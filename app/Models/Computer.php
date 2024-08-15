@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Computer extends Model
 {
+    protected $connection = 'sqlsrv2';
     use HasFactory;
     protected $table = 'Webapp_computers';
     protected $fillable =[

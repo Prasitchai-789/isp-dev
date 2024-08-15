@@ -7,9 +7,10 @@
 @endsection
 
 @section('script')
-    <script>
-        window.addEventListener('close-modal', event => {
+<script>
+    window.addEventListener('close-modal', event => {
             $('#computerModal').modal('hide'); // ให้ซ่อนโมดัล
         });
-    </script>
+</script>
+
 @endsection

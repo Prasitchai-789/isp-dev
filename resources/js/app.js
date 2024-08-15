@@ -1,5 +1,6 @@
 import "./bootstrap";
 
+
 window.addEventListener("alert", (event) => {
     let data = event.detail;
 
@@ -42,3 +43,7 @@ window.addEventListener("alertconfirmDelete", (event) => {
             }
         });
 });
+
+
+
+

@@ -25,7 +25,7 @@ return new class extends Migration
             $table->string('service_tag');
             $table->string('monitor')->nullable();
             $table->string('os')->nullable();
-            $table->string('status');
+            $table->string('status')->nullable();
             $table->string('remark')->nullable();
             $table->string('photo')->nullable();
             $table->timestamps();

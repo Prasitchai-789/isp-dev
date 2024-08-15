@@ -11,9 +11,14 @@ class HomeController extends Controller
      *
      * @return void
      */
+    // public function __construct()
+    // {
+    //     $this->middleware('auth');
+    // }
     public function __construct()
     {
-        $this->middleware('auth');
+        $this->middleware('permission:view user',['only' => ['index']]);
+        // $this->middleware('auth');
     }
 
     /**

@@ -7,13 +7,18 @@
 
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
+    <link rel="shortcut icon" href="{{ asset('/favicon.ico') }}">
 
     <title>{{ config('app.name', 'Laravel') }}</title>
+
 
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.bunny.net">
     <link href="https://fonts.bunny.net/css?family=Nunito" rel="stylesheet">
-    <script src="https://kit.fontawesome.com/ae360af17e.js" crossorigin="anonymous"></script>
+    {{-- <script src="https://kit.fontawesome.com/ae360af17e.js" crossorigin="anonymous"></script> --}}
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
+
+
 
     <!-- Scripts -->
     @vite(['resources/sass/app.scss','resources/css/app.css','resources/css/style.css', 'resources/js/app.js',
@@ -96,10 +101,11 @@
 
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-
     @livewireScripts
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     @yield('script')
+    @stack('plugin-scripts')
+    @stack('custom-scripts')
 </body>
 
 </html>

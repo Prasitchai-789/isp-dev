@@ -23,7 +23,7 @@
             <div class="card table-card">
 
                 <div class="card-header d-flex align-items-center justify-content-between py-3">
-                    <h4 class="mb-0">User</h4><button class="btn btn-sm btn-link-primary">View All</button>
+                    <h4 class="mb-0 animate__animated animate__bounce">User</h4><button class="btn btn-sm btn-link-primary">View All</button>
 
                 </div>
                 <div class="card-body">
@@ -83,6 +83,19 @@
         </div>
     </div>
 
+    <div class="col-xl-6 grid-margin stretch-card">
+        <div class="card">
+            <div class="card-body">
+                <h6 class="card-title">Area chart</h6>
+                <div id="chart"></div>
+            </div>
+        </div>
+    </div>
+    
+
+
+    <div id="chart2">
+    </div>
     <!-- Modal -->
     <div wire:ignore.self class="modal fade" id="exampleModal" data-bs-backdrop="static" data-bs-keyboard="false"
         tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -137,12 +150,12 @@
                     <form novalidate wire:submit.prevent="update">
                         <div class="mb-3">
                             <label for="name" class="form-label">Full Name</label>
-                            <input wire:model='name' type="text" class="form-control" id="name">
+                            <input wire:model='name' type="text" class="form-control" id="nameedit">
                             @error('name') <span class="error text-danger">{{ $message }}</span> @enderror
                         </div>
                         <div class="mb-3">
                             <label for="email" class="form-label">Email Address</label>
-                            <input wire:model="email" type="email" class="form-control" id="email">
+                            <input wire:model="email" type="email" class="form-control" id="emailedit">
                             @error('email') <span class="error text-danger">{{ $message }}</span> @enderror
                         </div>
                         <button type="submit" class="btn btn-primary" data-bs-dismiss="modal">Submit</button>

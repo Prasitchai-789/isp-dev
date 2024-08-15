@@ -2,12 +2,13 @@
 
 namespace App\Livewire\Computer;
 
-use App\Models\Computer;
-use GuzzleHttp\Promise\Create;
-use Illuminate\Console\Command;
 use Livewire\Component;
+use App\Models\Computer;
 use Livewire\WithPagination;
 use Livewire\WithFileUploads;
+use GuzzleHttp\Promise\Create;
+use Illuminate\Console\Command;
+use Illuminate\Support\Facades\Storage;
 
 class ComputerIndex extends Component
 {
@@ -33,6 +34,7 @@ class ComputerIndex extends Component
     public Computer $computer;
     public $deleteId;
     public $updateId;
+    public $currentPath;
 
 
 
@@ -57,7 +59,7 @@ class ComputerIndex extends Component
         'service_tag' => 'required|string|max:255',
         'monitor' => 'nullable',
         'os' => 'nullable',
-        'photo' => 'nullable',
+        'photo' => 'image|max:1024',
         'remark' => 'nullable',
     ];
     // realtime validation
@@ -69,12 +71,14 @@ class ComputerIndex extends Component
     public function mount(Computer $computer)
     {
         $this->computer = $computer;
+        $this->currentPath = request()->path();
     }
     public function render()
     {
         $computers = Computer::orderBy('id', 'desc')->get();
         return view('livewire.computer.computer-index', [
             'computers' => $computers,
+            'currentPath' => $this->currentPath,
         ]);
     }
 
@@ -99,10 +103,28 @@ class ComputerIndex extends Component
                     'service_tag' => 'required|string|max:255',
                     'monitor' => 'nullable',
                     'os' => 'nullable',
-                    'photo' => 'nullable',
+                    'photo' => 'image|max:2048',
                     'remark' => 'nullable',
                 ]
             );
+
+            // if ($this->photo) {
+            //     $filePath = $this->photo->storeAs('Image_upload', $this->photo->getClientOriginalName(), 'public');
+            //     $validateData['photo'] = $filePath;
+            // }
+            if ($this->photo) {
+                $fileName = $this->photo->getClientOriginalName(); // ดึงชื่อไฟล์เดิม
+                $filePath = 'Image_upload/' . $fileName;
+
+                // ตรวจสอบว่ามีไฟล์ชื่อเดียวกันอยู่ในโฟลเดอร์หรือไม่
+                if (Storage::disk('public')->exists($filePath)) {
+                    // เพิ่มเวลาปัจจุบันลงในชื่อไฟล์เพื่อให้ชื่อไฟล์ไม่ซ้ำกัน
+                    $fileName = pathinfo($fileName, PATHINFO_FILENAME) . '_' . time() . '.' . $this->photo->getClientOriginalExtension();
+                }
+
+                $filePath = $this->photo->storeAs('Image_upload', $fileName, 'public');
+                $validateData['photo'] = $filePath; // เก็บเส้นทางไฟล์ที่เก็บไว้
+            }
             Computer::create($validateData);
 
             $this->resetInputFields();
@@ -158,7 +180,7 @@ class ComputerIndex extends Component
         $this->mainboard = $computer->mainboard;
         $this->model = $computer->model;
         $this->service_tag = $computer->service_tag;
-        $this->remark = $computer->coremarkde_com;
+        $this->remark = $computer->remark;
     }
 
     public function updateComputer()
@@ -182,8 +204,30 @@ class ComputerIndex extends Component
                     'remark' => 'nullable',
                 ]
             );
-            $computer = Computer::where('id', $this->updateId)->first();
-            $computer->update($validateData);
+            $asset = Computer::findOrFail($this->updateId);
+
+            if ($this->photo) {
+                $fileName = $this->photo->getClientOriginalName();
+                $filePath = 'Image_upload/' . $fileName;
+
+                // ลบไฟล์เดิม
+                if ($asset->photo) {
+                    Storage::disk('public')->delete($asset->photo);
+                }
+
+                // ตรวจสอบว่ามีไฟล์ชื่อเดียวกันอยู่ในโฟลเดอร์หรือไม่
+                if (Storage::disk('public')->exists($filePath)) {
+                    // เพิ่มเวลาปัจจุบันลงในชื่อไฟล์เพื่อให้ชื่อไฟล์ไม่ซ้ำกัน
+                    $fileName = pathinfo($fileName, PATHINFO_FILENAME) . '_' . time() . '.' . $this->photo->getClientOriginalExtension();
+                    $filePath = 'Image_upload/' . $fileName;
+                }
+
+                // บันทึกไฟล์ใหม่
+                $this->photo->storeAs('Image_upload', $fileName, 'public');
+                $validateData['photo'] = $filePath;
+            }
+
+            $asset->update($validateData);
 
             $this->resetInputFields();
             $this->dispatch(
@@ -213,11 +257,13 @@ class ComputerIndex extends Component
         $computer = Computer::find($id);
 
         if ($computer) {
-            $this->dispatch('alertconfirmDelete',
-            [
-                'deleteId' => $this->deleteId,
-                'code' => 'prasit',
-        ]);
+            $this->dispatch(
+                'alertconfirmDelete',
+                [
+                    'deleteId' => $this->deleteId,
+                    'code' => 'prasit',
+                ]
+            );
         } else {
             // จัดการกรณีที่ไม่พบผู้ใช้
             session()->flash('error', 'User not found.');

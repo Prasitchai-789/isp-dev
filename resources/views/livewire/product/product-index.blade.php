@@ -17,7 +17,7 @@
             @if ($isLoading)
             <div class="card table-card">
                 <div class="card-header d-flex align-items-center justify-content-between py-3">
-                    <h4 class="mb-0">User</h4><button class="btn btn-sm btn-link-primary">View All</button>
+                    <h4 class="mb-0 animate__animated animate__headShake">Product</h4><button class="btn btn-sm btn-link-primary">View All</button>
                 </div>
                 <div class="card-body">
                     <div class="table-responsive">

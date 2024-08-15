@@ -26,6 +26,14 @@
         </div>
     </div>
 
+    <div class="page-header my-2">
+        <div class="page-block card mb-0">
+            <div class="card-body">
+                
+            </div>
+        </div>
+    </div>
+
     <div class="row mt-4">
         <div class="col-md-6 col-xl-3">
             <div class="card bg-grd-primary notification-card">
