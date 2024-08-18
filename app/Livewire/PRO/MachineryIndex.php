@@ -60,10 +60,14 @@ class MachineryIndex extends Component
 
     public function render()
     {
-        $machinerys = Machinery::orderBy('id', 'desc')->get();
+        $machineries = Machinery::orderBy('id', 'desc')->get();
+        if($machineries->isEmpty()) {
+            return view('livewire.pro.machinery-index', ['machineries' => []]);
+        } else {
         return view('livewire.pro.machinery-index', [
-            'machinerys' => $machinerys,
+            'machineries' => $machineries,
         ]);
+        }
     }
 
     public function addMachinery()

@@ -11,7 +11,7 @@ use App\Http\Controllers\SaleController;
 use App\Http\Controllers\UserController;
 use Illuminate\Console\Command;
 
-Route::group(['middleware' => ['role:developer|admin|user']], function () {
+Route::group(['middleware' => ['role:developer|admin|user|staff']], function () {
     Route::resource('permissions', App\Http\Controllers\PermissionController::class);
     Route::get('permissions/{permissionId}/delete', [App\Http\Controllers\PermissionController::class, 'destrory']);
 
@@ -22,11 +22,13 @@ Route::group(['middleware' => ['role:developer|admin|user']], function () {
 
     Route::resource('users', App\Http\Controllers\UserController::class);
     Route::get('users/{userId}/delete', [App\Http\Controllers\UserController::class, 'destrory']);
-    Route::get('home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
 });
 
+Route::get('home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
 Route::get('/', function () {
-    return view('welcome');
+    return view('auth.login');
 });
 
 Auth::routes();

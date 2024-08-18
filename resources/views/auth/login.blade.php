@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container">
+    {{-- <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card">
@@ -69,5 +69,55 @@
             </div>
         </div>
     </div>
-</div>
+</div> --}}
+    <div class="form-body without-side">
+        <div class="iofrm-layout">
+            <div class="form-holder my-4">
+                <div class="form-content">
+                    <div class="form-items">
+                        <div class="iofrm-info-holder ">
+                            <img src="{{ asset('images/iofrm/logoISP.png') }}" alt="" style="width: 40%;">
+                            <img src="{{ asset('images/iofrm/graphic3.svg') }}" alt="" style="width: 50%;">
+                        </div>
+                        <h3 class="mt-4">Login to account</h3>
+                        <p>Access to the most powerfull tool in the entire design and web industry.</p>
+                        <form method="POST" action="{{ route('login') }}">
+                            @csrf
+                            <input class="form-control @error('email') is-invalid @enderror" type="email" name="email"
+                                id="email" placeholder="E-mail Address" value="{{ old('email') }}" required
+                                autocomplete="email" autofocus>
+                            @error('email')
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $message }}</strong>
+                                </span>
+                            @enderror
+                            <input id="password" type="password"
+                                class="form-control @error('password') is-invalid @enderror" name="password" required
+                                autocomplete="current-password" placeholder="Password">
+                            @error('password')
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $message }}</strong>
+                                </span>
+                            @enderror
+                            <div class="form-button my-4">
+                                <button id="submit" type="submit" class="ibtn">{{ __('Login') }}</button>
+                                @if (Route::has('password.request'))
+                                    <a href="{{ route('password.request') }}">{{ __('Forgot Your Password?') }}</a>
+                                @endif
+                            </div>
+
+                        </form>
+                        <div class="other-links social-with-title">
+                            {{-- <div class="text">Or login with</div>
+                        <a href="#"><i class="fab fa-facebook-f"></i>Facebook</a><a href="#"><i class="fab fa-google"></i>Google</a><a href="#"><i class="fab fa-linkedin-in"></i>Linkedin</a> --}}
+                        </div>
+                        <div class="page-links my-4">
+                            <a href="{{ route('register') }}">Register new account</a>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 @endsection

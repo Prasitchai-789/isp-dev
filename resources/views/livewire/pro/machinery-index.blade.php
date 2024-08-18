@@ -68,7 +68,7 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            @foreach ($machinerys as $machinery )
+                                            @foreach ($machineries as $machinery )
                                             <tr>
                                                 <td>{{$machinery->name_machinery}}</td>
                                                 <td>{{$machinery->name_machinery}}</td>

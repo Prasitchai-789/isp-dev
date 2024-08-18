@@ -17,12 +17,12 @@
     <script src="https://kit.fontawesome.com/ae360af17e.js" crossorigin="anonymous"></script>
 
     <!-- Scripts -->
-    @vite(['resources/sass/app.scss','resources/css/app.css','resources/css/style.css', 'resources/js/app.js',
-    'resources/js/script.js'])
+    @vite(['resources/sass/app.scss','resources/css/iofrm/iofrm-theme16.css','resources/css/iofrm/iofrm-style.css','resources/css/iofrm/bootstrap.min.css', 'resources/js/app.js',
+    'resources/js/script.js','resources/js/iofrm/bootstrap.bundle.min.js','resources/js/iofrm/cleave.min.js','resources/js/iofrm/main.js','resources/js/iofrm/jquery.min.js','resources/js/iofrm/popper.min.js'])
 </head>
 
 <body>
-    <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
+    {{-- <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
         <div class="container">
             <a class="navbar-brand" href="{{ url('/') }}">
                 {{ config('app.name', 'Laravel') }}
@@ -78,8 +78,8 @@
                 </ul>
             </div>
         </div>
-    </nav>
-    <main class="py-4">
+    </nav> --}}
+    <main class="form-body">
         @yield('content')
     </main>
 
