@@ -1,15 +1,16 @@
 <?php
 
-use App\Http\Controllers\AssetController;
-use App\Http\Controllers\ComputerController;
-use App\Http\Controllers\PDFController;
-use App\Http\Controllers\PRO\MachineryController;
 use App\Livewire\Counter;
+use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\PDFController;
 use App\Http\Controllers\SaleController;
 use App\Http\Controllers\UserController;
-use Illuminate\Console\Command;
+use App\Http\Controllers\AssetController;
+use App\Livewire\Pro\ReportMachineryIndex;
+use App\Http\Controllers\ComputerController;
+use App\Http\Controllers\PRO\MachineryController;
 
 Route::group(['middleware' => ['role:developer|admin|user|staff']], function () {
     Route::resource('permissions', App\Http\Controllers\PermissionController::class);
@@ -58,6 +59,7 @@ Route::controller(AssetController::class)->group(function () {
 
 Route::controller(MachineryController::class)->group(function () {
     Route::get('/machinery/', 'index')->name('machinery.index');
-    Route::get('/machinery/report/', 'reportIndex')->name('report-machinery.index');
-    Route::get('/machinery/list/', 'listIndex')->name('list-machinery.index');
+    Route::get('/machinery/report/{machineryId}', 'reportIndex')->name('report-machinery.index');
+    Route::get('/machinery/list/{sparepartId}', 'listIndex')->name('list-machinery.index');
 });
+

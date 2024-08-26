@@ -76,10 +76,15 @@ class ComputerIndex extends Component
     public function render()
     {
         $computers = Computer::orderBy('id', 'desc')->get();
-        return view('livewire.computer.computer-index', [
-            'computers' => $computers,
-            'currentPath' => $this->currentPath,
-        ]);
+
+        if ($computers->isEmpty()) {
+            return view('livewire.computer.computer-index', ['computers' => []]);
+        } else {
+            return view('livewire.computer.computer-index', [
+                'computers' => $computers,
+                'currentPath' => $this->currentPath,
+            ]);
+        }
     }
 
     public function addComputer()

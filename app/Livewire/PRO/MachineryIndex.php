@@ -2,11 +2,13 @@
 
 namespace App\Livewire\PRO;
 
+use Carbon\Carbon;
 use Livewire\Component;
 use Livewire\WithPagination;
 use App\Models\PRO\Machinery;
 use Livewire\WithFileUploads;
 use Illuminate\Support\Facades\Storage;
+use App\Events\CarEvent;
 
 class MachineryIndex extends Component
 {
@@ -38,6 +40,8 @@ class MachineryIndex extends Component
         $this->isLoading = true;
     }
 
+
+
     protected $rules = [
         'name_machinery' => 'required|string|max:255',
         'number_machinery' => 'required|string|max:255',
@@ -60,6 +64,8 @@ class MachineryIndex extends Component
 
     public function render()
     {
+
+        Carbon::setLocale('th');
         $machineries = Machinery::orderBy('id', 'desc')->get();
         if($machineries->isEmpty()) {
             return view('livewire.pro.machinery-index', ['machineries' => []]);
@@ -108,7 +114,6 @@ class MachineryIndex extends Component
                 $validateData['photo_machinery'] = $filePath; // เก็บเส้นทางไฟล์ที่เก็บไว้
             }
             Machinery::create($validateData);
-
             $this->resetInputFields();
             $this->dispatch(
                 'alert',
@@ -165,5 +170,101 @@ class MachineryIndex extends Component
         $this->remark_machinery = $machinery->remark_machinery;
         $this->photo_machinery = $machinery->photo_machinery;
         $this->start_machinery = $machinery->start_machinery;
+    }
+
+    public function updateMachinery()
+    {
+        try {
+            $validateData = $this->validate(
+                [
+                    'name_machinery' => 'required|string|max:255',
+                    'number_machinery' => 'required|string|max:255',
+                    'register_machinery' => 'required|string|max:255',
+                    'job_machinery' => 'nullable|string|max:255',
+                    'agency_machinery' => 'nullable|string|max:255',
+                    'type' => 'nullable|string|max:255',
+                    'status_machinery' => 'nullable|string|max:255',
+                    // 'plan_machinery' => 'nullable|string|max:255',
+                    // 'breakdown_machinery' => 'nullable|string|max:255',
+                    'remark_machinery' => 'nullable|string|max:255',
+                    'photo_machinery' => 'nullable|image|max:1024',
+                    // 'start_machinery' => 'nullable',
+                ]
+            );
+
+            $machinery = Machinery::findOrFail($this->updateId);
+
+            if ($this->photo_machinery) {
+                $fileName = $this->photo_machinery->getClientOriginalName();
+                $filePath = 'Image_upload/' . $fileName;
+
+                if (Storage::disk('public')->exists($filePath)) {
+                    $fileName = pathinfo($fileName, PATHINFO_FILENAME) . '_' . time() . '.' . $this->photo_machinery->getClientOriginalExtension();
+                }
+
+                $filePath = $this->photo_machinery->storeAs('Image_upload', $fileName, 'public');
+                $validateData['photo_machinery'] = $filePath;
+            }
+
+            $machinery->update($validateData);
+
+            $this->resetInputFields();
+            $this->dispatch(
+                'alert',
+                position: "center",
+                icon: "success",
+                title: "อัพเดทข้อมูลสำเร็จ",
+                showConfirmButton: false,
+                timer: 1500
+            );
+            $this->dispatch('close-modal');
+        } catch (\Throwable $th) {
+            $this->dispatch(
+                'alert',
+                position: "center",
+                icon: "error",
+                title: "เกิดข้อผิดพลาด",
+                showConfirmButton: false,
+                timer: 1600
+            );
+        }
+    }
+
+    public function confirmDelete($id)
+    {
+        $this->deleteId = $id;
+        $machinery = Machinery::find($id);
+
+        if ($machinery) {
+            $this->dispatch(
+                'alertconfirmDelete',
+                [
+                    'deleteId' => $this->deleteId,
+                ]
+            );
+        } else {
+            session()->flash('error', 'User not found.');
+        }
+    }
+
+    public function deleteItem()
+    {
+        $machinery = Machinery::find($this->deleteId);
+        if ($machinery->photo_machinery) {
+            Storage::delete('public/' . $machinery->photo_machinery);
+        }
+        if ($machinery) {
+            $machinery->delete();
+            $this->dispatch(
+                'alert',
+                position: "center",
+                icon: "success",
+                title: "ลบข้อมูลสำเร็จ",
+                showConfirmButton: false,
+                timer: 1600
+            );
+        } else {
+            session()->flash('error', 'Computer not found.');
+        }
     }
 }

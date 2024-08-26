@@ -25,11 +25,11 @@ return new class extends Migration
             $table->string('kw_spare')->nullable();
             $table->string('quantity_spare')->nullable();
             $table->string('status_spare')->nullable();
-            $table->date('plan_spare')->nullable();
+            $table->dateTime('plan_spare')->nullable();
             $table->string('breakdown_spare')->nullable();
             $table->string('remark_spare')->nullable();
             $table->string('photo_spare')->nullable();
-            $table->date('start_spare')->nullable();
+            $table->dateTime('start_spare')->nullable();
         });
     }
 

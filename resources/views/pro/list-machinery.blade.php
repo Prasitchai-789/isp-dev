@@ -2,6 +2,6 @@
 
 @section('content')
 
-@livewire('pro.list-machinery-index')
+@livewire('pro.list-machinery-index', ['sparepartId' => $sparepart->id])
 
 @endsection

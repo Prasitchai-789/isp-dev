@@ -2,7 +2,7 @@
 
 @section('content')
 
-@livewire('pro.report-machinery-index')
+@livewire('pro.report-machinery-index', ['machineryId' => $machinery->id])
 
 @endsection
 

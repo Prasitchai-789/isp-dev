@@ -14,18 +14,24 @@
                                 <div class="page-header-title border-bottom pb-2 mb-2 font_Prompt">
                                     <h4 class="animate__animated animate__headShake">รายการเครื่องจักร
                                         <!-- Button trigger modal -->
-                                        <button type="button" class="btn btn-outline-primary btn-sm float-end"
+                                        <button type="button" class="btn btn-outline-primary btn-sm float-end mx-2"
                                             style="border-radius: 7px" data-bs-toggle="modal"
                                             data-bs-target="#sparepartModal" wire:click='addSparePart'>
                                             <span class="font_anuphan">CREATE</span>
                                         </button>
+                                        <a type="button" class="btn btn-outline-danger btn-sm float-end "
+                                            style="border-radius: 7px" href="{{ route('machinery.index', ['machineryId' => $machinery->id])}}">
+                                            <span class="font_anuphan">
+                                                <i class="bi bi-arrow-left-short"></i>Back</span>
+                                        </a>
+
                                         <!-- Button trigger modal -->
                                     </h4>
                                 </div>
                             </div>
                             <div class="col-md-12 font_anuphan">
                                 <ul class="breadcrumb">
-                                    <li class="breadcrumb-item"><a href="{{ route('report-machinery.index') }}"><i
+                                    <li class="breadcrumb-item"><a href="{{ route('report-machinery.index', ['machineryId' => $machinery->id]) }}"><i
                                                 class="ph ph-house"></i>หน้าหลัก</a></li>
                                     <li class="breadcrumb-item"><a href="{{ route('machinery.index')}}">ฝ่ายผลิตและวิศวกรรม</a>
                                     </li>
@@ -53,9 +59,7 @@
                             @endif
                             <div class="col-lg-4 mt-2">
                                 <div class="col-lg-6 col-lg-12">
-                                    <div class="card seo-card"><img
-                                            src="https://hadef.com/wp-content/uploads/Eintraeger-Elektrokran-HADEF-EEE-Schleppkabel-2.png" alt="seo bg"
-                                            class="img-fluid">
+                                    <div class="card seo-card"><img src="{{ $machinery->photo_machinery ? asset('storage/'.$machinery->photo_machinery) : asset('images/user/avatar-1.jpg') }}" alt="machinery image" class="img-fluid">
                                         <div class=" bg-grd-primary"></div>
                                         <div class="card-body seo-content">
                                             <h4 class="m-t-10 text-white">Devices and resolution</h4>
@@ -74,27 +78,32 @@
                                         <tbody>
                                             <tr>
                                                 <td class="column1 text-start h6" style="width: 80px">ชื่อเครื่องจักร</td>
-                                                <td class="column2 text-start">: Overhead Crane </td>
+                                                <td class="column2 text-start">: {{ $machinery->name_machinery }} </td>
                                             </tr>
                                             <tr>
                                                 <td class="column1 h6">หมายเลขเครื่องจักร</td>
-                                                <td class="column2">: ST002A</td>
+                                                <td class="column2">: {{ $machinery->number_machinery }}</td>
                                             </tr>
                                             <tr>
                                                 <td class="column1 h6">ทะเบียนเครื่องจักร</td>
-                                                <td class="column2">: ISP-5901-xxx</td>
+                                                <td class="column2">: {{ $machinery->register_machinery }}</td>
                                             </tr>
                                             <tr>
                                                 <td class="column1 h6">ลักษณะงาน</td>
-                                                <td class="column2">: ยกกะบะปาล์ม</td>
+                                                <td class="column2">: {{ $machinery->job_machinery }}</td>
                                             </tr>
                                             <tr>
                                                 <td class="column1 h6">หน่วยงาน</td>
-                                                <td class="column2">: บรรจุปาล์ม</td>
+                                                <td class="column2">: {{ $machinery->agency_machinery }}</td>
                                             </tr>
                                             <tr>
                                                 <td class="column1 h6">เริ่มใช้งาน</td>
-                                                <td class="column2">: 23-May-59</td>
+                                                <td>@if($machinery->start_machinery)
+                                                    {{ \Carbon\Carbon::parse($machinery->start_machinery)->translatedFormat('j F Y') }}
+                                                    @else
+                                                    ไม่ระบุวันที่
+                                                    @endif</td>
+                                                <td>
                                             </tr>
                                             <tr>
                                                 <td class="column1"></td>
@@ -124,7 +133,52 @@
                                         </tr>
                                     </thead>
                                     <tbody>
+                                        @foreach ($spareparts as $sparepart)
+                                        <tr>
+                                            <td>{{ $sparepart->name_spare }}</td>
+                                            <td>{{ $sparepart->name_spare }}</td>
+                                            <td>{{ $sparepart->brand_spare }}</td>
+                                            {{-- <td><img src="{{ asset('storage/'.$machinery->photo) }}" alt="user image" class="wid-60">
+                                            </td> --}}
+                                            <td>{{ $sparepart->model_spare }}</td>
+                                            <td>{{ $sparepart->number_spare }}</td>
+                                            <td>{{ $sparepart->size_spare }}</td>
+                                            <td>{{ $sparepart->status_spare }}</td>
+                                            <td>@if($sparepart->plan_spare)
+                                                {{ \Carbon\Carbon::parse($sparepart->plan_spare)->translatedFormat('j F Y') }}
+                                                @else
+                                                ไม่ระบุวันที่
+                                                @endif</td>
+                                            <td>
+                                            <td>{{ $sparepart->breakdown_spare }}</td>
+                                            <td><img src="{{ $sparepart->photo_spare ? asset('storage/'.$sparepart->photo_spare) : asset('images/user/avatar-1.jpg') }}" alt="Spare image" class="wid-60">
+                                            </td>
 
+
+                                            <td>
+                                                {{-- <a href="{{ route('report-machinery.index', ['id' => $machinery->id]) }}" --}}
+                                                <a href="{{ route('list-machinery.index', ['sparepartId' => $sparepart->id]) }}"
+                                                    class="avtar avtar-xs btn-link-secondary">
+                                                    <i class="bi bi-eye text-primary"
+                                                        style="font-size: 18px;"></i>
+                                                </a>
+                                                <a href="#"
+                                                    wire:click='confirmEdit({{ $sparepart->id }})'
+                                                    data-bs-toggle="modal" data-bs-target="#sparepartModal"
+                                                    class="avtar avtar-xs btn-link-secondary">
+                                                    <i class="bi bi-pencil-square text-warning"
+                                                        style="font-size: 18px;"></i>
+                                                </a>
+                                                <a href="#"
+                                                    wire:click='confirmDelete({{ $sparepart->id }})'
+                                                    class="avtar avtar-xs btn-link-secondary"
+                                                    data-bs-toggle="modal" data-bs-target="#">
+                                                    <i class="bi bi-trash  text-danger"
+                                                        style="font-size: 18px;"></i>
+                                                </a>
+                                            </td>
+                                        </tr>
+                                    @endforeach
 
                                     </tbody>
                                 </table>
@@ -152,7 +206,7 @@
                                                         <label class="font_Prompt">รายการ</label>
                                                         <div class="input-group">
                                                             <span class="input-group-text text-primary">
-                                                                <i class="bi bi-pc"></i>
+                                                                <i class="bi bi-list-check"></i>
                                                             </span>
                                                             <input type="text"
                                                                 class="form-control form-control-sm font_Prompt text-primary"
@@ -163,8 +217,8 @@
                                                     <div class="col-md-6 mb-2">
                                                         <label class="font_Prompt">ยี่ห้อ</label>
                                                         <div class="input-group">
-                                                            <span class="input-group-text ">
-                                                                <i class="bi bi-cpu text-primary"></i>
+                                                            <span class="input-group-text text-primary">
+                                                                <i class="bi bi-app-indicator"></i>
                                                             </span>
                                                             <input type="text"
                                                                 class="form-control form-control-sm font_Prompt text-primary"
@@ -213,7 +267,7 @@
                                                             style="font-family: 'Prompt', sans-serif;">ขนาด</label>
                                                         <div class="input-group">
                                                             <span class="input-group-text text-primary">
-                                                                <i class="bi bi-device-ssd"></i>
+                                                                <i class="bi bi-aspect-ratio"></i>
                                                             </span>
                                                             <input type="text"
                                                                 class="form-control form-control-sm font_Prompt text-primary"
@@ -226,7 +280,7 @@
                                                             style="font-family: 'Prompt', sans-serif;">สารหล่อหลื่น</label>
                                                         <div class="input-group">
                                                             <span class="input-group-text text-primary">
-                                                                <i class="bi bi-device-ssd"></i>
+                                                                <i class="bi bi-funnel-fill"></i>
                                                             </span>
                                                             <input type="text"
                                                                 class="form-control form-control-sm font_Prompt text-primary"
@@ -264,8 +318,9 @@
                                                     <div class="col-md-6 mb-2">
                                                         <label class="font_Prompt">สถานะ</label>
                                                         <div class="input-group ">
-                                                            <span class="input-group-text text-primary"><i
-                                                                    class="fa-solid fa-clock"></i></span>
+                                                            <span class="input-group-text text-primary">
+                                                                <i class="bi bi-stack-overflow"></i>
+                                                            </span>
                                                             <select class="form-select   my-auto font_Prompt"
                                                                 id="status_spare" name="status_spare"
                                                                 wire:model="status_spare" style="color:green"
@@ -282,7 +337,7 @@
                                                         <label class="font_Prompt">แผนการบำรุงรักษา</label>
                                                         <div class="input-group">
                                                             <span class="input-group-text text-primary">
-                                                                <i class="bi bi-motherboard"></i>
+                                                                <i class="bi bi-calendar2-week"></i>
                                                             </span>
                                                             <input type="date"
                                                                 class="form-control form-control-sm font_Prompt text-primary"
@@ -294,7 +349,7 @@
                                                         <label class="font_Prompt">เริ่มใช้งาน</label>
                                                         <div class="input-group">
                                                             <span class="input-group-text text-primary">
-                                                                <i class="bi bi-hash"></i>
+                                                                <i class="bi bi-calendar-event"></i>
                                                             </span>
                                                             <input type="date"
                                                                 class="form-control form-control-sm font_Prompt text-primary"
@@ -333,14 +388,14 @@
                                                                 }}</span> @enderror
 
                                                         </div>
-                                                        <div wire:loading wire:target="photo_machinery">
+                                                        <div wire:loading wire:target="photo_spare">
                                                             Uploading...
                                                         </div>
                                                     </div>
 
                                                 </div>
                                                 <div class="d-flex justify-content-end gap-2 font_Prompt">
-                                                    <button wire:loading.attr='disabled' wire:target='photo'
+                                                    <button wire:loading.attr='disabled' wire:target='photo_spare'
                                                         type="submit"
                                                         class=" {{ $edit ? 'btn btn-warning' : 'btn btn-primary' }} mb-2 me-2 btn-sm"
                                                         style="border-radius: 10px"><i

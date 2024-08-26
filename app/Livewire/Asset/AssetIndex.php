@@ -66,7 +66,6 @@ class AssetIndex extends Component
     {
         Carbon::setLocale('th');
         $categorys = CategoryAsset::orderBy('id','asc')->get();
-        // $assets = Asset::orderBy('id', 'desc')->get();
         $assets = Asset::with('category')->orderBy('id', 'desc')->get();
         return view('livewire.asset.asset-index', [
             'assets' => $assets,

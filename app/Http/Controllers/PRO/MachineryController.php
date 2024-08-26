@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers\PRO;
 
-use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Models\PRO\Machinery;
+use App\Http\Controllers\Controller;
+use App\Models\PRO\SparePart;
 
 class MachineryController extends Controller
 {
@@ -15,13 +17,19 @@ class MachineryController extends Controller
         return view('pro.index');
     }
 
-    public function reportIndex()
+    public function reportIndex(Request $request,$machineryId)
     {
-        return view('pro.report-machinery');
+        $machineryId = Machinery::findOrFail($machineryId);
+        return view('pro.report-machinery',[
+            'machinery' => $machineryId,
+        ]);
     }
 
-    public function listIndex()
+    public function listIndex(Request $request,$sparepartId)
     {
-        return view('pro.list-machinery');
+        $sparepartId = SparePart::findOrFail($sparepartId);
+        return view('pro.list-machinery',[
+            'sparepart' => $sparepartId,
+        ]);
     }
 }

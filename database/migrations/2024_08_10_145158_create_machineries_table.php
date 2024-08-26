@@ -21,11 +21,11 @@ return new class extends Migration
             $table->string('agency_machinery')->nullable();
             $table->string('type')->nullable();
             $table->string('status_machinery')->nullable();
-            $table->date('plan_machinery')->nullable();
+            $table->dateTime('plan_machinery')->nullable();
             $table->string('breakdown_machinery')->nullable();
             $table->string('remark_machinery')->nullable();
             $table->string('photo_machinery')->nullable();
-            $table->date('start_machinery')->nullable();
+            $table->dateTime('start_machinery')->nullable();
         });
     }
 
