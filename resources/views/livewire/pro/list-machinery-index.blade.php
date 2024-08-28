@@ -53,13 +53,13 @@
                             <div class="col-lg-6 mt-2">
                                 <div class="col-lg-6 col-lg-12">
                                     <div class="card seo-card">
-                                        <img src="{{ $sparepart->photo_spare ? asset('storage/'.$sparepart->photo_spare) : asset('images/user/avatar-1.jpg') }}" alt="machinery image" class="img-fluid">
+                                        <img src="{{ $sparepart->photo_spare ? asset('storage/'.$sparepart->photo_spare) : asset('images/user/avatar-1.jpg') }}" alt="Spare part image" class="img-fluid img-crop-500">
                                         <div class=" bg-grd-primary"></div>
-                                        <div class="card-body seo-content">
+                                        {{-- <div class="card-body seo-content">
                                             <h4 class="m-t-10 text-white">Devices and resolution</h4>
                                             <p class="m-b-0 m-t-20">Lorem Ipsum is simply dummy text of the printing and
                                                 typesetting industry. Lorem Ipsum has been the industry.</p>
-                                        </div>
+                                        </div> --}}
                                     </div>
                                 </div>
                             </div>

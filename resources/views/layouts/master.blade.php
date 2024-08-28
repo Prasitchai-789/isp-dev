@@ -17,13 +17,15 @@
     <link href="https://fonts.bunny.net/css?family=Nunito" rel="stylesheet">
     {{-- <script src="https://kit.fontawesome.com/ae360af17e.js" crossorigin="anonymous"></script> --}}
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
+    <script src="https://unpkg.com/pdf-lib"></script>
+    <script src="https://unpkg.com/@pdf-lib/fontkit@0.0.4"></script>
+    <script src="https://unpkg.com/downloadjs"></script>
 
 
 
 
     <!-- Scripts -->
-    @vite(['resources/sass/app.scss','resources/css/app.css','resources/css/style.css', 'resources/js/app.js',
-    'resources/js/script.js'])
+    @vite(['resources/sass/app.scss','resources/css/app.css','resources/css/style.css', 'resources/js/app.js','resources/js/script.js'])
 
     @livewireStyles
 

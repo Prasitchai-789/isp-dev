@@ -37,6 +37,9 @@ class ReportMachineryIndex extends Component
     public $start_spare;
     public $id;
     public $machineryId;
+    public $plan_startDate;
+    public $plan_endDate;
+    public $status;
 
 
 
@@ -50,7 +53,7 @@ class ReportMachineryIndex extends Component
     protected $rules = [
         'id_machinery' => 'required|string|max:255',
         'name_spare' => 'required|string|max:255',
-        'brand_spare' => 'required|string|max:255',
+        'brand_spare' => 'nullable|string|max:255',
         'type_spare' => 'nullable|string|max:255',
         'model_spare' => 'nullable|string|max:255',
         'number_spare' => 'nullable|string|max:255',
@@ -60,7 +63,7 @@ class ReportMachineryIndex extends Component
         'quantity_spare' => 'nullable|string|max:255',
         'status_spare' => 'nullable|string|max:255',
         'plan_spare' => 'nullable|max:255',
-        'breakdown_spare' => 'nullable',
+        // 'breakdown_spare' => 'nullable',
         'remark_spare' => 'nullable',
         'photo_spare' => 'nullable|image|max:1024',
         'start_spare' => 'nullable',
@@ -68,17 +71,42 @@ class ReportMachineryIndex extends Component
 
     public function mount(SparePart $sparepart, $machineryId)
     {
-        $this->sparepart = $sparepart;
+
         $this->machinery = Machinery::findOrFail($machineryId);
+        $this->sparepart = $sparepart;
+
+        $spareparts = SparePart::where('id_machinery', $this->machinery->id)
+            ->orderBy('plan_spare', 'desc')
+            ->get();
+
+        $this->plan_startDate = Carbon::now();
+        foreach ($spareparts as $sparepart) {
+            $this->plan_endDate = Carbon::parse($sparepart->plan_spare);
+            $this->calculateStatus($sparepart);
+        }
+    }
+
+    public function calculateStatus($sparepart)
+    {
+        $daysDifference = $this->plan_startDate->diffInDays($this->plan_endDate);
+
+        // if ($daysDifference < 1) {
+        //     $sparepart->status_spare = 3;
+        // } elseif ($daysDifference < 7) {
+        //     $sparepart->status_spare = 2;
+        // } else {
+        //     $sparepart->status_spare = 1;
+        // }
+        // $sparepart->update();
     }
 
     public function render()
     {
-
         Carbon::setLocale('th');
         $spareparts = SparePart::where('id_machinery', $this->machinery->id)
-                            ->orderBy('id', 'desc')
-                            ->get();
+            ->orderBy('id', 'desc')
+            ->get();
+
         return view('livewire.pro.report-machinery-index', [
             'spareparts' => $spareparts,
             'machinery' => $this->machinery,
@@ -97,7 +125,7 @@ class ReportMachineryIndex extends Component
                 [
                     // 'id_machinery' => 'required|string|max:255',
                     'name_spare' => 'required|string|max:255',
-                    'brand_spare' => 'required|string|max:255',
+                    'brand_spare' => 'nullable|string|max:255',
                     'type_spare' => 'nullable|string|max:255',
                     'model_spare' => 'nullable|string|max:255',
                     'number_spare' => 'nullable|string|max:255',
@@ -188,11 +216,15 @@ class ReportMachineryIndex extends Component
         $this->kw_spare = $sparepart->kw_spare;
         $this->quantity_spare = $sparepart->quantity_spare;
         $this->status_spare = $sparepart->status_spare;
-        $this->plan_spare = $sparepart->plan_spare;
         $this->breakdown_spare = $sparepart->breakdown_spare;
         $this->remark_spare = $sparepart->remark_spare;
         $this->photo_spare = $sparepart->photo_spare;
-        $this->start_spare = $sparepart->start_spare;
+        if ($sparepart) {
+            $this->start_spare = date_format(date_create($sparepart->start_spare), "Y-m-d");
+            $this->plan_spare = date_format(date_create($sparepart->plan_spare), "Y-m-d");
+        } else {
+            return redirect()->back()->with('error', '');
+        }
     }
 
     public function updateSparePart()
@@ -200,22 +232,22 @@ class ReportMachineryIndex extends Component
         try {
             $validateData = $this->validate(
                 [
-                     // 'id_machinery' => 'required|string|max:255',
-                     'name_spare' => 'required|string|max:255',
-                     'brand_spare' => 'required|string|max:255',
-                     'type_spare' => 'nullable|string|max:255',
-                     'model_spare' => 'nullable|string|max:255',
-                     'number_spare' => 'nullable|string|max:255',
-                     'size_spare' => 'nullable|string|max:255',
-                     'lubricant' => 'nullable|string|max:255',
-                     'kw_spare' => 'nullable|string|max:255',
-                     'quantity_spare' => 'nullable|string|max:255',
-                     'status_spare' => 'nullable|string|max:255',
-                     'plan_spare' => 'nullable|max:255',
-                     // 'breakdown_spare' => 'nullable',
-                     'remark_spare' => 'nullable',
-                     'photo_spare' => 'nullable|image|max:1024',
-                     'start_spare' => 'nullable',
+                    'id_machinery' => 'required|string|max:255',
+                    'name_spare' => 'required|string|max:255',
+                    'brand_spare' => 'nullable|string|max:255',
+                    'type_spare' => 'nullable|string|max:255',
+                    'model_spare' => 'nullable|string|max:255',
+                    'number_spare' => 'nullable|string|max:255',
+                    'size_spare' => 'nullable|string|max:255',
+                    'lubricant' => 'nullable|string|max:255',
+                    'kw_spare' => 'nullable|string|max:255',
+                    'quantity_spare' => 'nullable|string|max:255',
+                    'status_spare' => 'nullable|string|max:255',
+                    'plan_spare' => 'nullable|date',
+                    // 'breakdown_spare' => 'nullable',
+                    'remark_spare' => 'nullable',
+                    'photo_spare' => 'nullable|image|max:3072',
+                    'start_spare' => 'nullable|date',
                 ]
             );
 

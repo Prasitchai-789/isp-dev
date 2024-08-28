@@ -8,7 +8,6 @@ use Livewire\WithPagination;
 use App\Models\PRO\Machinery;
 use Livewire\WithFileUploads;
 use Illuminate\Support\Facades\Storage;
-use App\Events\CarEvent;
 
 class MachineryIndex extends Component
 {
@@ -32,6 +31,8 @@ class MachineryIndex extends Component
     public Machinery $machinery;
     public $deleteId;
     public $updateId;
+    public $message;
+
 
     public bool $isLoading = false;
 
@@ -53,7 +54,7 @@ class MachineryIndex extends Component
         'plan_machinery' => 'nullable|string|max:255',
         'breakdown_machinery' => 'nullable|string|max:255',
         'remark_machinery' => 'nullable|string|max:255',
-        'photo_machinery' => 'nullable|image|max:1024',
+        'photo_machinery' => 'nullable|image|max:3072',
         'start_machinery' => 'nullable',
     ];
 
@@ -61,6 +62,7 @@ class MachineryIndex extends Component
     {
         $this->machinery = $machinery;
     }
+
 
     public function render()
     {
@@ -81,6 +83,19 @@ class MachineryIndex extends Component
         $this->edit = false;
     }
 
+    public function generatePdf()
+    {
+        $this->message = 'สวัสดีจาก Livewire!';
+        $this->dispatch('modifyPdf',
+            fullName : $this->message,
+            number : 'isp-6001-001',
+            dis : 'เทคโนโลยีสารสนเทศ',
+
+
+    );
+
+    }
+
     public function saveMachinery()
     {
         try {
@@ -93,11 +108,11 @@ class MachineryIndex extends Component
                     'agency_machinery' => 'nullable|string|max:255',
                     'type' => 'nullable|string|max:255',
                     'status_machinery' => 'nullable|string|max:255',
-                    // 'plan_machinery' => 'nullable|string|max:255',
+                    'plan_machinery' => 'nullable|string|max:255',
                     // 'breakdown_machinery' => 'nullable|string|max:255',
                     'remark_machinery' => 'nullable|string|max:255',
                     'photo_machinery' => 'nullable|image|max:1024',
-                    // 'start_machinery' => 'nullable',
+                    'start_machinery' => 'nullable',
                 ]
             );
             if ($this->photo_machinery) {
@@ -165,11 +180,15 @@ class MachineryIndex extends Component
         $this->agency_machinery = $machinery->agency_machinery;
         $this->type = $machinery->type;
         $this->status_machinery = $machinery->status_machinery;
-        $this->plan_machinery = $machinery->plan_machinery;
         $this->breakdown_machinery = $machinery->breakdown_machinery;
         $this->remark_machinery = $machinery->remark_machinery;
         $this->photo_machinery = $machinery->photo_machinery;
-        $this->start_machinery = $machinery->start_machinery;
+        if ($machinery) {
+            $this->start_machinery = date_format(date_create($machinery->start_machinery), "Y-m-d");
+            $this->plan_machinery = date_format(date_create($machinery->plan_machinery), "Y-m-d");
+        } else {
+            return redirect()->back()->with('error', '');
+        }
     }
 
     public function updateMachinery()
@@ -184,11 +203,11 @@ class MachineryIndex extends Component
                     'agency_machinery' => 'nullable|string|max:255',
                     'type' => 'nullable|string|max:255',
                     'status_machinery' => 'nullable|string|max:255',
-                    // 'plan_machinery' => 'nullable|string|max:255',
+                    'plan_machinery' => 'nullable|string|max:255',
                     // 'breakdown_machinery' => 'nullable|string|max:255',
                     'remark_machinery' => 'nullable|string|max:255',
                     'photo_machinery' => 'nullable|image|max:1024',
-                    // 'start_machinery' => 'nullable',
+                    'start_machinery' => 'nullable',
                 ]
             );
 

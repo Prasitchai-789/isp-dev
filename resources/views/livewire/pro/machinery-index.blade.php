@@ -23,6 +23,11 @@
                                     </h4>
                                 </div>
                             </div>
+
+                            {{-- <div>
+        <button wire:click="generatePdf">Generate PDF</button>
+    </div> --}}
+
                             <div class="col-md-12 font_anuphan">
                                 <ul class="breadcrumb">
                                     <li class="breadcrumb-item"><a href="{{ url('home/') }}"><i
@@ -64,13 +69,15 @@
                                                     <th class="text-center">เลขทะเบียนเครื่องจักร</th>
                                                     <th class="text-center">ลักษณะงานที่ใช้</th>
                                                     <th class="text-center">หน่วยงาน</th>
+                                                    <th class="text-center">สถานะ</th>
                                                     <th class="text-center">เริ่มใช้งาน</th>
+                                                    <th class="text-center">Action</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                @foreach ($machineries as $machinery)
+                                                @foreach ($machineries as $index => $machinery)
                                                     <tr>
-                                                        <td>{{ $machinery->name_machinery }}</td>
+                                                        <td>{{ $loop->iteration }}</td>
                                                         <td>{{ $machinery->name_machinery }}</td>
                                                         {{-- <td><img src="{{ asset('storage/'.$machinery->photo) }}" alt="user image" class="wid-60"> --}}
                                                         </td>
@@ -78,6 +85,20 @@
                                                         <td>{{ $machinery->register_machinery }}</td>
                                                         <td>{{ $machinery->job_machinery }}</td>
                                                         <td>{{ $machinery->agency_machinery }}</td>
+                                                        <td>
+                                                            @if ($machinery->status_machinery == 1)
+                                                                <span class="badge bg-success">ปกติ</span>
+                                                            @else
+                                                                <span class="badge bg-danger">ชำรุด</span>
+                                                            @endif
+                                                        </td>
+                                                        <td>
+                                                            @if ($machinery->start_machinery)
+                                                                {{ \Carbon\Carbon::parse($machinery->start_machinery)->translatedFormat('j F Y') }}
+                                                            @else
+                                                                ไม่ระบุวันที่
+                                                            @endif
+                                                        </td>
 
                                                         <td>
                                                             {{-- <a href="{{ route('report-machinery.index', ['id' => $machinery->id]) }}" --}}
@@ -106,14 +127,14 @@
 
                                             </tbody>
                                         </table>
-                                    <div>
-                                @else
-                                    <div class="flex items-center justify-center">
-                                        <div class="inline-block w-8 h-8 border-4 rounded-full spinner-border animate-spin"
-                                            role="status">
-                                            <span class="visually-hidden">Loading...</span>
-                                        </div>
-                                    </div>
+                                        <div>
+                                        @else
+                                            <div class="flex items-center justify-center">
+                                                <div class="inline-block w-8 h-8 border-4 rounded-full spinner-border animate-spin"
+                                                    role="status">
+                                                    <span class="visually-hidden">Loading...</span>
+                                                </div>
+                                            </div>
                                 @endif
                             </div>
                         </div>
@@ -220,7 +241,7 @@
                                                         </span>
                                                         <select class="form-select   my-auto font_Prompt"
                                                             id="status_machinery" name="status_machinery"
-                                                            wire:model="status_machinery" style="color:green"
+                                                            wire:model="status_machinery" style="color:rgb(39, 89, 215)"
                                                             required>
                                                             <option selected value="">เลือก...</option>
                                                             <option value="1">ปกติ</option>
