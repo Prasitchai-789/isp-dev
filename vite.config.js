@@ -8,6 +8,8 @@ export default defineConfig({
                 'resources/sass/app.scss',
                 'resources/css/app.css',
                 'resources/js/app.js',
+                'resources/js/apexchart.js',
+                'resources/js/GM/dashboard-palm.js',
             ],
             refresh: true,
         }),

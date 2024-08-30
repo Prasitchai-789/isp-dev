@@ -25,7 +25,12 @@
 
 
     <!-- Scripts -->
-    @vite(['resources/sass/app.scss','resources/css/app.css','resources/css/style.css', 'resources/js/app.js','resources/js/script.js'])
+    @vite(['resources/sass/app.scss','resources/css/app.css',
+    'resources/css/style.css',
+    'resources/js/app.js',
+    'resources/js/script.js' ,
+    
+    ])
 
     @livewireStyles
 

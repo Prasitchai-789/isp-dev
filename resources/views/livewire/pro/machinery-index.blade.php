@@ -241,8 +241,8 @@
                                                         </span>
                                                         <select class="form-select   my-auto font_Prompt"
                                                             id="status_machinery" name="status_machinery"
-                                                            wire:model="status_machinery" style="color:rgb(39, 89, 215)"
-                                                            required>
+                                                            wire:model="status_machinery"
+                                                            style="color:rgb(39, 89, 215)" required>
                                                             <option selected value="">เลือก...</option>
                                                             <option value="1">ปกติ</option>
                                                             <option value="2">แจ้งซ่อม</option>

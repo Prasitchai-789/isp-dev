@@ -10,7 +10,10 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\AssetController;
 use App\Livewire\Pro\ReportMachineryIndex;
 use App\Http\Controllers\ComputerController;
+use App\Http\Controllers\GM\DashboardPalmController;
+use App\Http\Controllers\IT\RepairController;
 use App\Http\Controllers\PRO\MachineryController;
+use App\Http\Controllers\RPO\DashboardPalmPurchase;
 
 Route::group(['middleware' => ['role:developer|admin|user|staff']], function () {
     Route::resource('permissions', App\Http\Controllers\PermissionController::class);
@@ -62,4 +65,18 @@ Route::controller(MachineryController::class)->group(function () {
     Route::get('/machinery/report/{machineryId}', 'reportIndex')->name('report-machinery.index');
     Route::get('/machinery/list/{sparepartId}', 'listIndex')->name('list-machinery.index');
 });
+
+Route::controller(DashboardPalmPurchase::class)->group(function () {
+    Route::get('/dashboard-palm-purchase/', 'index')->name('dashboard-palm-purchase.index');
+});
+
+Route::controller(DashboardPalmController::class)->group(function () {
+    Route::get('/dashboard-palm/', 'index')->name('dashboard-palm.index');
+});
+
+Route::controller(RepairController::class)->group(function () {
+    Route::get('/report-repair/', 'index')->name('report-repair.index');
+});
+
+
 

@@ -10,6 +10,21 @@
                         Departments
                     </li>
                     <li class="sidebar-item font_anuphan">
+                        <a href="#" class="sidebar-link collapsed" data-bs-target="#GM" data-bs-toggle="collapse"
+                            aria-expanded="false">
+                            <i class="bi bi-columns-gap"></i>
+                              Dashboard
+                        </a>
+                        <ul id="GM" class="sidebar-dropdown list-unstyled collapse" data-bs-parent="#sidebar">
+                            @can('view dashboard GM')
+                            <li class="sidebar-item">
+                                <a href="{{ route('dashboard-palm.index')}}" class="sidebar-link-li">จัดซื้อปาล์ม</a>
+                            </li>
+                            @endcan
+                        </ul>
+                    </li>
+
+                    <li class="sidebar-item font_anuphan">
                         <a href="#" class="sidebar-link collapsed" data-bs-target="#ffb" data-bs-toggle="collapse"
                             aria-expanded="false">
                             <i class="bi bi-cart-plus"></i>
@@ -18,16 +33,12 @@
                         <ul id="ffb" class="sidebar-dropdown list-unstyled collapse" data-bs-parent="#sidebar">
                             @can('view user')
                             <li class="sidebar-item">
-                                <a href="{{ route('home')}}" class="sidebar-link-li">Home</a>
-                            </li>
-                            @endcan
-                            @can('view user')
-                            <li class="sidebar-item">
-                                <a href="#" class="sidebar-link-li">บันทึกการขายสินค้า</a>
+                                <a href="{{ route('dashboard-palm-purchase.index')}}" class="sidebar-link-li">รายงานการซื้อผลปาล์ม</a>
                             </li>
                             @endcan
                         </ul>
                     </li>
+
                     <li class="sidebar-item font_anuphan">
                         <a href="#" class="sidebar-link collapsed" data-bs-target="#asset" data-bs-toggle="collapse"
                             aria-expanded="false">
@@ -46,6 +57,7 @@
                             </li>
                         </ul>
                     </li>
+
                     <li class="sidebar-item font_anuphan">
                         <a href="#" class="sidebar-link collapsed" data-bs-target="#hre" data-bs-toggle="collapse"
                             aria-expanded="false">
@@ -58,6 +70,23 @@
                             </li>
                         </ul>
                     </li>
+
+                    @can('view user')
+                    <li class="sidebar-item font_anuphan">
+                        <a href="#" class="sidebar-link collapsed" data-bs-target="#it" data-bs-toggle="collapse"
+                            aria-expanded="false">
+                            <i class="bi bi-person-lines-fill"></i>
+                             IT
+                        </a>
+                        <ul id="it" class="sidebar-dropdown list-unstyled collapse" data-bs-parent="#sidebar">
+                            <li class="sidebar-item">
+                                <a href="{{ route('report-repair.index')}}" class="sidebar-link-li">รายงานการแจ้งซ่อม</a>
+                            </li>
+                        </ul>
+                    </li>
+                    @endcan
+
+
                     <li class="sidebar-item font_anuphan">
                         <a href="#" class="sidebar-link collapsed" data-bs-target="#pro" data-bs-toggle="collapse"
                             aria-expanded="false">
@@ -70,6 +99,7 @@
                             </li>
                         </ul>
                     </li>
+
                     <li class="sidebar-header">
                         Admin Element
                     </li>
@@ -94,6 +124,11 @@
                         <ul id="auth" class="sidebar-dropdown list-unstyled collapse" data-bs-parent="#sidebar">
                             <li class="sidebar-item">
                                 <a href="{{ route('permissions.index')}}" class="sidebar-link-li">Permissions</a>
+                            </li>
+                        </ul>
+                        <ul id="auth" class="sidebar-dropdown list-unstyled collapse" data-bs-parent="#sidebar">
+                            <li class="sidebar-item">
+                                <a href="{{ route('home')}}" class="sidebar-link-li">Template</a>
                             </li>
                         </ul>
 

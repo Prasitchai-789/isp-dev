@@ -44,5 +44,5 @@ window.addEventListener("alertconfirmDelete", (event) => {
         });
 });
 
-   
+
 
