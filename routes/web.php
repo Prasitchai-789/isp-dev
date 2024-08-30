@@ -76,7 +76,7 @@ Route::controller(DashboardPalmController::class)->group(function () {
 
 Route::controller(RepairController::class)->group(function () {
     Route::get('/report-repair/', 'index')->name('report-repair.index');
+    Route::get('/api/data',[App\Livewire\IT\RepairIndex::class,'getData']);
 });
-
 
 

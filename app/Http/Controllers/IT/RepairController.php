@@ -2,8 +2,9 @@
 
 namespace App\Http\Controllers\IT;
 
-use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Models\Technical\WorkOrder;
+use App\Http\Controllers\Controller;
 
 class RepairController extends Controller
 {

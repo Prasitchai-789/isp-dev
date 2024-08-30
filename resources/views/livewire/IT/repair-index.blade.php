@@ -73,24 +73,29 @@
                             <!-- Table -->
                             <div class="col-12 text-center">
                                 <div class="table-responsive font_anuphan">
-                                    <table class="table table-hover" id="pc-dt-simple">
+                                    <table id="myTable" class="table table-striped " style="width:100%">
                                         <thead>
                                             <tr>
-                                                <th>ลำดับ</th>
-                                                <th class="text-center">ชื่อเครื่องจักร</th>
-                                                <th class="text-center">หมายเลขเครื่อง</th>
-                                                <th class="text-center">เลขทะเบียนเครื่องจักร</th>
-                                                <th class="text-center">ลักษณะงานที่ใช้</th>
-                                                <th class="text-center">หน่วยงาน</th>
-                                                <th class="text-center">สถานะ</th>
-                                                <th class="text-center">เริ่มใช้งาน</th>
-                                                <th class="text-center">Action</th>
+                                                <th class="texe align-middle ">วันที่</th>
+                                                <th class="texe align-middle ">ชื่อผู้แจ้ง
+                                                </th>
+                                                <th class="texe align-middle">สถานะ</th>
+                                                <th class="texe align-middle">ประเภท</th>
+                                                <th class="texe align-middle">ชื่อเครื่อง
+                                                </th>
+                                                <th class="texe align-middle">
+                                                    รายละเอียด</th>
+                                                <th class="texe  align-middle">สถานที่</th>
+                                                <th class="texe  align-middle">เบอร์โทรศัพท์
+                                                </th>
+                                                <th class="texe text-center">จัดการ
+                                                </th>
                                             </tr>
                                         </thead>
                                         <tbody>
+                                            <tbody>
 
-
-                                        </tbody>
+                                            </tbody>
                                     </table>
                                 <div>
                             </div>
@@ -106,3 +111,8 @@
         </div>
     </div>
 </div>
+
+{{-- <script>
+    const workOrders = @json($workOrders);
+</script> --}}
+

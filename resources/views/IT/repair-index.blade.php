@@ -10,6 +10,6 @@
 
 @section('script')
 
-{{-- @vite('resources/js/GM/dashboard-palm.js') --}}
+@vite('resources/js/datatable/repair-table.js')
 
 @endsection
