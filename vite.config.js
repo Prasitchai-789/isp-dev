@@ -11,6 +11,7 @@ export default defineConfig({
                 'resources/js/apexchart.js',
                 'resources/js/GM/dashboard-palm.js',
                 'resources/js/datatable/repair-table.js',
+                'resources/js/pdf/pdf-report-it.js',
             ],
             refresh: true,
         }),

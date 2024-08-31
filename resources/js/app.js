@@ -13,6 +13,7 @@ window.addEventListener("alert", (event) => {
     });
 });
 
+
 window.addEventListener("alertconfirmDelete", (event) => {
     let data = event.detail;
 

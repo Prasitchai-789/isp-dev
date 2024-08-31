@@ -48,7 +48,8 @@
                                     <th>Action</th>
                                 </tr>
                             </thead>
-                            @foreach ($computers as $computer )
+                            <tbody>
+                                @foreach ($computers as $computer )
                             <tr>
                                 <td>{{$computer->code_com}}</td>
                                 <td><img src="{{ asset('storage/'.$computer->photo) }}" alt="user image" class="wid-60">
@@ -84,7 +85,6 @@
                             </tr>
 
                             @endforeach
-                            <tbody>
                             </tbody>
                         </table>
                         <div class="d-flex justify-content mx-4">
