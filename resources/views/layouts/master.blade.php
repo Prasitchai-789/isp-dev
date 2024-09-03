@@ -15,7 +15,27 @@
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.bunny.net">
     <link href="https://fonts.bunny.net/css?family=Nunito" rel="stylesheet">
-    {{-- <script src="https://kit.fontawesome.com/ae360af17e.js" crossorigin="anonymous"></script> --}}
+
+    <!-- [Favicon] icon -->
+    <link rel="icon" href="{{ asset('assets/images/favicon.svg') }}" type="image/x-icon">
+    <!-- map-vector css -->
+    <link rel="stylesheet" href="{{ asset('assets/css/plugins/jsvectormap.min.css') }}">
+    <!-- [Google Font : Poppins] icon -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+
+    <!-- [Tabler Icons] https://tablericons.com -->
+    <link rel="stylesheet" href="{{ asset('assets/fonts/tabler-icons.min.css') }}">
+    <!-- [Feather Icons] https://feathericons.com -->
+    <link rel="stylesheet" href="{{ asset('assets/fonts/feather.css') }}">
+    <!-- [Font Awesome Icons] https://fontawesome.com/icons -->
+    <link rel="stylesheet" href="{{ asset('assets/fonts/fontawesome.css') }}">
+    <!-- [Material Icons] https://fonts.google.com/icons -->
+    <link rel="stylesheet" href="{{ asset('assets/fonts/material.css') }}">
+    <!-- [Template CSS Files] -->
+    <link rel="stylesheet" href="../assets/css/style.css" id="main-style-link">
+    <link rel="stylesheet" href="../assets/css/style-preset.css">
+    <link rel="stylesheet" href="{{ asset('assets/css/app.css') }}">
+
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
     <script src="https://unpkg.com/pdf-lib"></script>
     <script src="https://unpkg.com/@pdf-lib/fontkit@0.0.4"></script>
@@ -24,13 +44,9 @@
 
 
 
+
     <!-- Scripts -->
-    @vite(['resources/sass/app.scss','resources/css/app.css',
-    'resources/css/style.css',
-    'resources/js/app.js',
-    'resources/js/script.js' ,
-    
-    ])
+    {{-- @vite(['resources/sass/app.scss', 'resources/css/app.css', 'resources/js/app.js', 'resources/js/script.js']) --}}
 
     @livewireStyles
 
@@ -60,35 +76,36 @@
                 <ul class="navbar-nav ms-auto">
                     <!-- Authentication Links -->
                     @guest
-                    @if (Route::has('login'))
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
-                    </li>
-                    @endif
+                        @if (Route::has('login'))
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
+                            </li>
+                        @endif
 
-                    @if (Route::has('register'))
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a>
-                    </li>
-                    @endif
+                        @if (Route::has('register'))
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a>
+                            </li>
+                        @endif
                     @else
-                    <li class="nav-item dropdown">
-                        <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button"
-                            data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                            {{ Auth::user()->name }}
-                        </a>
-
-                        <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                            <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault();
-                                document.getElementById('logout-form').submit();">
-                                {{ __('Logout') }}
+                        <li class="nav-item dropdown">
+                            <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button"
+                                data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                                {{ Auth::user()->name }}
                             </a>
 
-                            <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
-                                @csrf
-                            </form>
-                        </div>
-                    </li>
+                            <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+                                <a class="dropdown-item" href="{{ route('logout') }}"
+                                    onclick="event.preventDefault();
+                                document.getElementById('logout-form').submit();">
+                                    {{ __('Logout') }}
+                                </a>
+
+                                <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                                    @csrf
+                                </form>
+                            </div>
+                        </li>
 
                     @endguest
                 </ul>
@@ -111,6 +128,24 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     @livewireScripts
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <script src="{{ asset('assets/js/app.js') }}"></script>
+    <script src="{{ asset('assets/js/script.js') }}"></script>
+
+    <!-- [Page Specific JS] start -->
+    <script src="../assets/js/plugins/apexcharts.min.js"></script>
+    {{-- <script src="../assets/js/plugins/jsvectormap.min.js"></script> --}}
+    {{-- <script src="../assets/js/plugins/world.js"></script> --}}
+    {{-- <script src="../assets/js/plugins/world-merc.js"></script> --}}
+    {{-- <script src="../assets/js/pages/dashboard-sales.js"></script> --}}
+    <!-- [Page Specific JS] end -->
+    <!-- Required Js -->
+    {{-- <script src="../assets/js/plugins/popper.min.js"></script> --}}
+    <script src="../assets/js/plugins/simplebar.min.js"></script>
+    <script src="../assets/js/plugins/bootstrap.min.js"></script>
+    <script src="../assets/js/fonts/custom-font.js"></script>
+    {{-- <script src="../assets/js/pcoded.js"></script> --}}
+    <script src="../assets/js/plugins/feather.min.js"></script>
     @yield('script')
     @stack('plugin-scripts')
     @stack('custom-scripts')

@@ -14,14 +14,17 @@
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.bunny.net">
     <link href="https://fonts.bunny.net/css?family=Nunito" rel="stylesheet">
+
+
+    <link rel="stylesheet" href="{{ asset('assets/css/iofrm/bootstrap.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/css/iofrm/fontawesome-all.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/css/iofrm/iofrm-style.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/css/iofrm/iofrm-theme16.css') }}">
     <script src="https://kit.fontawesome.com/ae360af17e.js" crossorigin="anonymous"></script>
 
     <!-- Scripts -->
 
-    @vite(['resources/sass/app.scss','resources/css/iofrm/iofrm-theme16.css','resources/css/iofrm/iofrm-style.css',
-    'resources/css/iofrm/bootstrap.min.css', 'resources/js/app.js',
-    'resources/js/script.js','resources/js/iofrm/bootstrap.bundle.min.js',
-    'resources/js/iofrm/cleave.min.js','resources/js/iofrm/main.js','resources/js/iofrm/jquery.min.js','resources/js/iofrm/popper.min.js'])
+    @vite(['resources/sass/app.scss'])
 
 </head>
 
@@ -88,6 +91,11 @@
     </main>
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="{{ asset('assets/js/iofrm/bootstrap.bundle.min.js') }}"></script>
+    <script src="{{ asset('assets/js/iofrm/cleave.min.js') }}"></script>
+    <script src="{{ asset('assets/js/iofrm/jquery.min.js') }}"></script>
+    <script src="{{ asset('assets/js/iofrm/main.js') }}"></script>
+    <script src="{{ asset('assets/js/iofrm/popper.min.js') }}"></script>
     @livewireScripts
 </body>
 

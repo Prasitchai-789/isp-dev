@@ -6,12 +6,9 @@ export default defineConfig({
         laravel({
             input: [
                 'resources/sass/app.scss',
-                'resources/css/app.css',
-                'resources/js/app.js',
-                'resources/js/apexchart.js',
-                'resources/js/GM/dashboard-palm.js',
-                'resources/js/datatable/repair-table.js',
-                'resources/js/pdf/pdf-report-it.js',
+                // 'resources/js/apexchart.js',
+                // 'resources/js/GM/dashboard-palm.js',
+                // 'resources/js/datatable/repair-table.js',
             ],
             refresh: true,
         }),

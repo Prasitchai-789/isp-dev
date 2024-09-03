@@ -7,8 +7,7 @@
 @endsection
 
 @section('script')
-    @vite('resources/js/datatable/repair-table.js')
-    {{-- @vite('resources/js/pdf/pdf-report-it.js') --}}
+    {{-- @vite('resources/js/datatable/repair-table.js') --}}
 
     <script>
         window.addEventListener('close-modal', event => {
@@ -27,6 +26,7 @@
             modifyPdf(event);
 
         });
+
         const {
             degrees,
             PDFDocument,
