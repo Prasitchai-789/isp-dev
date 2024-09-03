@@ -76,7 +76,7 @@
                 <div class="form-content">
                     <div class="form-items">
                         <div class="iofrm-info-holder ">
-                            <img src="{{ asset('images/iofrm/logoISP.png') }}" alt="" style="width: 40%;">
+                            <img src="{{ asset('assets/images/iofrm/logoISP.png') }}" alt="" style="width: 40%;">
                             <img src="{{ asset('images/iofrm/graphic3.svg') }}" alt="" style="width: 50%;">
                         </div>
                         <h3 class="mt-4">Login to account</h3>
@@ -120,4 +120,5 @@
             </div>
         </div>
     </div>
+
 @endsection

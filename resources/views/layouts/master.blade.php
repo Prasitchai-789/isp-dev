@@ -89,27 +89,61 @@
                         @endif
                     @else
                         <li class="nav-item dropdown">
-                            <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button"
+                            <a id="navbarDropdown" class="nav-link dropdown-toggle arrow-none" href="#" role="button"
                                 data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                                 {{ Auth::user()->name }}
                             </a>
 
                             <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                                <a class="dropdown-item" href="{{ route('logout') }}"
-                                    onclick="event.preventDefault();
-                                document.getElementById('logout-form').submit();">
-                                    {{ __('Logout') }}
+                                <a href="#" class="dropdown-item">
+                                    <span class="d-flex align-items-center">
+                                        <i class="ph ph-user-circle"></i>
+                                        <span>Edit profile</span>
+                                    </span>
                                 </a>
-
-                                <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
-                                    @csrf
-                                </form>
-                            </div>
+                                <a href="#" class="dropdown-item">
+                                    <span class="d-flex align-items-center">
+                                        <i class="ph ph-bell"></i>
+                                        <span>Notifications</span>
+                                    </span>
+                                </a>
+                                <a href="#" class="dropdown-item">
+                                    <span class="d-flex align-items-center">
+                                        <i class="ph ph-gear-six"></i>
+                                        <span>Settings</span>
+                                    </span>
+                                </a>
+                                <a href="#" class="dropdown-item">
+                                    <span class="d-flex align-items-center">
+                                        <i class="ph ph-plus-circle"></i>
+                                        <span>Add account</span>
+                                    </span>
+                                </a>
+                                <a href="{{ route('logout') }}"
+                                    onclick="event.preventDefault();
+                              document.getElementById('logout-form').submit();"
+                                    class="dropdown-item">
+                                    <span class="d-flex align-items-center">
+                                        <i class="ph ph-power"></i>
+                                        <span>{{ __('Logout') }}</span>
+                                    </span>
+                                </a>
+                        <li>
+                            <a></a>
                         </li>
-
-                    @endguest
-                </ul>
-            </div>
+                        <a id="navbarDropdown" class="nav-link dropdown-toggle p-0 m-0" href="#" role="button"
+                                data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                                <img src="../assets/images/user/avatar-2.jpg" alt="user-image" class="user-avtar"
+                                    style="width: 40px; height: 40px; border-radius: 50%;">
+                            </a>
+                        <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                            @csrf
+                        </form>
+                </div>
+                </li>
+            @endguest
+            </ul>
+        </div>
         </div>
     </nav>
 
@@ -133,14 +167,15 @@
     <script src="{{ asset('assets/js/script.js') }}"></script>
 
     <!-- [Page Specific JS] start -->
-    <script src="../assets/js/plugins/apexcharts.min.js"></script>
+    {{-- <script src="../assets/js/plugins/apexcharts.min.js"></script> --}}
+    <script src="{{ asset('assets/js/plugins/apexcharts.min.js') }}"></script>
     {{-- <script src="../assets/js/plugins/jsvectormap.min.js"></script> --}}
     {{-- <script src="../assets/js/plugins/world.js"></script> --}}
     {{-- <script src="../assets/js/plugins/world-merc.js"></script> --}}
     {{-- <script src="../assets/js/pages/dashboard-sales.js"></script> --}}
     <!-- [Page Specific JS] end -->
     <!-- Required Js -->
-    {{-- <script src="../assets/js/plugins/popper.min.js"></script> --}}
+    <script src="../assets/js/plugins/popper.min.js"></script>
     <script src="../assets/js/plugins/simplebar.min.js"></script>
     <script src="../assets/js/plugins/bootstrap.min.js"></script>
     <script src="../assets/js/fonts/custom-font.js"></script>
