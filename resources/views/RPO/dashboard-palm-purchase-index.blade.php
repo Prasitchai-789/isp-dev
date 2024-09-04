@@ -7,7 +7,7 @@
 @endsection
 
 @section('script')
-
+<script src="{{ asset('assets/js/plugins/apexcharts.min.js') }}"></script>
 {{-- @vite('resources/js/apexchart.js') --}}
 <script>
     var options = {

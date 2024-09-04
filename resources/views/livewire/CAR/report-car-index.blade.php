@@ -1,6 +1,5 @@
 <div>
     <div class="container">
-
         <div class="page-header">
             <div class="page-block card mb-0">
                 <div class="card-body">
@@ -12,7 +11,7 @@
                                 @endif
 
                                 <div class="page-header-title border-bottom pb-2 mb-2 font_Prompt">
-                                    <h4 class="animate__animated animate__headShake">รายการเครื่องจักร
+                                    <h4 class="animate__animated animate__headShake">รายการรถบริษัท ฯ
                                         <!-- Button trigger modal -->
                                         <button type="button" class="btn btn-outline-primary btn-sm float-end"
                                             style="border-radius: 7px" data-bs-toggle="modal"
@@ -27,10 +26,10 @@
                             <div class="col-md-12 font_anuphan">
                                 <ul class="breadcrumb">
                                     <li class="breadcrumb-item"><a href="{{ url('home/') }}"><i
-                                                class="ph ph-house"></i>หน้าหลัก</a></li>
-                                    <li class="breadcrumb-item"><a href="javascript: void(0)">ฝ่ายผลิตและวิศวกรรม</a>
+                                                class="ph ph-house"></i> หน้าหลัก</a></li>
+                                    <li class="breadcrumb-item"><a href="javascript: void(0)">ทะเบียนทรัพย์สิน</a>
                                     </li>
-                                    <li class="breadcrumb-item" aria-current="page"><strong>รายการเครื่องจักร</strong>
+                                    <li class="breadcrumb-item" aria-current="page"><strong>รายการรถบริษัท ฯ</strong>
                                     </li>
                                 </ul>
                             </div>
@@ -53,92 +52,34 @@
                                 </div>
                             @endif
                             <!-- Table -->
-                            <div wire:init='initLoading' class="col-12 mt-2 text-center">
-                                @if ($isLoading)
+                            <div  class="col-12 mt-2 text-center">
                                     <div class="table-responsive font_anuphan my-2">
                                         <table class="table table-hover" id="pc-dt-simple">
                                             <thead>
                                                 <tr>
                                                     <th>ลำดับ</th>
-                                                    <th class="text-center">ชื่อเครื่องจักร</th>
-                                                    <th class="text-center">หมายเลขเครื่อง</th>
-                                                    <th class="text-center">เลขทะเบียนเครื่องจักร</th>
-                                                    <th class="text-center">ลักษณะงานที่ใช้</th>
-                                                    <th class="text-center">หน่วยงาน</th>
-                                                    <th class="text-center">สถานะ</th>
-                                                    <th class="text-center">เริ่มใช้งาน</th>
-                                                    <th class="text-center">Action</th>
+                                                    <th class="text-center">เลขทะเบียน</th>
+                                                    <th class="text-center">จังหวัด</th>
+                                                    <th class="text-center">ประเภทรถ</th>
+                                                    <th class="text-center">ลักษณะ</th>
+                                                    <th class="text-center">ยี่ห้อ</th>
+                                                    <th class="text-center">รุ่น</th>
+                                                    <th class="text-center">ปี</th>
+                                                    <th class="text-center">สี</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                @foreach ($machineries as $index => $machinery)
-                                                    <tr>
-                                                        <td>{{ $loop->iteration }}</td>
-                                                        <td>{{ $machinery->name_machinery }}</td>
-                                                        {{-- <td><img src="{{ asset('storage/'.$machinery->photo) }}" alt="user image" class="wid-60"> --}}
-                                                        </td>
-                                                        <td>{{ $machinery->number_machinery }}</td>
-                                                        <td>{{ $machinery->register_machinery }}</td>
-                                                        <td>{{ $machinery->job_machinery }}</td>
-                                                        <td>{{ $machinery->agency_machinery }}</td>
-                                                        <td>
-                                                            @if ($machinery->status_machinery == 1)
-                                                                <span class="badge bg-success">ปกติ</span>
-                                                            @else
-                                                                <span class="badge bg-danger">ชำรุด</span>
-                                                            @endif
-                                                        </td>
-                                                        <td>
-                                                            @if ($machinery->start_machinery)
-                                                                {{ \Carbon\Carbon::parse($machinery->start_machinery)->translatedFormat('j F Y') }}
-                                                            @else
-                                                                ไม่ระบุวันที่
-                                                            @endif
-                                                        </td>
-
-                                                        <td>
-                                                            {{-- <a href="{{ route('report-machinery.index', ['id' => $machinery->id]) }}" --}}
-                                                            <a href="{{ route('report-machinery.index', ['machineryId' => $machinery->id]) }}"
-                                                                class="avtar avtar-xs btn-link-secondary">
-                                                                <i class="bi bi-eye text-primary"
-                                                                    style="font-size: 18px;"></i>
-                                                            </a>
-                                                            <a href="#"
-                                                                wire:click='confirmEdit({{ $machinery->id }})'
-                                                                data-bs-toggle="modal" data-bs-target="#machineryModal"
-                                                                class="avtar avtar-xs btn-link-secondary">
-                                                                <i class="bi bi-pencil-square text-warning"
-                                                                    style="font-size: 18px;"></i>
-                                                            </a>
-                                                            <a href="#"
-                                                                wire:click='confirmDelete({{ $machinery->id }})'
-                                                                class="avtar avtar-xs btn-link-secondary"
-                                                                data-bs-toggle="modal" data-bs-target="#">
-                                                                <i class="bi bi-trash  text-danger"
-                                                                    style="font-size: 18px;"></i>
-                                                            </a>
-                                                        </td>
-                                                    </tr>
-                                                @endforeach
 
                                             </tbody>
                                         </table>
                                         <div>
-                                        @else
-                                            <div class="flex items-center justify-center">
-                                                <div class="inline-block w-8 h-8 border-4 rounded-full spinner-border animate-spin"
-                                                    role="status">
-                                                    <span class="visually-hidden">Loading...</span>
-                                                </div>
-                                            </div>
-                                @endif
                             </div>
                         </div>
                     </div>
                     <!-- Table -->
 
                     <!-- ADD MODAL -->
-                    <div wire:ignore.self class="modal fade" id="machineryModal" data-bs-backdrop="static"
+                    {{-- <div wire:ignore.self class="modal fade" id="machineryModal" data-bs-backdrop="static"
                         data-bs-keyboard="false" tabindex="-1" aria-labelledby="machineryModalLabel"
                         aria-hidden="true">
                         <div class="modal-dialog modal-lg">
@@ -313,7 +254,7 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </div> --}}
                     <!-- ADD MODAL -->
                 </div>
             </div>

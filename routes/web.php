@@ -8,6 +8,7 @@ use App\Http\Controllers\PDFController;
 use App\Http\Controllers\SaleController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\AssetController;
+use App\Http\Controllers\CAR\ReportCarController;
 use App\Livewire\Pro\ReportMachineryIndex;
 use App\Http\Controllers\ComputerController;
 use App\Http\Controllers\GM\DashboardPalmController;
@@ -83,4 +84,9 @@ Route::controller(RepairController::class)->group(function () {
     Route::get('/api/data',[App\Livewire\IT\RepairIndex::class,'getData'])->name('getData');
 });
 
+Route::controller(ReportCarController::class)->group(function () {
+    Route::get('/report-car/', 'index')->name('report-car.index');
+    Route::get('/character-car/', 'characterIndex')->name('character-car.index');
+    Route::get('/type-car/', 'typeIndex')->name('type-car.index');
+});
 

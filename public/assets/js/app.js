@@ -18,7 +18,7 @@ window.addEventListener("alertconfirmDelete", (event) => {
     const swalWithBootstrapButtons = Swal.mixin({
         customClass: {
             confirmButton: "btn btn-success",
-            cancelButton: "btn btn-danger",
+            cancelButton: "btn btn-danger me-2",
         },
         buttonsStyling: false,
     });

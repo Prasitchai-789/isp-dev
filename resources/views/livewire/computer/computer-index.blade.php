@@ -88,7 +88,7 @@
                             </tbody>
                         </table>
                         <div class="d-flex justify-content mx-4">
-                            {{-- {{ $products->links() ?? '' }} --}}
+                            {{ $computers->links() ?? '' }}
                         </div>
                     </div>
                 </div>

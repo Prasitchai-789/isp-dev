@@ -9,7 +9,7 @@
 @endsection
 
 @section('script')
-
+<script src="{{ asset('assets/js/plugins/apexcharts.min.js') }}"></script>
 {{-- @vite('resources/js/GM/dashboard-palm.js') --}}
 <script>
     var options = {
@@ -173,5 +173,6 @@ var options = {
   chart.render();
 
 </script>
+
 
 @endsection

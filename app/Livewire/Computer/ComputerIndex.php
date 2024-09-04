@@ -75,7 +75,7 @@ class ComputerIndex extends Component
     }
     public function render()
     {
-        $computers = Computer::orderBy('id', 'desc')->get();
+        $computers = Computer::orderBy('id', 'desc')->paginate(10);
 
         if ($computers->isEmpty()) {
             return view('livewire.computer.computer-index', ['computers' => []]);

@@ -69,7 +69,7 @@
                 <div class="card border-left-blue order-card">
                     <div class="card-body p-3">
                         <h6 class="font_anuphan">ปริมาณรับซื้อผลปาล์ม</h6>
-                        <h2 class="text-end"><i class="feather icon-shopping-cart float-start"></i><span
+                        <h2 class="text-end"><i class="ph ph-shopping-cart-simple float-start"></i><span
                                 class="text-primary">{{ $getSumByDate }}</span></h2>
                         <p class="m-b-0 text-base font_Prompt"><span class="float-end">Kg.</span></p>
                     </div>
@@ -79,7 +79,7 @@
                 <div class="card border-left-green order-card">
                     <div class="card-body p-3">
                         <h6 class="font_anuphan">ราคาเฉลี่ย</h6>
-                        <h2 class="text-end"><i class="feather icon-shopping-cart float-start"></i><span
+                        <h2 class="text-end"><i class="ph ph-currency-circle-dollar float-start"></i><span
                                 class="text-success"> {{ $getAveragePriceByDate }}</span></h2>
                         <p class="m-b-0 text-base font_Prompt"><span class="float-end">บาท/Kg.</span></p>
                     </div>
@@ -89,7 +89,7 @@
                 <div class="card border-left-red order-card">
                     <div class="card-body p-3">
                         <h6 class="font_anuphan">ยอดเงิน</h6>
-                        <h2 class="text-end"><i class="feather icon-shopping-cart float-start"></i><span
+                        <h2 class="text-end"><i class="ph ph-currency-circle-dollar float-start"></i><span
                                 class="text-danger"> {{ $getSumPriceByDate }} MB</span></h2>
                         <p class="m-b-0 text-base font_Prompt"><span class="float-end"></span></p>
                     </div>

@@ -42,7 +42,7 @@
                     <li class="sidebar-item font_anuphan">
                         <a href="#" class="sidebar-link collapsed d-flex align-items-center" data-bs-target="#asset" data-bs-toggle="collapse"
                             aria-expanded="false">
-                            <i class="bi bi-stack-overflow"></i>
+                            <i class="ph ph-cardholder me-2"></i>
                              {{ __('ทะเบียนทรัพย์สิน') }}
                         </a>
                         <ul id="asset" class="sidebar-dropdown list-unstyled collapse" data-bs-parent="#sidebar">
@@ -57,11 +57,29 @@
                             </li>
                         </ul>
                     </li>
+                    <li class="sidebar-item font_anuphan">
+                        <a href="#" class="sidebar-link collapsed d-flex align-items-center" data-bs-target="#SEC" data-bs-toggle="collapse"
+                            aria-expanded="false">
+                            <i class="ph ph-cardholder me-2"></i>
+                             {{ __('ฝ่ายรักษาความปลอดภัยและยานยนต์') }}
+                        </a>
+                        <ul id="SEC" class="sidebar-dropdown list-unstyled collapse" data-bs-parent="#sidebar">
+                            <li class="sidebar-item">
+                                <a href="{{ route('report-car.index')}}" class="sidebar-link-li">รายการรถบริษัท ฯ</a>
+                            </li>
+                            <li class="sidebar-item">
+                                <a href="{{ route('computer.index')}}" class="sidebar-link-li">Computer</a>
+                            </li>
+                            <li class="sidebar-item">
+                                <a href="{{ route('computer.windows.index')}}" class="sidebar-link-li">Windows</a>
+                            </li>
+                        </ul>
+                    </li>
 
                     <li class="sidebar-item font_anuphan">
                         <a href="#" class="sidebar-link collapsed d-flex align-items-center" data-bs-target="#hre" data-bs-toggle="collapse"
                             aria-expanded="false">
-                            <i class="bi bi-person-lines-fill"></i>
+                            <i class="ph ph-user-list me-2"></i>
                              HRE
                         </a>
                         <ul id="hre" class="sidebar-dropdown list-unstyled collapse" data-bs-parent="#sidebar">
@@ -75,7 +93,7 @@
                     <li class="sidebar-item font_anuphan">
                         <a href="#" class="sidebar-link collapsed d-flex align-items-center" data-bs-target="#it" data-bs-toggle="collapse"
                             aria-expanded="false">
-                            <i class="bi bi-person-lines-fill"></i>
+                            <i class="ph ph-graph me-2"></i>
                              IT
                         </a>
                         <ul id="it" class="sidebar-dropdown list-unstyled collapse" data-bs-parent="#sidebar">
@@ -108,7 +126,7 @@
                     <li class="sidebar-item">
                         <a href="#" class="sidebar-link collapsed d-flex align-items-center" data-bs-target="#auth" data-bs-toggle="collapse"
                             aria-expanded="false">
-                            <i class="bi bi-person-bounding-box"></i>
+                            <i class="ph ph-fingerprint me-2"></i>
                              Admin
                         </a>
                         <ul id="auth" class="sidebar-dropdown list-unstyled collapse" data-bs-parent="#sidebar">

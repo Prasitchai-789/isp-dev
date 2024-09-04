@@ -16,6 +16,7 @@
     <link rel="dns-prefetch" href="//fonts.bunny.net">
     <link href="https://fonts.bunny.net/css?family=Nunito" rel="stylesheet">
 
+    {{-- <link rel="stylesheet" href="{{ asset('node_modules/bootstrap-icons/font/bootstrap-icons.css') }}"> --}}
     <!-- [Favicon] icon -->
     <link rel="icon" href="{{ asset('assets/images/favicon.svg') }}" type="image/x-icon">
     <!-- map-vector css -->
@@ -46,6 +47,7 @@
 
 
     <!-- Scripts -->
+    @vite(['resources/css/app.css', 'resources/js/app.js'])
     {{-- @vite(['resources/sass/app.scss', 'resources/css/app.css', 'resources/js/app.js', 'resources/js/script.js']) --}}
 
     @livewireStyles
@@ -168,7 +170,7 @@
 
     <!-- [Page Specific JS] start -->
     {{-- <script src="../assets/js/plugins/apexcharts.min.js"></script> --}}
-    <script src="{{ asset('assets/js/plugins/apexcharts.min.js') }}"></script>
+   
     {{-- <script src="../assets/js/plugins/jsvectormap.min.js"></script> --}}
     {{-- <script src="../assets/js/plugins/world.js"></script> --}}
     {{-- <script src="../assets/js/plugins/world-merc.js"></script> --}}

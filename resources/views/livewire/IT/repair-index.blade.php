@@ -43,7 +43,7 @@
                                         <th>รายละเอียด</th>
                                         <th>สถานที่</th>
                                         <th>เบอร์โทรศัพท์</th>
-                                        <th>จัดการ</th>
+                                        <th style="width: 150px" class="text-center">จัดการ</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -57,23 +57,23 @@
                                             <td class="texe align-middle h5">
                                                 @if ($workorder->Status == 1)
                                                     <span class="badge rounded-pill bg-primary"><i
-                                                            class="fa-solid fa-clock"></i>
+                                                            class="ph ph-clock-clockwise"></i>
                                                         รอดำเนินการ</span>
                                                 @elseif ($workorder->Status == 2)
                                                     <span class="badge rounded-pill bg-warning text-dark"><i
-                                                            class="fa-solid fa-circle-check"></i>
+                                                            class="ph ph-clock-countdown"></i>
                                                         กำลังดำเนินการ</span>
                                                 @elseif ($workorder->Status == 3)
                                                     <span class="badge rounded-pill bg-warning text-danger"><i
-                                                            class="fa-solid fa-paper-plane"></i>
+                                                            class="ph ph-telegram-logo"></i>
                                                         ส่งซ่อมภายนอก</span>
                                                 @elseif ($workorder->Status == 4)
                                                     <span class="badge rounded-pill bg-success"><i
-                                                            class="fa-solid fa-circle-check"></i>
+                                                            class="ph ph-check-circle"></i>
                                                         ดำเนินการเสร็จสิ้น</span>
                                                 @else
                                                     <span class="badge rounded-pill bg-danger"><i
-                                                            class="fa-sharp fa-solid fa-circle-xmark"></i>
+                                                            class="ph ph-x-circle"></i>
                                                         ยกเลิก</span>
                                                 @endif
 
@@ -118,7 +118,7 @@
                                 </tbody>
                             </table>
                             <div class="d-flex justify-content mx-4">
-                                {{-- {{ $products->links() ?? '' }} --}}
+                                {{ $workOrders->links() ?? '' }}
                             </div>
                         </div>
                     </div>
