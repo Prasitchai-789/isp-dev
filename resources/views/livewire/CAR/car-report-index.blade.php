@@ -12,7 +12,7 @@
                                 <div class="page-header-title border-bottom pb-2 mb-2 font_Prompt">
                                     <h4 class="animate__animated animate__headShake">รายการรถบริษัท ฯ
                                         <!-- Button trigger modal -->
-                                        <button type="button" class="btn btn-outline-primary btn-sm float-end"
+                                        <button type="button" class="btn btn-primary btn-sm float-end"
                                             style="border-radius: 7px" data-bs-toggle="modal"
                                             data-bs-target="#carReportModal" wire:click='addCarReport'>
                                             <span class="font_anuphan">เพิ่มรถ</span>
@@ -534,7 +534,7 @@
             <div class="modal-content">
                 <div class="modal-header {{ $edit ? 'bg-c-yellow' : 'bg-c-blue' }}  text-white">
                     <h1 class="modal-title fs-5 font_anuphan text-white" id="carBrandModalLabel">
-                        กรอกข้อมูลประเภทรถ </h1>
+                        กรอกข้อมูลยี่ห้อรถ </h1>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <form novalidate class="form " wire:submit.prevent="{{ $edit ? 'updateCarBrand' : 'saveCarBrand' }}"
@@ -543,7 +543,7 @@
                         <div class="container-fluid">
                             <div class="row" id="error">
                                 <div class="col-md-12 mb-12">
-                                    <label class="font_Prompt">ประเภทรถ</label>
+                                    <label class="font_Prompt">ยี่ห้อรถ</label>
                                     <div class="input-group">
                                         <span class="input-group-text text-primary">
                                             <i class="ph ph-car"></i>
