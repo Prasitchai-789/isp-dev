@@ -29,6 +29,13 @@ class DashboardPalmPurchaseIndex extends Component
     public $labels;
     public $currentDate;
 
+    public function __construct()
+    {
+        $this->middleware('permission:view RPO',['only' => ['render']]);
+        $this->middleware('permission:create RPO',['only' => ['create','store']]);
+        $this->middleware('permission:update RPO',['only' => ['update','edit']]);
+        $this->middleware('permission:delete RPO',['only' => ['destory']]);
+    }
     public function mount()
     {
         $this->filterDate = Carbon::now()->toDateString();
@@ -87,7 +94,7 @@ class DashboardPalmPurchaseIndex extends Component
         $this->selectedDate = Carbon::parse($this->selectedDate)->locale('th')->translatedFormat('j F Y');
         $date = $this->filterDate;
 
-        $filterDate = Carbon::parse($this->filterDate)->subDay(0);
+        $filterDate = Carbon::parse($this->filterDate)->subDay();
         $subDays = collect(range(0, 9))->map(function ($date) use ($filterDate) {
             return $filterDate->copy()->subDays($date)->toDateString();
         })->reverse()->values();
