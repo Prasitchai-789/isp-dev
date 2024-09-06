@@ -17,7 +17,7 @@ use App\Http\Controllers\PRO\MachineryController;
 use App\Http\Controllers\RPO\DashboardPalmPurchase;
 use App\Http\Controllers\GM\DashboardPalmController;
 
-Route::group(['middleware' => ['role:developer|admin|user|staff']], function () {
+Route::group(['middleware' => ['role:developer|admin']], function () {
     Route::resource('permissions', App\Http\Controllers\PermissionController::class);
     Route::get('permissions/{permissionId}/delete', [App\Http\Controllers\PermissionController::class, 'destrory']);
 
@@ -43,46 +43,60 @@ Route::get('/login16', function () {
 
 Auth::routes();
 
-// Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 Route::get('/user', [UserController::class, 'index'])->name('user.index');
 Route::get('/pdf', [PDFController::class, 'index'])->name('pdf.index');
 
 
-// Route::prefix('dashboard')->middleware(['auth:sanctum','verified'])->group(function(){
-//     Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-// });
+
 Route::get('/counter', Counter::class);
 
-Route::controller(SaleController::class)->group(function () {
-    Route::get('/product/', 'productIndex')->name('product.index');
+Route::group(['middleware' => ['role:developer|admin']], function () {
+    Route::controller(ComputerController::class)->group(function () {
+        Route::get('/computer/', 'computerIndex')->name('computer.index');
+        Route::get('/windows/', 'windowsIndex')->name('computer.windows.index');
+    });
+
+    Route::controller(AssetController::class)->group(function () {
+        Route::get('/asset/', 'assetIndex')->name('asset.index');
+    });
 });
 
-Route::controller(ComputerController::class)->group(function () {
-    Route::get('/computer/', 'computerIndex')->name('computer.index');
-    Route::get('/windows/', 'windowsIndex')->name('computer.windows.index');
+
+
+
+
+Route::group(['middleware' => ['role:developer|admin|admin-PRO']], function () {
+    Route::controller(SaleController::class)->group(function () {
+        Route::get('/product/', 'productIndex')->name('product.index');
+    });
+    Route::controller(MachineryController::class)->group(function () {
+        Route::get('/machinery/', 'index')->name('machinery.index');
+        Route::get('/machinery/report/{machineryId}', 'reportIndex')->name('report-machinery.index');
+        Route::get('/machinery/list/{sparepartId}', 'listIndex')->name('list-machinery.index');
+    });
+
 });
 
-Route::controller(AssetController::class)->group(function () {
-    Route::get('/asset/', 'assetIndex')->name('asset.index');
+Route::group(['middleware' => ['role:developer|admin|GM|MD']], function () {
+    Route::controller(DashboardPalmController::class)->group(function () {
+        Route::get('/dashboard-palm/', 'index')->name('dashboard-palm.index');
+    });
 });
 
-Route::controller(MachineryController::class)->group(function () {
-    Route::get('/machinery/', 'index')->name('machinery.index');
-    Route::get('/machinery/report/{machineryId}', 'reportIndex')->name('report-machinery.index');
-    Route::get('/machinery/list/{sparepartId}', 'listIndex')->name('list-machinery.index');
+Route::group(['middleware' => ['role:developer|admin|admin-RPO|MD']], function () {
+    Route::controller(DashboardPalmPurchase::class)->group(function () {
+        Route::get('/dashboard-palm-purchase/', 'index')->name('dashboard-palm-purchase.index');
+    });
 });
 
-Route::controller(DashboardPalmPurchase::class)->group(function () {
-    Route::get('/dashboard-palm-purchase/', 'index')->name('dashboard-palm-purchase.index');
-});
 
-Route::controller(DashboardPalmController::class)->group(function () {
-    Route::get('/dashboard-palm/', 'index')->name('dashboard-palm.index');
-});
+
+
+
 
 Route::controller(RepairController::class)->group(function () {
     Route::get('/report-repair/', 'index')->name('report-repair.index');
-    Route::get('/api/data',[App\Livewire\IT\RepairIndex::class,'getData'])->name('getData');
+    Route::get('/api/data', [App\Livewire\IT\RepairIndex::class, 'getData'])->name('getData');
 });
 
 Route::controller(CarController::class)->group(function () {
@@ -90,4 +104,3 @@ Route::controller(CarController::class)->group(function () {
     Route::get('/car-character/', 'characterIndex')->name('car-character.index');
     Route::get('/car-type/', 'typeIndex')->name('type.index');
 });
-
