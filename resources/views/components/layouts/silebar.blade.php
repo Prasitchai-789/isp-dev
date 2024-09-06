@@ -2,9 +2,11 @@
     <!-- ======= Navigation links for sidebar ======== -->
     <ul class="sidebar-nav">
         <div class="h-100">
-            <div class="sidebar-logo text-center py-0">
-                {{-- <img src="../img/logo/logoISP.PNG" class="avatar img-fluid rounded" alt=""> --}}
-                {{-- <a href="">{{ config('app.name', 'ISANPALM') }}</a> --}}
+            <div class="sidebar-logo text-center py-2">
+
+                <a class="navbar-brand" href="{{ url('/') }}">
+                    {{ config('app.name', 'ISANPALM') }}
+                </a>
                 <ul class="sidebar-nav mt-0">
                     <li class="sidebar-header">
                         Departments

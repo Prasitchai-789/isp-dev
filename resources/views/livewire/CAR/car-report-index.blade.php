@@ -10,30 +10,30 @@
                                 <div class="alert alert-success">{{ session('status') }}</div>
                                 @endif
                                 <div class="page-header-title border-bottom pb-2 mb-2 font_Prompt">
-                                    <h4 class="animate__animated animate__headShake">รายการรถบริษัท ฯ
-                                        <!-- Button trigger modal -->
-                                        <button type="button" class="btn btn-primary btn-sm float-end"
-                                            style="border-radius: 7px" data-bs-toggle="modal"
-                                            data-bs-target="#carReportModal" wire:click='addCarReport'>
-                                            <span class="font_anuphan">เพิ่มรถ</span>
-                                        </button>
-                                        <button type="button" class="btn btn-outline-primary btn-sm float-end me-2"
-                                            style="border-radius: 7px" data-bs-toggle="modal"
-                                            data-bs-target="#carTypeModal" wire:click='addCarType'>
-                                            <span class="font_anuphan">เพิ่มประเภทรถ</span>
-                                        </button>
-                                        <button type="button" class="btn btn-outline-primary btn-sm float-end me-2"
-                                            style="border-radius: 7px" data-bs-toggle="modal"
-                                            data-bs-target="#carCharacterModal" wire:click='addCarCharacter'>
-                                            <span class="font_anuphan">เพิ่มลักษณะรถ</span>
-                                        </button>
-                                        <button type="button" class="btn btn-outline-primary btn-sm float-end me-2"
-                                            style="border-radius: 7px" data-bs-toggle="modal"
-                                            data-bs-target="#carBrandModal" wire:click='addCarBrand'>
-                                            <span class="font_anuphan">เพิ่มยี่ห้อรถ</span>
-                                        </button>
-                                        <!-- Button trigger modal -->
-                                    </h4>
+                                        <div class="col-lg-6 col-sm-12">
+                                            <h4 class="animate__animated animate__headShake">รายการรถบริษัท ฯ</h4>
+                                            <button type="button" class="btn btn-primary btn-sm col-lg-2"
+                                                style="border-radius: 7px" data-bs-toggle="modal"
+                                                data-bs-target="#carReportModal" wire:click='addCarReport'>
+                                                <span class="font_anuphan">เพิ่มรถ</span>
+                                            </button>
+                                            <button type="button" class="btn btn-outline-primary btn-sm me-2"
+                                                style="border-radius: 7px" data-bs-toggle="modal"
+                                                data-bs-target="#carTypeModal" wire:click='addCarType'>
+                                                <span class="font_anuphan">เพิ่มประเภทรถ</span>
+                                            </button>
+                                            <button type="button" class="btn btn-outline-primary btn-sm me-2"
+                                                style="border-radius: 7px" data-bs-toggle="modal"
+                                                data-bs-target="#carCharacterModal" wire:click='addCarCharacter'>
+                                                <span class="font_anuphan">เพิ่มลักษณะรถ</span>
+                                            </button>
+                                            <button type="button" class="btn btn-outline-primary btn-sm me-2"
+                                                style="border-radius: 7px" data-bs-toggle="modal"
+                                                data-bs-target="#carBrandModal" wire:click='addCarBrand'>
+                                                <span class="font_anuphan">เพิ่มยี่ห้อรถ</span>
+                                            </button>
+                                    </div>
+
                                 </div>
                             </div>
 
@@ -67,18 +67,18 @@
                             </div>
                             @endif
                             <!-- Table -->
-                            <div class="col-12 mt-2 text-center">
+                            <div class="col-12 text-center">
                                 <div class="table-responsive font_anuphan my-2">
                                     <table class="table table-hover" id="pc-dt-simple">
                                         <thead>
                                             <tr>
-                                                <th >ลำดับ</th>
-                                                <th >ทะเบียนรถ</th>
-                                                <th >จังหวัด</th>
-                                                <th >ยี่ห้อรถ</th>
-                                                <th >เลขไมล์</th>
-                                                <th >ภาษี</th>
-                                                <th >ประกันภัย</th>
+                                                <th>ลำดับ</th>
+                                                <th>ทะเบียนรถ</th>
+                                                <th>จังหวัด</th>
+                                                <th>ยี่ห้อรถ</th>
+                                                <th>เลขไมล์</th>
+                                                <th>ภาษี</th>
+                                                <th>ประกันภัย</th>
                                                 <th class="text-center">สถานะ</th>
                                                 <th class="text-center">Action</th>
                                             </tr>
@@ -187,8 +187,8 @@
                                         <span class="input-group-text text-primary">
                                             <i class="bi bi-person-vcard"></i>
                                         </span>
-                                        <select class="form-control my-auto font_Prompt" id="car_county" name="car_county"
-                                            wire:model="car_county" required="">
+                                        <select class="form-control my-auto font_Prompt" id="car_county"
+                                            name="car_county" wire:model="car_county" required="">
                                             <option selected="" value="">
                                                 เลือกประเภทรถ</option>
                                             @foreach($provinces as $province)
@@ -388,7 +388,8 @@
                                 <div class="col-md-12 mb-2">
                                     <label class="font_Prompt">สถานะ</label>
                                     <div class="form-check form-switch mb-2"><input type="checkbox"
-                                            class="form-check-input input-primary" id="car_status" wire:model="car_status">
+                                            class="form-check-input input-primary" id="car_status"
+                                            wire:model="car_status">
                                         <label class="form-check-label" for="car_status">ใช้งาน
                                         </label>
                                     </div>
