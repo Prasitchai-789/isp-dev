@@ -74,7 +74,6 @@
                                             <tr>
                                                 <th>ลำดับ</th>
                                                 <th>ทะเบียนรถ</th>
-                                                <th>จังหวัด</th>
                                                 <th>ยี่ห้อรถ</th>
                                                 <th>เลขไมล์</th>
                                                 <th>ภาษี</th>
@@ -86,17 +85,16 @@
                                         <tbody>
                                             @foreach ($carReports as $carReport)
                                             <tr>
-                                                <td>{{ $carReport->car_number }}</td>
-                                                <td>{{ $carReport->car_number }}</td>
-                                                <td>{{ $carReport->car_county }}</td>
-                                                <td>{{ $carReport->car_brand }}</td>
+                                                <td>{{ $loop->iteration }}</td>
+                                                <td>{{ $carReport->car_number }} {{ $carReport->province->ProvinceName ?? 'N/A' }}</td>
+                                                <td>{{ $carReport->brand->car_brand_list ?? 'N/A' }}</td>
                                                 <td>{{ $carReport->car_mileage }}</td>
                                                 <td>
                                                     @if ($carReport->car_tax)
                                                     {{ \Carbon\Carbon::parse($carReport->car_tax)->translatedFormat('j
                                                     F Y') }}
                                                     @else
-                                                    ไม่ระบุวันที่
+                                                    -
                                                     @endif
                                                 </td>
                                                 <td>
@@ -105,7 +103,7 @@
                                                     \Carbon\Carbon::parse($carReport->car_insurance)->translatedFormat('j
                                                     F Y') }}
                                                     @else
-                                                    ไม่ระบุวันที่
+                                                    -
                                                     @endif
                                                 </td>
                                                 <td class="text-center">
@@ -160,7 +158,7 @@
                 <div class="modal-header {{ $edit ? 'bg-c-yellow' : 'bg-c-blue' }}  text-white">
                     <h1 class="modal-title fs-5 font_anuphan text-white" id="carReportModalLabel">
                         กรอกแบบฟอร์ม </h1>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" wire:click='Close'></button>
                 </div>
                 <div class="modal-body">
                     <form novalidate class="form "

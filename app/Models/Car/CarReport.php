@@ -2,8 +2,9 @@
 
 namespace App\Models\CAR;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use App\Models\Lacation\Province;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class CarReport extends Model
 {
@@ -28,4 +29,13 @@ class CarReport extends Model
         'car_status',
         'car_details',
     ];
+    public function province()
+    {
+        return $this->belongsTo(Province::class, 'car_county', 'ProvinceID');
+    }
+
+    public function brand()
+    {
+        return $this->belongsTo(CarBrand::class, 'car_brand', 'id');
+    }
 }

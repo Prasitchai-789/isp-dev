@@ -76,14 +76,15 @@ class CarReportIndex extends Component
         $this->isLoading = true;
     }
 
+
     public function render()
     {
         Carbon::setLocale('th');
-        $carReports = CarReport::orderBy('id', 'desc')->paginate(10);
+        $carReports = CarReport::with(['province', 'brand'])->orderBy('id', 'desc')->paginate(10);
         $carTypes = CarType::orderBy('id', 'desc')->get();
         $carCharacters = CarCharacter::orderBy('id', 'desc')->get();
-        $carBrands = CarBrand::orderBy('id', 'desc')->get();
-        $provinces = Province::orderBy('ProvinceName','ASC')->get();
+        $carBrands = CarBrand::orderBy('id', 'ASC')->get();
+        $provinces = Province::orderBy('ProvinceName', 'ASC')->get();
         return view('livewire.CAR.car-report-index', [
             'carReports' => $carReports,
             'carTypes' => $carTypes,
@@ -303,18 +304,21 @@ class CarReportIndex extends Component
         $this->car_color = $carReport->car_color;
         $this->car_fuel = $carReport->car_fuel;
         $this->car_mileage = $carReport->car_mileage;
-        if ($carReport) {
-            $this->car_date = date_format(date_create( $carReport->car_date), "Y-m-d");
-            $this->car_buy = date_format(date_create($carReport->car_buy), "Y-m-d");
-            $this->car_tax = date_format(date_create($carReport->car_tax), "Y-m-d");
-            $this->car_insurance = date_format(date_create($carReport->car_insurance), "Y-m-d");
-        } else {
-            return redirect()->back()->with('error', '');
-        }
+        $this->car_date = $carReport->car_date ? date_format(date_create($carReport->car_date), "Y-m-d") : null;
+        $this->car_buy = $carReport->car_buy ? date_format(date_create($carReport->car_buy), "Y-m-d") : null;
+        $this->car_tax = $carReport->car_tax ? date_format(date_create($carReport->car_tax), "Y-m-d") : null;
+        $this->car_insurance = $carReport->car_insurance ? date_format(date_create($carReport->car_insurance), "Y-m-d") : null;
+        // if ($carReport) {
+        //     $this->car_date = empty($this->car_date) ? "" : date_format(date_create($carReport->car_date), "Y-m-d");
+        //     $this->car_buy = empty($this->car_buy) ? " " : date_format(date_create($carReport->car_buy), "Y-m-d");
+        //     $this->car_tax = empty($this->car_tax) ? " " : date_format(date_create($carReport->car_tax), "Y-m-d");
+        //     $this->car_insurance = empty($this->car_insurance) ? " " : date_format(date_create($carReport->car_insurance), "Y-m-d");
+        // } else {
+        //     return redirect()->back()->with('error', '');
+        // }
         $this->car_photo = $carReport->car_photo;
         $this->car_status = $carReport->car_status;
         $this->car_details = $carReport->car_details;
-
     }
 
     public function updateCarReport()
@@ -402,7 +406,7 @@ class CarReportIndex extends Component
 
         if ($carReport) {
             if ($carReport->car_photo) {
-                Storage::delete('public/'.$carReport->car_photo);
+                Storage::delete('public/' . $carReport->car_photo);
             }
 
             $carReport->delete();
@@ -425,5 +429,11 @@ class CarReportIndex extends Component
                 timer: 1500
             );
         }
+    }
+
+    public function Close()
+    {
+        $this->resetInputFields();
+        $this->dispatch('close-modal');
     }
 }

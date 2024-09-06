@@ -12,4 +12,5 @@ class CarBrand extends Model
     protected $fillable =[
         'car_brand_list',
     ];
+    
 }
