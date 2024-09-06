@@ -117,7 +117,6 @@
                             wire:submit.prevent="{{ $edit ? 'updateComputer' : 'saveComputer' }}" id="myForm">
                             <div class="container-fluid">
                                 <div class="row" id="error">
-
                                     <div class="col-md-6 mb-2">
                                         <label class="font_Prompt">รหัสเครื่อง</label>
                                         <div class="input-group">
@@ -267,6 +266,7 @@
                                         $edit ? ' แก้ไข' : ' บันทึก'
                                         }}</button>
                                 </div>
+                            </div>
                         </form>
                     </div>
                 </div>

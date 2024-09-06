@@ -5,19 +5,19 @@ namespace App\Http\Controllers\CAR;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
-class ReportCarController extends Controller
+class CarController extends Controller
 {
     public function index()
     {
-        return view('CAR.report-car-index');
+        return view('CAR.car-report-index');
     }
 
     public function characterIndex()
     {
-        return view('CAR.character-car-index');
+        return view('CAR.car-character-index');
     }
     public function typeIndex()
     {
-        return view('CAR.type-car-index');
+        return view('CAR.car-type-index');
     }
 }

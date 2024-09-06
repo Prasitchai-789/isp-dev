@@ -5,7 +5,12 @@ namespace App\Models\CAR;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class ReportCar extends Model
+class CarType extends Model
 {
     use HasFactory;
+    protected $table = 'car_types';
+    protected $fillable =[
+        'car_type_list',
+
+    ];
 }

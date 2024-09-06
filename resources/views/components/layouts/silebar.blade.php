@@ -65,7 +65,7 @@
                         </a>
                         <ul id="SEC" class="sidebar-dropdown list-unstyled collapse" data-bs-parent="#sidebar">
                             <li class="sidebar-item">
-                                <a href="{{ route('report-car.index')}}" class="sidebar-link-li">รายการรถบริษัท ฯ</a>
+                                <a href="{{ route('car-report.index')}}" class="sidebar-link-li">รายการรถบริษัท ฯ</a>
                             </li>
                             <li class="sidebar-item">
                                 <a href="{{ route('computer.index')}}" class="sidebar-link-li">Computer</a>

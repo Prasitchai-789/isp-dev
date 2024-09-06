@@ -8,13 +8,14 @@ use App\Http\Controllers\PDFController;
 use App\Http\Controllers\SaleController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\AssetController;
-use App\Http\Controllers\CAR\ReportCarController;
 use App\Livewire\Pro\ReportMachineryIndex;
+use App\Http\Controllers\CAR\CarController;
 use App\Http\Controllers\ComputerController;
-use App\Http\Controllers\GM\DashboardPalmController;
 use App\Http\Controllers\IT\RepairController;
+use App\Http\Controllers\CAR\ReportCarController;
 use App\Http\Controllers\PRO\MachineryController;
 use App\Http\Controllers\RPO\DashboardPalmPurchase;
+use App\Http\Controllers\GM\DashboardPalmController;
 
 Route::group(['middleware' => ['role:developer|admin|user|staff']], function () {
     Route::resource('permissions', App\Http\Controllers\PermissionController::class);
@@ -84,9 +85,9 @@ Route::controller(RepairController::class)->group(function () {
     Route::get('/api/data',[App\Livewire\IT\RepairIndex::class,'getData'])->name('getData');
 });
 
-Route::controller(ReportCarController::class)->group(function () {
-    Route::get('/report-car/', 'index')->name('report-car.index');
-    Route::get('/character-car/', 'characterIndex')->name('character-car.index');
-    Route::get('/type-car/', 'typeIndex')->name('type-car.index');
+Route::controller(CarController::class)->group(function () {
+    Route::get('/car-report/', 'index')->name('car-report.index');
+    Route::get('/car-character/', 'characterIndex')->name('car-character.index');
+    Route::get('/car-type/', 'typeIndex')->name('type.index');
 });
 

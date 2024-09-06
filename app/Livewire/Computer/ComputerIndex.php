@@ -292,4 +292,6 @@ class ComputerIndex extends Component
             session()->flash('error', 'Computer not found.');
         }
     }
+
+    
 }
