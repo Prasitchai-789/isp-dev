@@ -4,7 +4,7 @@ namespace App\Http\Notify;
 
 class LineNotify
 {
-    public function sendline($message, $token)
+    public function sendLine($message, $token)
     {
         define('LINE_API', "https://notify-api.line.me/api/notify");
         define('LINE_TOKEN', $token);

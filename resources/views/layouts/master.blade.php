@@ -151,26 +151,7 @@
             <main class="content px-3 py-2 bg-c-darkwhite">
                 @yield('content')
             </main>
-            <!-- ========= light and dark mode toggle button ======= -->
-            <!--
-            <a href="#" class="theme-toggle">
-                <i class="fa-regular fa-moon"></i>
-                <i class="fa-regular fa-sun"></i>
-            </a> -->
-
-            <!-- ========= footer section of dashboard ======= -->
-
-            {{-- <footer class="footer">
-                <div class="">
-                    <div class="">
-                        <div class="text-center">
-                            <p class="mt-2 mb-1">
-                                <span class="font_anuphan">Modified By Prasitchai</span>
-                            </p>
-                        </div>
-                    </div>
-                </div>
-            </footer> --}}
+            
         </div>
     </div>
 

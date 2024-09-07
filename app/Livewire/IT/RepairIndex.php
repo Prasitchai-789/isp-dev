@@ -5,7 +5,9 @@ namespace App\Livewire\IT;
 use Livewire\Component;
 use Livewire\WithPagination;
 use App\Models\Technical\TypeWork;
+use Illuminate\Support\Facades\DB;
 use App\Models\Technical\WorkOrder;
+use App\Http\Notify\LineNotify;
 
 class RepairIndex extends Component
 {
@@ -17,8 +19,24 @@ class RepairIndex extends Component
     public $deleteId;
     public $updateId;
     public $typework;
-    public $filterType;
-    public $message;
+    public $filterType = "";
+    public $NameOfInformant;
+    public $Status = 1;
+    public $created_at;
+    public $updated_at;
+    public $TypeWork;
+    public $Number;
+    public $MachineName;
+    public $MachineCode;
+    public $Detail;
+    public $Location;
+    public $Telephone;
+    public $WorkStatus;
+    public $Technician;
+    public $RepairReport;
+    public $RepairDate;
+    public $Remark;
+    public $Image;
 
     public bool $isLoading = false;
 
@@ -27,16 +45,57 @@ class RepairIndex extends Component
         $this->isLoading = true;
     }
 
+    protected function rules()
+    {
+        return [
+            // 'Date' => 'required | Date',
+            'NameOfInformant' => 'required',
+            'Status' => 'required',
+            'TypeWork' => 'required',
+            'Number' => 'nullable',
+            'MachineName' => 'required',
+            'MachineCode' => 'required',
+            'Detail' => 'required',
+            'Location' => 'nullable',
+            'Telephone' => 'required',
+            'WorkStatus' => 'nullable',
+            'Technician' => 'required',
+            'RepairReport' => 'required',
+            'RepairDate' => 'nullable',
+            'Remark' => 'nullable',
+            'Image' => 'nullable',
+        ];
+    }
 
-    // public function getData()
-    // {
-    //     $workOrders = WorkOrder::all();
-    //     return response()->json($workOrders);
-    // }
 
+    public function generateReferenceNumber()
+    {
+        $yearTH = date('Y') + 543;
+        $shortYear = substr($yearTH, 2);
+
+        $month = date('m');
+        $workOrder = WorkOrder::where('TypeWork', 1)->orderBy('id', 'desc')->first();
+
+        if ($workOrder) {
+
+            $latestNumber = $workOrder->Number;
+
+            $latestNumber = (int)substr($workOrder->Number, -3);
+            $newNumber = $latestNumber + 1;
+        } else {
+            $latestNumber = null;
+        }
+        $referenceNumber = sprintf('IT%s%s%03d', $shortYear, $month, $newNumber);
+        return $referenceNumber;
+    }
     public function addWorkOrder()
     {
         $this->edit = false;
+    }
+
+    public function setFilterType($value)
+    {
+        $this->filterType = $value;
     }
 
     public function render()
@@ -44,17 +103,16 @@ class RepairIndex extends Component
         $query = WorkOrder::query();
         if ($this->filterType != "") {
             $query->where("Status", $this->filterType);
-        }else{
-
+        } else {
         }
 
-        $typeworks = TypeWork::orderBy('TypeWorkID', 'ASC')->get();
-        $workorders = $query->orderBy('id', 'DESC')
+        $typeWorks = TypeWork::orderBy('TypeWorkID', 'ASC')->get();
+        $workOrders = $query->orderBy('id', 'DESC')
             ->orderBy('updated_at', 'DESC')
             ->paginate(15);
-        if ($workorders->isNotEmpty()) {
-            $typeworkid = $typeworks[0]->TypeWorkID;
-            $type = TypeWork::where('TypeWorkID', $typeworkid)->first();
+        if ($workOrders->isNotEmpty()) {
+            $typeWorkID = $typeWorks[0]->TypeWorkID;
+            $type = TypeWork::where('TypeWorkID', $typeWorkID)->first();
             if ($type) {
                 $this->typework = $type->TypeWork;
             } else {
@@ -80,11 +138,111 @@ class RepairIndex extends Component
         $CountStatus5 = WorkOrder::where('Status', 5)
             ->whereNull('deleted_at')
             ->count();
-        $workOrders = WorkOrder::orderBy('id','desc')->paginate('10');
-        return view('livewire.IT.repair-index',[
+
+        $workOrders = WorkOrder::orderBy('id', 'desc')
+            ->paginate(10);
+        return view('livewire.IT.repair-index', [
             'workOrders' => $workOrders,
-            'typeworks' => $typeworks,
+            'typeWorks' => $typeWorks,
         ]);
+    }
+    public function saveTypeWorkOrder()
+    {
+        $validatedData = $this->validate([
+            'TypeWork' => 'required',
+        ]);
+        DB::transaction(function () use ($validatedData) {
+            TypeWork::create($validatedData);
+        });
+        $this->dispatch(
+            'alert',
+            position: "center",
+            icon: "success",
+            title: "บันทึกข้อมูลสำเร็จ",
+            showConfirmButton: false,
+            timer: 1500
+        );
+        $this->resetInput();
+        $this->dispatchBrowserEvent('close-modal');
+    }
+
+    public function saveWorkOrder()
+    {
+        try {
+            $validatedData = $this->validate([
+                'NameOfInformant' => 'required',
+                'Status' => 'required',
+                'TypeWork' => 'required',
+                'MachineName' => 'required',
+                'MachineCode' => 'required',
+                'Detail' => 'required',
+                'Location' => 'nullable',
+                'Telephone' => 'nullable',
+                'Number' => 'nullable',
+            ]);
+
+            $validatedData['Number'] = $this->generateReferenceNumber();
+            DB::transaction(function () use ($validatedData) {
+                WorkOrder::create($validatedData);
+            });
+            if ($this->TypeWork == 1) {
+                $header = "แจ้งซ่อม";
+                $name = $this->NameOfInformant;
+                $type = TypeWork::where('TypeWorkID', $validatedData['TypeWork'])->first()->TypeWork;
+                $MachineName = $this->MachineName;
+                $Detail = $this->Detail;
+                $Location = $this->Location;
+                $Telephone = $this->Telephone;
+                //IT
+                $token = "jrrXorziVwPvBqVGT6KSHxaFHcGMR4jgWgvuDlhF2YY";
+                $message = $header .
+                    "\n" . "ชื่อผู้แจ้ง: " . $name .
+                    "\n" . "ประเภท: " . $type .
+                    "\n" . "ชื่อเครื่อง: " . $MachineName .
+                    "\n" . "รายละเอียด: " . $Detail .
+                    "\n" . "สถานที่: " . $Location .
+                    "\n" . "เบอร์: " . $Telephone;
+            } else {
+                $header = "แจ้งซ่อม";
+                $name = $this->NameOfInformant;
+                $type = TypeWork::where('TypeWorkID', $validatedData['TypeWork'])->first()->TypeWork;
+                $MachineName = $this->MachineName;
+                $Detail = $this->Detail;
+                $Location = $this->Location;
+                $Telephone = $this->Telephone;
+
+                $token = "lIUwI7lXmUKstWmHJENkRAerhEFnNvCUxyAhWSn4MiM";
+                $message = $header .
+                    "\n" . "ชื่อผู้แจ้ง: " . $name .
+                    "\n" . "ประเภท: " . $type .
+                    "\n" . "ชื่อเครื่อง: " . $MachineName .
+                    "\n" . "รายละเอียด: " . $Detail .
+                    "\n" . "สถานที่: " . $Location .
+                    "\n" . "เบอร์: " . $Telephone;
+            }
+            $lineNotify = new LineNotify();
+            $lineNotify->sendLine($message, $token);
+            $this->dispatch(
+                'alert',
+                position: "center",
+                icon: "success",
+                title: "บันทึกข้อมูลสำเร็จ",
+                showConfirmButton: false,
+                timer: 1500
+            );
+            $this->reset();
+            $this->resetInputFields();
+            $this->dispatchBrowserEvent('close-modal');
+        } catch (\Throwable $th) {
+            $this->dispatch(
+                'alert',
+                position: "center",
+                icon: "error",
+                title: "เกิดข้อผิดพลาด",
+                showConfirmButton: false,
+                timer: 1500
+            );
+        }
     }
 
     public function closeModal()
@@ -95,32 +253,96 @@ class RepairIndex extends Component
 
     public function resetInputFields()
     {
-        // $this->version = '';
-        // $this->licensed = '';
-        // $this->type = '';
-        // $this->buy = '';
-        // $this->status = '';
-        // $this->remark = '';
+        $this->created_at = '';
+        $this->updated_at = '';
+        $this->NameOfInformant = '';
+        $this->Status = '';
+        $this->TypeWork = '';
+        $this->MachineName = '';
+        $this->MachineCode = '';
+        $this->Detail = '';
+        $this->Number = '';
+        $this->Technician = '';
+        $this->RepairReport = '';
+        $this->Location = '';
+        $this->Telephone = '';
+        $this->WorkStatus = '';
     }
     public function confirmEdit($id)
     {
         $this->edit = 1;
         $this->updateId = $id;
         $this->resetInputFields();
-        // $wins = Windows::find($id);
-        // $this->version = $wins->version;
-        // $this->licensed = $wins->licensed;
-        // $this->type = $wins->type;
-        // $this->buy = $wins->buy;
-        // $this->status = $wins->status;
-        // $this->remark = $wins->remark;
+        $workOrder = WorkOrder::find($id);
+        $this->created_at = $workOrder->created_at;
+        $this->updated_at = $workOrder->updated_at;
+        $this->NameOfInformant = $workOrder->NameOfInformant;
+        $this->Status = $workOrder->Status;
+        $this->TypeWork = $workOrder->TypeWork;
+        $this->MachineName = $workOrder->MachineName;
+        $this->MachineCode = $workOrder->MachineCode;
+        $this->Detail = $workOrder->Detail;
+        $this->Number = $workOrder->Number;
+        $this->Technician = $workOrder->Technician;
+        $this->RepairReport = $workOrder->RepairReport;
+        $this->Location = $workOrder->Location;
+        $this->Telephone = $workOrder->Telephone;
+        $this->WorkStatus = $workOrder->WorkStatus;
+    }
+
+    public function updateWorkOrder()
+    {
+
+        try {
+            $validatedData = $this->validate(
+                [
+                    'Number' => 'required',
+                    'Status' => 'required',
+                    'Technician' => 'required',
+                    'RepairReport' => 'required',
+                ]
+            );
+
+            $WorkOrder = WorkOrder::findOrFail($this->updateId);
+
+            if ($validatedData['Status'] == 4) {
+                $validatedData['WorkStatus'] = "ส่งมอบงาน";
+            } else {
+                if ($validatedData['Status'] == 5) {
+                    $validatedData['WorkStatus'] = "ยกเลิก";
+                } else {
+                    $validatedData['WorkStatus'] = "มอบหมายงาน";
+                }
+            }
+            $WorkOrder->update($validatedData);
+
+            $this->dispatch(
+                'alert',
+                position: "center",
+                icon: "success",
+                title: "บันทึกข้อมูลสำเร็จ",
+                showConfirmButton: false,
+                timer: 1500
+            );
+            $this->resetInputFields();
+            $this->dispatch('close-modal');
+        } catch (\Throwable $th) {
+            $this->dispatch(
+                'alert',
+                position: "center",
+                icon: "error",
+                title: "เกิดข้อผิดพลาด",
+                showConfirmButton: false,
+                timer: 1500
+            );
+        }
     }
     public function confirmDelete($id)
     {
         $this->deleteId = $id;
-        $workorder = WorkOrder::find($id);
+        $workOrder = WorkOrder::find($id);
 
-        if ($workorder) {
+        if ($workOrder) {
             $this->dispatch(
                 'alertconfirmDelete',
                 [
@@ -128,42 +350,65 @@ class RepairIndex extends Component
                 ]
             );
         } else {
-            // จัดการกรณีที่ไม่พบผู้ใช้
-            session()->flash('error', 'User not found.');
+            $this->dispatch(
+                'alert',
+                position: "center",
+                icon: "error",
+                title: "เกิดข้อผิดพลาด",
+                showConfirmButton: false,
+                timer: 1500
+            );
         }
     }
 
     public function deleteItem()
     {
-        dd($this->deleteId);
-        // $workorder = WorkOrder::find($this->deleteId);
-        // if ($workorder) {
-        //     $workorder->delete();
-        //     $this->dispatch(
-        //         'alert',
-        //         position: "center",
-        //         icon: "success",
-        //         title: "ลบข้อมูลสำเร็จ",
-        //         showConfirmButton: false,
-        //         timer: 2000
-        //     );
-        // } else {
-            session()->flash('error', 'Computer not found.');
-        // }
+        $workOrder = WorkOrder::find($this->deleteId);
+        if ($workOrder) {
+            $workOrder->delete();
+            $this->dispatch(
+                'alert',
+                position: "center",
+                icon: "success",
+                title: "ลบข้อมูลสำเร็จ",
+                showConfirmButton: false,
+                timer: 2000
+            );
+        } else {
+            $this->dispatch(
+                'alert',
+                position: "center",
+                icon: "error",
+                title: "เกิดข้อผิดพลาด",
+                showConfirmButton: false,
+                timer: 1500
+            );
+        }
     }
 
     public function generatePdf($id)
     {
-        $workorder = WorkOrder::find($id);
-        // dd($workorder);
-        $this->dispatch('modifyPdf',
-        NameOfInformant : $workorder->NameOfInformant,
-        Location : $workorder->Location,
-        MachineName : $workorder->MachineName,
-        Detail : $workorder->Detail,
 
-    );
+        $workOrder = WorkOrder::find($id);
+        if ($workOrder->TypeWork == 1) {
+
+            $this->dispatch(
+                'modifyPdf',
+                NameOfInformant: $workOrder->NameOfInformant,
+                Location: $workOrder->Location,
+                MachineName: $workOrder->MachineName,
+                Detail: $workOrder->Detail,
+                Number: $workOrder->Number,
+            );
+        } else {
+            $this->dispatch(
+                'newDispatchAction',
+                NameOfInformant: $workOrder->NameOfInformant,
+                Location: $workOrder->Location,
+                MachineName: $workOrder->MachineName,
+                Detail: $workOrder->Detail,
+                Number: $workOrder->Number,
+            );
+        }
     }
-
-
 }

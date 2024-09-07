@@ -66,12 +66,12 @@
 
             // Draw a string of text diagonally across the first page
             //เลขที่
-            firstPage.drawText('', {
+            firstPage.drawText(event.detail.Number, {
                 x: width / 2 + 115,
                 y: height / 2 + 302,
                 size: 16,
                 font: thaiFont,
-                color: rgb(0.95, 0.1, 0.1),
+                color: rgb(0.1, 0.1, 0.95),
                 // rotate: degrees(-45),
             })
             //ชื่อ
