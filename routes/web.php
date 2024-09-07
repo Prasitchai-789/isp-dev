@@ -32,6 +32,7 @@ Route::group(['middleware' => ['role:developer|admin']], function () {
 });
 
 Route::get('home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::get('template', [App\Http\Controllers\HomeController::class, 'templateIndex'])->name('template');
 
 Route::get('/', function () {
     return view('auth.login');

@@ -96,7 +96,7 @@
                         @endif
                         @else
                         <li class="nav-item">
-                            <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button"
+                            <a id="navbarDropdown" class="nav-link dropdown-toggle font_Prompt" href="#" role="button"
                                 data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                                 {{ Auth::user()->name }}
                                 <img src="../assets/images/user/avatar-2.jpg" alt="user-image" class="user-avtar"
@@ -104,7 +104,7 @@
                             </a>
 
                             <div class="dropdown-menu dropdown-menu-end">
-                                <a href="#" class="dropdown-item">
+                                {{-- <a href="#" class="dropdown-item">
                                     <span class="d-flex align-items-center">
                                         <i class="ph ph-user-circle"></i>
                                         <span>Edit profile</span>
@@ -121,8 +121,8 @@
                                         <i class="ph ph-gear-six"></i>
                                         <span>Settings</span>
                                     </span>
-                                </a>
-                                <a href="#" class="dropdown-item">
+                                </a> --}}
+                                <a href="{{ route('register') }}" class="dropdown-item">
                                     <span class="d-flex align-items-center">
                                         <i class="ph ph-plus-circle"></i>
                                         <span>Add account</span>

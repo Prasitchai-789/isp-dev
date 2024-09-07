@@ -54,9 +54,12 @@
                                             <a href="{{ url('users/'.$user->id.'/edit')}}" class="avtar avtar-xs btn-link-secondary">
                                                 <i class="bi bi-pencil-square text-warning text-middle" style="font-size: 18px;"></i>
                                             </a>
+                                            @can('delete user')
                                             <a href="#" onclick="confirmDeleteUser('{{ url('users/'.$user->id.'/delete') }}')" class="avtar avtar-xs btn-link-secondary">
                                                 <i class="bi bi-trash text-danger" style="font-size: 18px;"></i>
                                             </a>
+                                            @endcan
+
                                         </td>
                                     </tr>
                                     @endforeach

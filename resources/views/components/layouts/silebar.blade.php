@@ -3,7 +3,7 @@
     <div class="h-100">
         <div class="sidebar-logo text-center py-2">
 
-            <a class="navbar-brand" href="{{ url('/') }}">
+            <a class="navbar-brand" href="{{ url('/home') }}">
                 {{ config('app.name', 'ISANPALM') }}
             </a>
             <ul class="sidebar-nav mt-0">
@@ -163,7 +163,7 @@
                     </ul>
                     <ul id="auth" class="sidebar-dropdown list-unstyled collapse" data-bs-parent="#sidebar">
                         <li class="sidebar-item">
-                            <a href="{{ route('home')}}" class="sidebar-link-li">Template</a>
+                            <a href="{{ route('template')}}" class="sidebar-link-li">Template</a>
                         </li>
                     </ul>
 

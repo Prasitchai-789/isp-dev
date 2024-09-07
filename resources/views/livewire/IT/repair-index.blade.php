@@ -107,11 +107,14 @@
                                                     data-bs-target="#WorkOrderModal" class="avtar avtar-xs btn-link-secondary">
                                                     <i class="bi bi-pencil-square text-warning" style="font-size: 18px;"></i>
                                                 </a>
+                                                @can('delete user')
                                                 <a href="#" wire:click='confirmDelete({{ $workorder->id }})'
                                                     class="avtar avtar-xs btn-link-secondary" data-bs-toggle="modal"
                                                     data-bs-target="#">
                                                     <i class="bi bi-trash  text-danger" style="font-size: 18px;"></i>
                                                 </a>
+                                                @endcan
+
                                             </td>
                                         </tr>
                                     @endforeach

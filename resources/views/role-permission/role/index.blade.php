@@ -43,12 +43,18 @@
                                             <td class="text-center">{{$role->name}}</td>
                                             <td class="text-center">
                                                 <a href="{{ url('roles/'.$role->id.'/give-permissions')}}" class="btn btn-success">Add / Edit Role Permission</a>
+                                                @can('update role')
                                                 <a href="{{ url('roles/'.$role->id.'/edit')}}" class="avtar avtar-xs btn-link-secondary">
                                                     <i class="bi bi-pencil-square text-warning text-middle" style="font-size: 18px;"></i>
                                                 </a>
+                                                @endcan
+
+                                                @can('delete role')
                                                 <a href="#" onclick="confirmDeleteRole('{{ url('roles/'.$role->id.'/delete') }}')" class="avtar avtar-xs btn-link-secondary">
                                                     <i class="bi bi-trash text-danger" style="font-size: 18px;"></i>
                                                 </a>
+                                                @endcan
+
                                             </td>
                                         </tr>
                                         @endforeach

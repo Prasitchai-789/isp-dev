@@ -29,13 +29,7 @@ class DashboardPalmPurchaseIndex extends Component
     public $labels;
     public $currentDate;
 
-    public function __construct()
-    {
-        $this->middleware('permission:view RPO',['only' => ['render']]);
-        $this->middleware('permission:create RPO',['only' => ['create','store']]);
-        $this->middleware('permission:update RPO',['only' => ['update','edit']]);
-        $this->middleware('permission:delete RPO',['only' => ['destory']]);
-    }
+   
     public function mount()
     {
         $this->filterDate = Carbon::now()->toDateString();
