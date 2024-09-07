@@ -82,6 +82,22 @@
                 font: thaiFont,
                 color: rgb(0.1, 0.1, 0.95),
             });
+            //ชื่อ
+            firstPage.drawText(event.detail.NameOfInformant, {
+                x: 340,
+                y: 560,
+                size: 14,
+                font: thaiFont,
+                color: rgb(0.1, 0.1, 0.95),
+            });
+            //วันที่
+            firstPage.drawText(event.detail.Date, {
+                x: 370,
+                y: 540,
+                size: 14,
+                font: thaiFont,
+                color: rgb(0.1, 0.1, 0.95),
+            });
             //แผนก
             firstPage.drawText('', {
                 x: 258,

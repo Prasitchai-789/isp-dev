@@ -2,12 +2,13 @@
 
 namespace App\Livewire\IT;
 
+use Carbon\Carbon;
 use Livewire\Component;
 use Livewire\WithPagination;
+use App\Http\Notify\LineNotify;
 use App\Models\Technical\TypeWork;
 use Illuminate\Support\Facades\DB;
 use App\Models\Technical\WorkOrder;
-use App\Http\Notify\LineNotify;
 
 class RepairIndex extends Component
 {
@@ -399,6 +400,7 @@ class RepairIndex extends Component
                 MachineName: $workOrder->MachineName,
                 Detail: $workOrder->Detail,
                 Number: $workOrder->Number,
+                Date: Carbon::parse($workOrder->created_at)->locale('th')->translatedFormat('j F Y'),
             );
         } else {
             $this->dispatch(
