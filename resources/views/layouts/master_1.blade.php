@@ -34,8 +34,8 @@
     <!-- [Material Icons] https://fonts.google.com/icons -->
     <link rel="stylesheet" href="{{ asset('assets/fonts/material.css') }}">
     <!-- [Template CSS Files] -->
-    <link rel="stylesheet" href="{{ asset('assets/css/style.css') }}" id="main-style-link">
-    <link rel="stylesheet" href="{{ asset('assets/css/style-preset.css') }}">
+    <link rel="stylesheet" href="../assets/css/style.css" id="main-style-link">
+    <link rel="stylesheet" href="../assets/css/style-preset.css">
     <link rel="stylesheet" href="{{ asset('assets/css/app.css') }}">
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
@@ -99,7 +99,7 @@
                             <a id="navbarDropdown" class="nav-link dropdown-toggle font_Prompt" href="#" role="button"
                                 data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                                 {{ Auth::user()->name }}
-                                <img src="{{ asset('assets/images/user/avatar-2.jpg') }}" alt="user-image" class="user-avtar"
+                                <img src="../assets/images/user/avatar-2.jpg" alt="user-image" class="user-avtar"
                                     style="width: 40px; height: 40px; border-radius: 50%;">
                             </a>
 
@@ -172,12 +172,12 @@
     {{-- <script src="../assets/js/pages/dashboard-sales.js"></script> --}}
     <!-- [Page Specific JS] end -->
     <!-- Required Js -->
-    <script src="{{ asset('assets/js/plugins/popper.min.js') }}"></script>
-    <script src="{{ asset('assets/js/plugins/simplebar.min.js') }}"></script>
-    <script src="{{ asset('assets/js/plugins/bootstrap.min.js') }}"></script>
-    <script src="{{ asset('assets/js/fonts/custom-font.js') }}"></script>
-    {{-- <script src="{{ asset('assets/js/pcoded.js') }}"></script> --}}
-    <script src="{{ asset('assets/js/plugins/feather.min.js') }}"></script>
+    <script src="../assets/js/plugins/popper.min.js"></script>
+    <script src="../assets/js/plugins/simplebar.min.js"></script>
+    <script src="../assets/js/plugins/bootstrap.min.js"></script>
+    <script src="../assets/js/fonts/custom-font.js"></script>
+    {{-- <script src="../assets/js/pcoded.js"></script> --}}
+    <script src="../assets/js/plugins/feather.min.js"></script>
     @yield('script')
     @stack('plugin-scripts')
     @stack('custom-scripts')

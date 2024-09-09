@@ -23,4 +23,6 @@ class Machinery extends Model
         'photo_machinery',
         'start_machinery',
     ];
+
+
 }

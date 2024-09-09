@@ -1,6 +1,5 @@
 <div>
     <div class="container">
-
         <div class="page-header">
             <div class="page-block card mb-0">
                 <div class="card-body">
@@ -15,7 +14,7 @@
                                     <h4 class="animate__animated animate__headShake">Spare parts
                                         <!-- Button trigger modal -->
                                         <a type="button" class="btn btn-outline-danger btn-sm float-end"
-                                            style="border-radius: 7px" href="{{ route('report-machinery.index', ['machineryId' => $sparepart->id_machinery])}}">
+                                            style="border-radius: 7px" href="{{ route('machinery-report.index', ['machineryId' => $sparePart->id_machinery])}}">
                                             <span class="font_anuphan"><i class="bi bi-arrow-left-short"></i>Back</span>
                                         </a>
                                         <!-- Button trigger modal -->
@@ -26,8 +25,6 @@
                                 <ul class="breadcrumb">
                                     <li class="breadcrumb-item"><a href="{{ route('machinery.index') }}"><i
                                                 class="ph ph-house"></i>หน้าหลัก</a></li>
-                                    {{-- <li class="breadcrumb-item"><a href="{{ route('report-machinery.index')}}">รายการเครื่องจักร</a>
-                                    </li> --}}
                                     <li class="breadcrumb-item" aria-current="page"><strong>Spare parts</strong></li>
                                 </ul>
                             </div>
@@ -53,13 +50,8 @@
                             <div class="col-lg-6 mt-2">
                                 <div class="col-lg-6 col-lg-12">
                                     <div class="card seo-card">
-                                        <img src="{{ $sparepart->photo_spare ? asset('storage/'.$sparepart->photo_spare) : asset('images/user/avatar-1.jpg') }}" alt="Spare part image" class="img-fluid img-crop-500">
+                                        <img src="{{ $sparePart->photo_spare ? asset('storage/'.$sparePart->photo_spare) : asset('images/user/avatar-1.jpg') }}" alt="Spare part image" class="img-fluid img-crop-500">
                                         <div class=" bg-grd-primary"></div>
-                                        {{-- <div class="card-body seo-content">
-                                            <h4 class="m-t-10 text-white">Devices and resolution</h4>
-                                            <p class="m-b-0 m-t-20">Lorem Ipsum is simply dummy text of the printing and
-                                                typesetting industry. Lorem Ipsum has been the industry.</p>
-                                        </div> --}}
                                     </div>
                                 </div>
                             </div>
@@ -71,70 +63,70 @@
                                     <table class="table text-start font_anuphan">
                                         <tbody>
                                             <tr>
-                                                <td class="column1 text-start h6" style="width: 80px">รายการ</td>
-                                                <td class="column2 text-start">: {{ $sparepart->name_spare}} </td>
+                                                <td class="column1 text-start h6" style="width: 150px">รายการ</td>
+                                                <td class="column2 text-start">: {{ $sparePart->name_spare}} </td>
                                             </tr>
                                             <tr>
                                                 <td class="column1 h6">ยี่ห้อ (Brand)</td>
-                                                <td class="column2">: {{ $sparepart->brand_spare}}</td>
+                                                <td class="column2">: {{ $sparePart->brand_spare}}</td>
                                             </tr>
                                             <tr>
                                                 <td class="column1 h6">แบบ (Type)</td>
-                                                <td class="column2">: {{ $sparepart->type_spare}}</td>
+                                                <td class="column2">: {{ $sparePart->type_spare}}</td>
                                             </tr>
                                             <tr>
                                                 <td class="column1 h6">รุ่น (Model)</td>
-                                                <td class="column2">: {{ $sparepart->model_spare}}</td>
+                                                <td class="column2">: {{ $sparePart->model_spare}}</td>
                                             </tr>
                                             <tr>
                                                 <td class="column1 h6">หมายเลข</td>
-                                                <td class="column2">: {{ $sparepart->number_spare}}</td>
+                                                <td class="column2">: {{ $sparePart->number_spare}}</td>
                                             </tr>
                                             <tr>
                                                 <td class="column1 h6">ขนาด</td>
-                                                <td class="column2">: {{ $sparepart->size_spare}}</td>
+                                                <td class="column2">: {{ $sparePart->size_spare}}</td>
                                             </tr>
                                             <tr>
                                                 <td class="column1 h6">สารหล่อลื่น</td>
-                                                <td class="column2">: {{ $sparepart->lubricant}}</td>
+                                                <td class="column2">: {{ $sparePart->lubricant}}</td>
                                             </tr>
                                             <tr>
                                                 <td class="column1 h6">ปริมาณในการเติม</td>
-                                                <td class="column2">: {{ $sparepart->id}}</td>
+                                                <td class="column2">: {{ $sparePart->id}}</td>
                                             </tr>
                                             <tr>
                                                 <td class="column1 h6">KW</td>
-                                                <td class="column2">: {{ $sparepart->kw_spare}}</td>
+                                                <td class="column2">: {{ $sparePart->kw_spare}}</td>
                                             </tr>
                                             <tr>
                                                 <td class="column1 h6">จำนวน</td>
-                                                <td class="column2">: {{ $sparepart->quantity_spare}}</td>
+                                                <td class="column2">: {{ $sparePart->quantity_spare}}</td>
                                             </tr>
                                             <tr>
                                                 <td class="column1 h6">สถานะ</td>
-                                                <td class="column2">: {{ $sparepart->status_spare}}</td>
+                                                <td class="column2">: {{ $sparePart->status_spare}}</td>
                                             </tr>
                                             <tr>
                                                 <td class="column1 h6">แผนการบำรุงรักษา</td>
-                                                <td>@if($sparepart->plan_spare)
-                                                    {{ \Carbon\Carbon::parse($sparepart->plan_spare)->translatedFormat('j F Y') }}
+                                                <td>@if($sparePart->plan_spare)
+                                                    {{ \Carbon\Carbon::parse($sparePart->plan_spare)->translatedFormat('j F Y') }}
                                                     @else
                                                     ไม่ระบุวันที่
-                                                    @endif</td>
-                                                <td>
+                                                    @endif
+                                                </td>
                                             </tr>
                                             <tr>
                                                 <td class="column1 h6">จำนวนครั้งการซ่อม</td>
-                                                <td class="column2">: {{ $sparepart->breakdown_spare}}</td>
+                                                <td class="column2">: {{ $sparePart->breakdown_spare}}</td>
                                             </tr>
                                             <tr>
                                                 <td class="column1 h6">เริ่มใช้งาน</td>
-                                                <td>@if($sparepart->plan_spare)
-                                                    {{ \Carbon\Carbon::parse($sparepart->start_spare)->translatedFormat('j F Y') }}
+                                                <td>@if($sparePart->plan_spare)
+                                                    {{ \Carbon\Carbon::parse($sparePart->start_spare)->translatedFormat('j F Y') }}
                                                     @else
                                                     ไม่ระบุวันที่
-                                                    @endif</td>
-                                                <td>
+                                                    @endif
+                                                </td>
                                             </tr>
                                             <tr>
                                                 <td class="column1"></td>
@@ -150,3 +142,5 @@
                 </div>
             </div>
         </div>
+    </div>
+</div>

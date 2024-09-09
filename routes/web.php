@@ -16,6 +16,7 @@ use App\Http\Controllers\CAR\ReportCarController;
 use App\Http\Controllers\PRO\MachineryController;
 use App\Http\Controllers\RPO\DashboardPalmPurchase;
 use App\Http\Controllers\GM\DashboardPalmController;
+use App\Http\Controllers\Technician\MachineryReportController;
 
 Route::group(['middleware' => ['role:developer|admin']], function () {
     Route::resource('permissions', App\Http\Controllers\PermissionController::class);
@@ -70,11 +71,11 @@ Route::group(['middleware' => ['role:developer|admin|admin-PRO']], function () {
     Route::controller(SaleController::class)->group(function () {
         Route::get('/product/', 'productIndex')->name('product.index');
     });
-    Route::controller(MachineryController::class)->group(function () {
-        Route::get('/machinery/', 'index')->name('machinery.index');
-        Route::get('/machinery/report/{machineryId}', 'reportIndex')->name('report-machinery.index');
-        Route::get('/machinery/list/{sparepartId}', 'listIndex')->name('list-machinery.index');
-    });
+    // Route::controller(MachineryController::class)->group(function () {
+    //     Route::get('/machinery/', 'index')->name('machinery.index');
+    //     Route::get('/machinery/report/{machineryId}', 'reportIndex')->name('report-machinery.index');
+    //     Route::get('/machinery/list/{sparepartId}', 'listIndex')->name('list-machinery.index');
+    // });
 
 });
 
@@ -105,3 +106,11 @@ Route::controller(CarController::class)->group(function () {
     Route::get('/car-character/', 'characterIndex')->name('car-character.index');
     Route::get('/car-type/', 'typeIndex')->name('type.index');
 });
+
+
+Route::controller(MachineryReportController::class)->group(function () {
+    Route::get('/machinery/', 'index')->name('machinery.index');
+    Route::get('/machinery/report/{machineryId}', 'reportIndex')->name('machinery-report.index');
+    Route::get('/machinery/spare-part/{sparePartId}', 'sparePartIndex')->name('spare-part.index');
+});
+

@@ -1,22 +1,22 @@
 <?php
 
-namespace App\Livewire\Pro;
+namespace App\Livewire\Technician;
 
 use Carbon\Carbon;
 use Livewire\Component;
 use App\Models\PRO\Machinery;
 use App\Models\PRO\SparePart;
+use Livewire\WithFileUploads;
 use Illuminate\Support\Facades\Storage;
-use Livewire\Features\SupportFileUploads\WithFileUploads;
 
-class ReportMachineryIndex extends Component
+class MachineryReportIndex extends Component
 {
     use WithFileUploads;
     protected $paginationTheme = 'bootstrap';
     protected $listeners = ['deleteConfirmed' => 'deleteItem'];
     public $deleteId;
     public $updateId;
-    public SparePart $sparepart;
+    public SparePart $sparePart;
     public Machinery $machinery;
     public $edit = false;
     public $id_machinery;
@@ -69,24 +69,24 @@ class ReportMachineryIndex extends Component
         'start_spare' => 'nullable',
     ];
 
-    public function mount(SparePart $sparepart, $machineryId)
+    public function mount(SparePart $sparePart, $machineryId)
     {
 
         $this->machinery = Machinery::findOrFail($machineryId);
-        $this->sparepart = $sparepart;
+        $this->sparePart = $sparePart;
 
-        $spareparts = SparePart::where('id_machinery', $this->machinery->id)
+        $spareParts = SparePart::where('id_machinery', $this->machinery->id)
             ->orderBy('plan_spare', 'desc')
             ->get();
 
         $this->plan_startDate = Carbon::now();
-        foreach ($spareparts as $sparepart) {
-            $this->plan_endDate = Carbon::parse($sparepart->plan_spare);
-            $this->calculateStatus($sparepart);
+        foreach ($spareParts as $sparePart) {
+            $this->plan_endDate = Carbon::parse($sparePart->plan_spare);
+            $this->calculateStatus($sparePart);
         }
     }
 
-    public function calculateStatus($sparepart)
+    public function calculateStatus($sparePart)
     {
         $daysDifference = $this->plan_startDate->diffInDays($this->plan_endDate);
 
@@ -103,12 +103,12 @@ class ReportMachineryIndex extends Component
     public function render()
     {
         Carbon::setLocale('th');
-        $spareparts = SparePart::where('id_machinery', $this->machinery->id)
+        $spareParts = SparePart::where('id_machinery', $this->machinery->id)
             ->orderBy('id', 'desc')
             ->get();
 
-        return view('livewire.pro.report-machinery-index', [
-            'spareparts' => $spareparts,
+        return view('livewire.technician.machinery-report-index', [
+            'spareParts' => $spareParts,
             'machinery' => $this->machinery,
         ]);
     }
@@ -142,21 +142,32 @@ class ReportMachineryIndex extends Component
                 ]
             );
             if ($this->photo_spare) {
-                $fileName = $this->photo_spare->getClientOriginalName(); // ดึงชื่อไฟล์เดิม
-                $filePath = 'Image_upload/' . $fileName;
 
-                // ตรวจสอบว่ามีไฟล์ชื่อเดียวกันอยู่ในโฟลเดอร์หรือไม่
-                if (Storage::disk('public')->exists($filePath)) {
-                    // เพิ่มเวลาปัจจุบันลงในชื่อไฟล์เพื่อให้ชื่อไฟล์ไม่ซ้ำกัน
-                    $fileName = pathinfo($fileName, PATHINFO_FILENAME) . '_' . time() . '.' . $this->photo_spare->getClientOriginalExtension();
+                if ($this->photo_spare instanceof \Illuminate\Http\UploadedFile) {
+
+                    $fileName = pathinfo($this->photo_spare->getClientOriginalName(), PATHINFO_FILENAME);
+                    $extension = $this->photo_spare->getClientOriginalExtension();
+
+
+                    $filePath = 'Image_spare/' . $fileName . '.' . $extension;
+                    if (Storage::disk('public')->exists($filePath)) {
+
+                        $fileName = $fileName . '_' . time() . '.' . $extension;
+                    }
+
+
+                    $filePath = $this->photo_spare->storeAs('Image_spare', $fileName, 'public');
+                    $validateData['photo_spare'] = $filePath;
+                } else {
+
+                    $validateData['photo_spare'] = $this->photo_spare;
                 }
-
-                $filePath = $this->photo_spare->storeAs('Image_upload', $fileName, 'public');
-                $validateData['photo_spare'] = $filePath; // เก็บเส้นทางไฟล์ที่เก็บไว้
             }
+
             $validateData['id_machinery'] = $this->machinery->id;
             SparePart::create($validateData);
 
+            $this->dispatch('close-modal');
             $this->resetInputFields();
             $this->dispatch(
                 'alert',
@@ -166,7 +177,7 @@ class ReportMachineryIndex extends Component
                 showConfirmButton: false,
                 timer: 1500
             );
-            $this->dispatch('close-modal');
+
         } catch (\Throwable $th) {
             $this->dispatch(
                 'alert',
@@ -246,7 +257,7 @@ class ReportMachineryIndex extends Component
                     'plan_spare' => 'nullable|date',
                     // 'breakdown_spare' => 'nullable',
                     'remark_spare' => 'nullable',
-                    'photo_spare' => 'nullable|image|max:3072',
+                    // 'photo_spare' => 'nullable|image|max:3072',
                     'start_spare' => 'nullable|date',
                 ]
             );
@@ -254,22 +265,39 @@ class ReportMachineryIndex extends Component
             $sparepart = SparePart::findOrFail($this->updateId);
 
             if ($this->photo_spare) {
-                $fileName = $this->photo_spare->getClientOriginalName(); // ดึงชื่อไฟล์เดิม
-                $filePath = 'Image_upload/' . $fileName;
+                $sparepart = SparePart::findOrFail($this->updateId);
 
-                // ตรวจสอบว่ามีไฟล์ชื่อเดียวกันอยู่ในโฟลเดอร์หรือไม่
-                if (Storage::disk('public')->exists($filePath)) {
-                    // เพิ่มเวลาปัจจุบันลงในชื่อไฟล์เพื่อให้ชื่อไฟล์ไม่ซ้ำกัน
-                    $fileName = pathinfo($fileName, PATHINFO_FILENAME) . '_' . time() . '.' . $this->photo_spare->getClientOriginalExtension();
+
+                if ($sparepart->photo_spare) {
+                    Storage::delete('public/' . $sparepart->photo_spare);
                 }
 
-                $filePath = $this->photo_spare->storeAs('Image_upload', $fileName, 'public');
-                $validateData['photo_spare'] = $filePath; // เก็บเส้นทางไฟล์ที่เก็บไว้
-            }
-            $validateData['id_machinery'] = $this->machinery->id;
 
+                if ($this->photo_spare instanceof \Illuminate\Http\UploadedFile) {
+
+                    $fileName = pathinfo($this->photo_spare->getClientOriginalName(), PATHINFO_FILENAME);
+                    $extension = $this->photo_spare->getClientOriginalExtension();
+
+
+                    $filePath = 'Image_spare/' . $fileName . '.' . $extension;
+                    if (Storage::disk('public')->exists($filePath)) {
+
+                        $fileName = $fileName . '_' . time() . '.' . $extension;
+                    }
+
+
+                    $filePath = $this->photo_spare->storeAs('Image_spare', $fileName, 'public');
+                    $validateData['photo_spare'] = $filePath;
+                } else {
+
+                    $validateData['photo_spare'] = $this->photo_spare;
+                }
+            }
+
+            $validateData['id_machinery'] = $this->machinery->id;
             $sparepart->update($validateData);
 
+            $this->dispatch('close-modal');
             $this->resetInputFields();
             $this->dispatch(
                 'alert',
@@ -279,7 +307,7 @@ class ReportMachineryIndex extends Component
                 showConfirmButton: false,
                 timer: 1500
             );
-            $this->dispatch('close-modal');
+
         } catch (\Throwable $th) {
             $this->dispatch(
                 'alert',

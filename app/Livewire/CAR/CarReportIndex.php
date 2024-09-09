@@ -231,7 +231,7 @@ class CarReportIndex extends Component
             ]);
             if ($this->car_photo) {
                 $fileName = $this->car_photo->getClientOriginalName();
-                $filePath = 'Image_upload/' . $fileName;
+                $filePath = 'Image_car/' . $fileName;
                 if (Storage::disk('public')->exists($filePath)) {
                     $fileName = pathinfo($fileName, PATHINFO_FILENAME) . '_' . time() . '.' . $this->car_photo->getClientOriginalExtension();
                 }
@@ -346,7 +346,7 @@ class CarReportIndex extends Component
 
             if ($this->car_photo) {
                 $fileName = $this->car_photo->getClientOriginalName();
-                $filePath = 'Image_upload/' . $fileName;
+                $filePath = 'Image_car/' . $fileName;
                 if (Storage::disk('public')->exists($filePath)) {
                     $fileName = pathinfo($fileName, PATHINFO_FILENAME) . '_' . time() . '.' . $this->car_photo->getClientOriginalExtension();
                 }

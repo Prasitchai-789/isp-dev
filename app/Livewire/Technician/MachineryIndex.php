@@ -1,13 +1,13 @@
 <?php
 
-namespace App\Livewire\PRO;
+namespace App\Livewire\Technician;
 
 use Carbon\Carbon;
 use Livewire\Component;
 use Livewire\WithPagination;
 use App\Models\PRO\Machinery;
-use Livewire\WithFileUploads;
 use Illuminate\Support\Facades\Storage;
+use Livewire\Features\SupportFileUploads\WithFileUploads;
 
 class MachineryIndex extends Component
 {
@@ -24,7 +24,7 @@ class MachineryIndex extends Component
     public $type;
     public $status_machinery;
     public $plan_machinery;
-    public $breakdown_machinery;
+    // public $breakdown_machinery;
     public $remark_machinery;
     public $photo_machinery;
     public $start_machinery;
@@ -41,8 +41,6 @@ class MachineryIndex extends Component
         $this->isLoading = true;
     }
 
-
-
     protected $rules = [
         'name_machinery' => 'required|string|max:255',
         'number_machinery' => 'required|string|max:255',
@@ -52,9 +50,9 @@ class MachineryIndex extends Component
         'type' => 'nullable|string|max:255',
         'status_machinery' => 'nullable|string|max:255',
         'plan_machinery' => 'nullable|string|max:255',
-        'breakdown_machinery' => 'nullable|string|max:255',
+        // 'breakdown_machinery' => 'nullable|string|max:255',
         'remark_machinery' => 'nullable|string|max:255',
-        'photo_machinery' => 'nullable|image|max:3072',
+        // 'photo_machinery' => 'nullable|image|max:3072',
         'start_machinery' => 'nullable',
     ];
 
@@ -66,34 +64,20 @@ class MachineryIndex extends Component
 
     public function render()
     {
-
         Carbon::setLocale('th');
         $machineries = Machinery::orderBy('id', 'desc')->get();
-        if($machineries->isEmpty()) {
-            return view('livewire.pro.machinery-index', ['machineries' => []]);
+        if ($machineries->isEmpty()) {
+            return view('livewire.Technician.machinery-index', ['machineries' => []]);
         } else {
-        return view('livewire.pro.machinery-index', [
-            'machineries' => $machineries,
-        ]);
+            return view('livewire.Technician.machinery-index', [
+                'machineries' => $machineries,
+            ]);
         }
     }
 
     public function addMachinery()
     {
         $this->edit = false;
-    }
-
-    public function generatePdf()
-    {
-        $this->message = 'สวัสดีจาก Livewire!';
-        $this->dispatch('modifyPdf',
-            fullName : $this->message,
-            number : 'isp-6001-001',
-            dis : 'เทคโนโลยีสารสนเทศ',
-
-
-    );
-
     }
 
     public function saveMachinery()
@@ -111,24 +95,36 @@ class MachineryIndex extends Component
                     'plan_machinery' => 'nullable|string|max:255',
                     // 'breakdown_machinery' => 'nullable|string|max:255',
                     'remark_machinery' => 'nullable|string|max:255',
-                    'photo_machinery' => 'nullable|image|max:1024',
+                    'photo_machinery' => 'nullable|image|max:3072',
                     'start_machinery' => 'nullable',
                 ]
             );
             if ($this->photo_machinery) {
-                $fileName = $this->photo_machinery->getClientOriginalName(); // ดึงชื่อไฟล์เดิม
-                $filePath = 'Image_upload/' . $fileName;
 
-                // ตรวจสอบว่ามีไฟล์ชื่อเดียวกันอยู่ในโฟลเดอร์หรือไม่
-                if (Storage::disk('public')->exists($filePath)) {
-                    // เพิ่มเวลาปัจจุบันลงในชื่อไฟล์เพื่อให้ชื่อไฟล์ไม่ซ้ำกัน
-                    $fileName = pathinfo($fileName, PATHINFO_FILENAME) . '_' . time() . '.' . $this->photo_machinery->getClientOriginalExtension();
+                if ($this->photo_machinery instanceof \Illuminate\Http\UploadedFile) {
+
+                    $fileName = pathinfo($this->photo_machinery->getClientOriginalName(), PATHINFO_FILENAME);
+                    $extension = $this->photo_machinery->getClientOriginalExtension();
+
+
+                    $filePath = 'Image_upload/' . $fileName . '.' . $extension;
+                    if (Storage::disk('public')->exists($filePath)) {
+
+                        $fileName = $fileName . '_' . time() . '.' . $extension;
+                    }
+
+
+                    $filePath = $this->photo_machinery->storeAs('Image_upload', $fileName, 'public');
+                    $validateData['photo_machinery'] = $filePath;
+                } else {
+
+                    $validateData['photo_machinery'] = $this->photo_machinery;
                 }
-
-                $filePath = $this->photo_machinery->storeAs('Image_upload', $fileName, 'public');
-                $validateData['photo_machinery'] = $filePath; // เก็บเส้นทางไฟล์ที่เก็บไว้
             }
+
             Machinery::create($validateData);
+
+            $this->dispatch('close-modal');
             $this->resetInputFields();
             $this->dispatch(
                 'alert',
@@ -138,7 +134,6 @@ class MachineryIndex extends Component
                 showConfirmButton: false,
                 timer: 1500
             );
-            $this->dispatch('close-modal');
         } catch (\Throwable $th) {
             $this->dispatch(
                 'alert',
@@ -151,21 +146,6 @@ class MachineryIndex extends Component
         }
     }
 
-    public function resetInputFields()
-    {
-        $this->name_machinery = '';
-        $this->number_machinery = '';
-        $this->register_machinery = '';
-        $this->job_machinery = '';
-        $this->agency_machinery = '';
-        $this->type = '';
-        $this->status_machinery = '';
-        $this->plan_machinery = '';
-        $this->breakdown_machinery = '';
-        $this->remark_machinery = '';
-        $this->photo_machinery = '';
-        $this->start_machinery = '';
-    }
 
     public function confirmEdit($id)
     {
@@ -180,15 +160,11 @@ class MachineryIndex extends Component
         $this->agency_machinery = $machinery->agency_machinery;
         $this->type = $machinery->type;
         $this->status_machinery = $machinery->status_machinery;
-        $this->breakdown_machinery = $machinery->breakdown_machinery;
+        // $this->breakdown_machinery = $machinery->breakdown_machinery;
         $this->remark_machinery = $machinery->remark_machinery;
         $this->photo_machinery = $machinery->photo_machinery;
-        if ($machinery) {
-            $this->start_machinery = date_format(date_create($machinery->start_machinery), "Y-m-d");
-            $this->plan_machinery = date_format(date_create($machinery->plan_machinery), "Y-m-d");
-        } else {
-            return redirect()->back()->with('error', '');
-        }
+        $this->start_machinery = $machinery->start_machinery ? date_format(date_create($machinery->start_machinery), "Y-m-d") : null;
+        $this->plan_machinery = $machinery->plan_machinery ? date_format(date_create($machinery->plan_machinery), "Y-m-d") : null;
     }
 
     public function updateMachinery()
@@ -206,7 +182,7 @@ class MachineryIndex extends Component
                     'plan_machinery' => 'nullable|string|max:255',
                     // 'breakdown_machinery' => 'nullable|string|max:255',
                     'remark_machinery' => 'nullable|string|max:255',
-                    'photo_machinery' => 'nullable|image|max:1024',
+                    // 'photo_machinery' => 'nullable|image|max:3072',
                     'start_machinery' => 'nullable',
                 ]
             );
@@ -214,19 +190,40 @@ class MachineryIndex extends Component
             $machinery = Machinery::findOrFail($this->updateId);
 
             if ($this->photo_machinery) {
-                $fileName = $this->photo_machinery->getClientOriginalName();
-                $filePath = 'Image_upload/' . $fileName;
+                $machinery = Machinery::findOrFail($this->updateId);
 
-                if (Storage::disk('public')->exists($filePath)) {
-                    $fileName = pathinfo($fileName, PATHINFO_FILENAME) . '_' . time() . '.' . $this->photo_machinery->getClientOriginalExtension();
+
+                if ($machinery->photo_machinery) {
+                    Storage::delete('public/' . $machinery->photo_machinery);
                 }
 
-                $filePath = $this->photo_machinery->storeAs('Image_upload', $fileName, 'public');
-                $validateData['photo_machinery'] = $filePath;
+
+                if ($this->photo_machinery instanceof \Illuminate\Http\UploadedFile) {
+
+                    $fileName = pathinfo($this->photo_machinery->getClientOriginalName(), PATHINFO_FILENAME);
+                    $extension = $this->photo_machinery->getClientOriginalExtension();
+
+
+                    $filePath = 'Image_upload/' . $fileName . '.' . $extension;
+                    if (Storage::disk('public')->exists($filePath)) {
+
+                        $fileName = $fileName . '_' . time() . '.' . $extension;
+                    }
+
+
+                    $filePath = $this->photo_machinery->storeAs('Image_upload', $fileName, 'public');
+                    $validateData['photo_machinery'] = $filePath;
+                } else {
+
+                    $validateData['photo_machinery'] = $this->photo_machinery;
+                }
             }
 
-            $machinery->update($validateData);
 
+
+
+            $machinery->update($validateData);
+            $this->dispatch('close-modal');
             $this->resetInputFields();
             $this->dispatch(
                 'alert',
@@ -236,7 +233,6 @@ class MachineryIndex extends Component
                 showConfirmButton: false,
                 timer: 1500
             );
-            $this->dispatch('close-modal');
         } catch (\Throwable $th) {
             $this->dispatch(
                 'alert',
@@ -285,5 +281,27 @@ class MachineryIndex extends Component
         } else {
             session()->flash('error', 'Computer not found.');
         }
+    }
+
+    public function Close()
+    {
+        $this->resetInputFields();
+        $this->dispatch('close-modal');
+    }
+
+    public function resetInputFields()
+    {
+        $this->name_machinery = '';
+        $this->number_machinery = '';
+        $this->register_machinery = '';
+        $this->job_machinery = '';
+        $this->agency_machinery = '';
+        $this->type = '';
+        $this->status_machinery = '';
+        $this->plan_machinery = '';
+        // $this->breakdown_machinery = '';
+        $this->remark_machinery = '';
+        $this->photo_machinery = '';
+        $this->start_machinery = '';
     }
 }
