@@ -78,6 +78,7 @@
                                                 <th>เลขไมล์</th>
                                                 <th>ภาษี</th>
                                                 <th>ประกันภัย</th>
+                                                <th>ระยะเปลี่ยน</th>
                                                 <th class="text-center">สถานะ</th>
                                                 <th class="text-center">Action</th>
                                             </tr>
@@ -91,34 +92,114 @@
                                                 <td>{{ $carReport->car_mileage }}</td>
                                                 <td>
                                                     @if ($carReport->car_tax)
-                                                    {{ \Carbon\Carbon::parse($carReport->car_tax)->translatedFormat('j
-                                                    F Y') }}
-                                                    @else
-                                                    -
+                                                    @php
+                                                        $plan = $carReport->car_tax;
+                                                        $plan_startDate = Carbon\Carbon::now();
+                                                        $plan_endDate = Carbon\Carbon::parse($plan);
+                                                        $daysDifference = $plan_startDate->diffInDays($plan_endDate);
+
+                                                        if ($daysDifference < 15) {
+                                                            $status = 3;
+                                                        } elseif ($daysDifference < 30) {
+                                                            $status = 2;
+                                                        } else {
+                                                            $status = 1;
+                                                        }
+                                                    @endphp
+
+                                                    @if ($status == 1)
+                                                        <span class="">
+                                                            @if ($carReport->car_tax)
+                                                                {{ \Carbon\Carbon::parse($carReport->car_tax)->translatedFormat('j F Y') }}
+                                                            @else
+                                                                ไม่ระบุวันที่
+                                                            @endif
+                                                        </span>
+                                                    @elseif ($status == 2)
+                                                        <span class="badge bg-warning">
+                                                            <i class="bi bi-exclamation-circle"></i>
+                                                            @if ($carReport->car_tax)
+                                                                {{ \Carbon\Carbon::parse($carReport->car_tax)->translatedFormat('j F Y') }}
+                                                            @else
+                                                                ไม่ระบุวันที่
+                                                            @endif
+                                                        </span>
+                                                    @elseif ($status == 3)
+                                                        <span class="badge bg-danger">
+                                                            <i class="bi bi-x-circle"></i>
+                                                            @if ($carReport->car_tax)
+                                                                {{ \Carbon\Carbon::parse($carReport->car_tax)->translatedFormat('j F Y') }}
+                                                            @else
+                                                                ไม่ระบุวันที่
+                                                            @endif
+                                                        </span>
                                                     @endif
+                                                @else
+                                                    <p>ไม่ระบุวันที่</p>
+                                                @endif
                                                 </td>
                                                 <td>
                                                     @if ($carReport->car_insurance)
-                                                    {{
-                                                    \Carbon\Carbon::parse($carReport->car_insurance)->translatedFormat('j
-                                                    F Y') }}
-                                                    @else
-                                                    -
+                                                    @php
+                                                        $plan = $carReport->car_insurance;
+                                                        $plan_startDate = Carbon\Carbon::now();
+                                                        $plan_endDate = Carbon\Carbon::parse($plan);
+                                                        $daysDifference = $plan_startDate->diffInDays($plan_endDate);
+
+                                                        if ($daysDifference < 15) {
+                                                            $status = 3;
+                                                        } elseif ($daysDifference < 30) {
+                                                            $status = 2;
+                                                        } else {
+                                                            $status = 1;
+                                                        }
+                                                    @endphp
+
+                                                    @if ($status == 1)
+                                                        <span class="">
+                                                            @if ($carReport->car_insurance)
+                                                                {{ \Carbon\Carbon::parse($carReport->car_insurance)->translatedFormat('j F Y') }}
+                                                            @else
+                                                                ไม่ระบุวันที่
+                                                            @endif
+                                                        </span>
+                                                    @elseif ($status == 2)
+                                                        <span class="badge bg-warning">
+                                                            <i class="bi bi-exclamation-circle"></i>
+                                                            @if ($carReport->car_insurance)
+                                                                {{ \Carbon\Carbon::parse($carReport->car_insurance)->translatedFormat('j F Y') }}
+                                                            @else
+                                                                ไม่ระบุวันที่
+                                                            @endif
+                                                        </span>
+                                                    @elseif ($status == 3)
+                                                        <span class="badge bg-danger">
+                                                            <i class="bi bi-x-circle"></i>
+                                                            @if ($carReport->car_insurance)
+                                                                {{ \Carbon\Carbon::parse($carReport->car_insurance)->translatedFormat('j F Y') }}
+                                                            @else
+                                                                ไม่ระบุวันที่
+                                                            @endif
+                                                        </span>
                                                     @endif
+                                                @else
+                                                    <p>ไม่ระบุวันที่</p>
+                                                @endif
+                                                </td>
+                                                <td class="text-center">
                                                 </td>
                                                 <td class="text-center">
                                                     @if ($carReport->car_status == 1)
-                                                    <span class="badge bg-danger">ซ่อมแซม</span>
-                                                    @else
                                                     <span class="badge bg-success">ใช้งาน</span>
+                                                    @else
+                                                    <span class="badge bg-danger">ซ่อมแซม</span>
                                                     @endif
                                                 </td>
                                                 <td class="text-center">
-                                                    {{-- <a href="#" wire:click='confirmEdit({{ $carReport->id }})'
-                                                        data-bs-toggle="modal" data-bs-target="#reportModal"
+                                                    <a href="{{ route('car-view.index', ['carReportId' => $carReport->id]) }}"
                                                         class="avtar avtar-xs btn-link-secondary">
                                                         <i class="bi bi-eye text-primary" style="font-size: 18px;"></i>
-                                                    </a> --}}
+                                                    </a>
                                                     <a href="#" wire:click='confirmEdit({{ $carReport->id }})'
                                                         data-bs-toggle="modal" data-bs-target="#carReportModal"
                                                         class="avtar avtar-xs btn-link-secondary">
@@ -171,7 +252,7 @@
                                         <span class="input-group-text text-primary">
                                             <i class="bi bi-123"></i>
                                         </span>
-                                        <input type="text" class="form-control" id="car_number" name="car_number"
+                                        <input type="text" class="form-control font_Prompt" id="car_number" name="car_number"
                                             wire:model="car_number" placeholder="" required="">
                                     </div>
                                     @error('car_number')
@@ -276,7 +357,7 @@
                                         <span class="input-group-text text-primary">
                                             <i class="bi bi-palette"></i>
                                         </span>
-                                        <input type="text" class="form-control" id="car_color" name="car_color"
+                                        <input type="text" class="form-control font_Prompt" id="car_color" name="car_color"
                                             wire:model="car_color" placeholder="" required="">
                                     </div>
                                     @error('car_color')
@@ -305,7 +386,7 @@
                                         <span class="input-group-text text-primary">
                                             <i class="bi bi-fuel-pump"></i>
                                         </span>
-                                        <input type="text" class="form-control" id="car_fuel" name="car_fuel"
+                                        <input type="text" class="form-control font_Prompt" id="car_fuel" name="car_fuel"
                                             wire:model="car_fuel" placeholder="" required="">
                                     </div>
                                     @error('car_fuel')
@@ -383,12 +464,30 @@
                                     @enderror
                                 </div>
 
-                                <div class="col-md-12 mb-2">
+                                <div class="col-md-6 mb-2">
+                                    <label class="font_Prompt">ส่วนงานที่ดูแล</label>
+                                    <div class="input-group">
+                                        <span class="input-group-text text-primary">
+                                            <i class="bi bi-people-fill"></i>
+                                        </span>
+                                        <select class="form-control my-auto font_Prompt" id="car_department" name="car_department"
+                                            wire:model="car_department" required="">
+                                            <option selected="" value="">
+                                                เลือกฝ่าย...</option>
+                                            @foreach($departments as $department)
+                                            <option value="{{ $department->DeptID }}">{{
+                                                $department->DeptName }}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6 mb-2">
                                     <label class="font_Prompt">สถานะ</label>
-                                    <div class="form-check form-switch mb-2"><input type="checkbox"
+                                    <div class="form-check form-switch mb-2 mt-2"><input type="checkbox"
                                             class="form-check-input input-primary" id="car_status"
-                                            wire:model="car_status">
-                                        <label class="form-check-label" for="car_status">ใช้งาน
+                                            wire:model="car_status"  @if($car_status) checked @endif>
+                                        <label class="form-check-label font_Prompt" for="car_status">ใช้งาน
                                         </label>
                                     </div>
                                     @error('car_status')
@@ -402,7 +501,7 @@
                                         <span class="input-group-text text-primary">
                                             <i class="bi bi-list-columns-reverse"></i>
                                         </span>
-                                        <textarea type="text" class="form-control form-control-sm" id="car_details"
+                                        <textarea type="text" class="form-control form-control-sm font_Prompt" id="car_details"
                                             name="car_details" wire:model="car_details" placeholder=""
                                             required></textarea>
                                     </div>

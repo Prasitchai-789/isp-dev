@@ -2,6 +2,7 @@
 
 namespace App\Models\CAR;
 
+use App\Models\HRE\Department;
 use App\Models\Lacation\Province;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -28,6 +29,7 @@ class CarReport extends Model
         'car_photo',
         'car_status',
         'car_details',
+        'car_department',
     ];
     public function province()
     {
@@ -37,5 +39,19 @@ class CarReport extends Model
     public function brand()
     {
         return $this->belongsTo(CarBrand::class, 'car_brand', 'id');
+    }
+
+    public function character()
+    {
+        return $this->belongsTo(CarCharacter::class, 'car_character', 'id');
+    }
+
+    public function type()
+    {
+        return $this->belongsTo(CarType::class, 'car_type', 'id');
+    }
+    public function department()
+    {
+        return $this->belongsTo(Department::class, 'car_department','DeptID');
     }
 }

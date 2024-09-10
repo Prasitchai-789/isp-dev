@@ -50,7 +50,7 @@
                             <div class="col-lg-6 mt-2">
                                 <div class="col-lg-6 col-lg-12">
                                     <div class="card seo-card">
-                                        <img src="{{ $sparePart->photo_spare ? asset('storage/'.$sparePart->photo_spare) : asset('images/user/avatar-1.jpg') }}" alt="Spare part image" class="img-fluid img-crop-500">
+                                        <img src="{{ $sparePart->photo_spare ? asset('storage/'.$sparePart->photo_spare) :  asset('images/user/picture.png') }}" alt="Spare part image" class="img-fluid img-crop-500">
                                         <div class=" bg-grd-primary"></div>
                                     </div>
                                 </div>

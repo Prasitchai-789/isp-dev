@@ -31,6 +31,7 @@ return new class extends Migration
             $table->string('car_photo')->nullable();
             $table->string('car_status')->nullable();
             $table->string('car_details')->nullable();
+            $table->string('car_department')->nullable();
         });
     }
 

@@ -61,7 +61,7 @@
                             <div class="col-lg-4 mt-2">
                                 <div class="col-lg-6 col-lg-12">
                                     <div class="card seo-card"><img
-                                            src="{{ $machinery->photo_machinery ? asset('storage/' . $machinery->photo_machinery) : asset('images/user/avatar-1.jpg') }}"
+                                            src="{{ $machinery->photo_machinery ? asset('storage/' . $machinery->photo_machinery) :  asset('images/user/picture.png') }}"
                                             alt="machinery image" class="img-fluid img-crop">
                                         <div class=" bg-grd-primary"></div>
                                     </div>

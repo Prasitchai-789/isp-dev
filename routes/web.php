@@ -104,7 +104,8 @@ Route::controller(RepairController::class)->group(function () {
 Route::controller(CarController::class)->group(function () {
     Route::get('/car-report/', 'index')->name('car-report.index');
     Route::get('/car-character/', 'characterIndex')->name('car-character.index');
-    Route::get('/car-type/', 'typeIndex')->name('type.index');
+    Route::get('/car-type/', 'typeIndex')->name('car-type.index');
+    Route::get('/car-view/{carReportId}', 'viewIndex')->name('car-view.index');
 });
 
 

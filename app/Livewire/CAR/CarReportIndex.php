@@ -9,6 +9,7 @@ use App\Models\CAR\CarBrand;
 use Livewire\WithPagination;
 use App\Models\CAR\CarReport;
 use Livewire\WithFileUploads;
+use App\Models\HRE\Department;
 use App\Models\CAR\CarCharacter;
 use App\Models\Lacation\Province;
 use Illuminate\Support\Facades\Storage;
@@ -43,6 +44,7 @@ class CarReportIndex extends Component
     public $car_character_list;
     public $car_type_list;
     public $car_brand_list;
+    public $car_department;
 
     protected $rules = [
         'car_number' => 'required|string|max:255',
@@ -62,6 +64,7 @@ class CarReportIndex extends Component
         'car_photo' => 'nullable|image|max:3072',
         'car_status' => 'boolean',
         'car_details' => 'nullable|string',
+        'car_department' => 'nullable|string',
     ];
 
     public function mount(CarReport $carReport)
@@ -85,12 +88,14 @@ class CarReportIndex extends Component
         $carCharacters = CarCharacter::orderBy('id', 'desc')->get();
         $carBrands = CarBrand::orderBy('id', 'ASC')->get();
         $provinces = Province::orderBy('ProvinceName', 'ASC')->get();
+        $departments = Department::orderBy('DeptID', 'ASC')->get();
         return view('livewire.CAR.car-report-index', [
             'carReports' => $carReports,
             'carTypes' => $carTypes,
             'carCharacters' => $carCharacters,
             'carBrands' => $carBrands,
             'provinces' => $provinces,
+            'departments' => $departments,
         ]);
     }
 
@@ -227,22 +232,34 @@ class CarReportIndex extends Component
                 'car_insurance' => 'nullable|date',
                 // 'car_photo' => 'nullable|image|max:3072',
                 // 'car_status' => 'boolean',
-                // 'car_details' => 'nullable|string',
+                'car_details' => 'nullable|string',
+                'car_department' => 'nullable|string',
             ]);
             if ($this->car_photo) {
-                $fileName = $this->car_photo->getClientOriginalName();
-                $filePath = 'Image_car/' . $fileName;
-                if (Storage::disk('public')->exists($filePath)) {
-                    $fileName = pathinfo($fileName, PATHINFO_FILENAME) . '_' . time() . '.' . $this->car_photo->getClientOriginalExtension();
+
+                if ($this->car_photo instanceof \Illuminate\Http\UploadedFile) {
+
+                    $fileName = pathinfo($this->car_photo->getClientOriginalName(), PATHINFO_FILENAME);
+                    $extension = $this->car_photo->getClientOriginalExtension();
+
+                    $filePath = 'Image_car/' . $fileName . '.' . $extension;
+                    if (Storage::disk('public')->exists($filePath)) {
+
+                        $fileName = $fileName . '_' . time() . '.' . $extension;
+                    }
+
+                    $filePath = $this->car_photo->storeAs('Image_car', $fileName, 'public');
+                    $validatedData['car_photo'] = $filePath;
+                } else {
+                    $validatedData['car_photo'] = $this->car_photo;
                 }
-                $filePath = $this->car_photo->storeAs('Image_car', $fileName, 'public');
-                $validatedData['car_photo'] = $filePath;
             }
 
             $validatedData['car_status'] = $this->car_status ? 1 : 0;
 
             CarReport::create($validatedData);
 
+            $this->dispatch('close-modal');
             $this->resetInputFields();
             $this->dispatch(
                 'alert',
@@ -252,7 +269,7 @@ class CarReportIndex extends Component
                 showConfirmButton: false,
                 timer: 1500
             );
-            $this->dispatch('close-modal');
+
         } catch (\Exception $e) {
             session()->flash('error', 'เกิดข้อผิดพลาด: ' . $e->getMessage());
             $this->dispatch(
@@ -288,6 +305,7 @@ class CarReportIndex extends Component
         $this->car_character_list = '';
         $this->car_type_list = '';
         $this->car_brand_list = '';
+        $this->car_department = '';
     }
     public function confirmEdit($id)
     {
@@ -308,17 +326,10 @@ class CarReportIndex extends Component
         $this->car_buy = $carReport->car_buy ? date_format(date_create($carReport->car_buy), "Y-m-d") : null;
         $this->car_tax = $carReport->car_tax ? date_format(date_create($carReport->car_tax), "Y-m-d") : null;
         $this->car_insurance = $carReport->car_insurance ? date_format(date_create($carReport->car_insurance), "Y-m-d") : null;
-        // if ($carReport) {
-        //     $this->car_date = empty($this->car_date) ? "" : date_format(date_create($carReport->car_date), "Y-m-d");
-        //     $this->car_buy = empty($this->car_buy) ? " " : date_format(date_create($carReport->car_buy), "Y-m-d");
-        //     $this->car_tax = empty($this->car_tax) ? " " : date_format(date_create($carReport->car_tax), "Y-m-d");
-        //     $this->car_insurance = empty($this->car_insurance) ? " " : date_format(date_create($carReport->car_insurance), "Y-m-d");
-        // } else {
-        //     return redirect()->back()->with('error', '');
-        // }
         $this->car_photo = $carReport->car_photo;
         $this->car_status = $carReport->car_status;
         $this->car_details = $carReport->car_details;
+        $this->car_department = $carReport->car_department;
     }
 
     public function updateCarReport()
@@ -339,19 +350,38 @@ class CarReportIndex extends Component
                 'car_buy' => 'nullable|date',
                 'car_tax' => 'nullable|date',
                 'car_insurance' => 'nullable|date',
-                'car_photo' => 'nullable|image|max:3072',
-                'car_status' => 'boolean',
+                // 'car_photo' => 'nullable|image|max:3072',
+                // 'car_status' => 'boolean',
                 'car_details' => 'nullable|string',
+                'car_department' => 'nullable|string',
             ]);
 
+            $carReport = CarReport::findOrFail($this->updateId);
+
             if ($this->car_photo) {
-                $fileName = $this->car_photo->getClientOriginalName();
-                $filePath = 'Image_car/' . $fileName;
-                if (Storage::disk('public')->exists($filePath)) {
-                    $fileName = pathinfo($fileName, PATHINFO_FILENAME) . '_' . time() . '.' . $this->car_photo->getClientOriginalExtension();
+                $carReport = CarReport::findOrFail($this->updateId);
+
+                if ($carReport->car_photo) {
+                    Storage::delete('public/' . $carReport->car_photo);
                 }
-                $filePath = $this->car_photo->storeAs('Image_car', $fileName, 'public');
-                $validatedData['car_photo'] = $filePath;
+
+                if ($this->car_photo instanceof \Illuminate\Http\UploadedFile) {
+
+                    $fileName = pathinfo($this->car_photo->getClientOriginalName(), PATHINFO_FILENAME);
+                    $extension = $this->car_photo->getClientOriginalExtension();
+
+                    $filePath = 'Image_car/' . $fileName . '.' . $extension;
+                    if (Storage::disk('public')->exists($filePath)) {
+
+                        $fileName = $fileName . '_' . time() . '.' . $extension;
+                    }
+
+                    $filePath = $this->car_photo->storeAs('Image_car', $fileName, 'public');
+                    $validatedData['car_photo'] = $filePath;
+                } else {
+
+                    $validatedData['car_photo'] = $this->car_photo;
+                }
             }
 
             $validatedData['car_status'] = $this->car_status ? 1 : 0;
@@ -359,11 +389,8 @@ class CarReportIndex extends Component
             $carReport = CarReport::findOrFail($this->updateId);
             $carReport->update($validatedData);
 
-            $this->resetInputFields();
-
-            $this->edit = false;
+            // $this->edit = false;
             $this->dispatch('close-modal');
-
             $this->resetInputFields();
             $this->dispatch(
                 'alert',
