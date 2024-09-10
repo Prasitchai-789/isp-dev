@@ -25,7 +25,7 @@
                             <div class="col-md-12 font_anuphan">
                                 <ul class="breadcrumb">
                                     <li class="breadcrumb-item"><a href="{{ url('home/') }}"><i
-                                                class="ph ph-house"></i>หน้าหลัก</a></li>
+                                                class="ph ph-house"></i> หน้าหลัก</a></li>
                                     <li class="breadcrumb-item"><a href="javascript: void(0)">ฝ่ายผลิตและวิศวกรรม</a>
                                     </li>
                                     <li class="breadcrumb-item" aria-current="page"><strong>รายการเครื่องจักร</strong>

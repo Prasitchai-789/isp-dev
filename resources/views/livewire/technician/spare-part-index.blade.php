@@ -24,7 +24,7 @@
                             <div class="col-md-12 font_anuphan">
                                 <ul class="breadcrumb">
                                     <li class="breadcrumb-item"><a href="{{ route('machinery.index') }}"><i
-                                                class="ph ph-house"></i>หน้าหลัก</a></li>
+                                                class="ph ph-house"></i> หน้าหลัก</a></li>
                                     <li class="breadcrumb-item" aria-current="page"><strong>Spare parts</strong></li>
                                 </ul>
                             </div>
@@ -91,10 +91,6 @@
                                                 <td class="column2">: {{ $sparePart->lubricant}}</td>
                                             </tr>
                                             <tr>
-                                                <td class="column1 h6">ปริมาณในการเติม</td>
-                                                <td class="column2">: {{ $sparePart->id}}</td>
-                                            </tr>
-                                            <tr>
                                                 <td class="column1 h6">KW</td>
                                                 <td class="column2">: {{ $sparePart->kw_spare}}</td>
                                             </tr>
@@ -104,15 +100,63 @@
                                             </tr>
                                             <tr>
                                                 <td class="column1 h6">สถานะ</td>
-                                                <td class="column2">: {{ $sparePart->status_spare}}</td>
+                                                <td class="column2">:  @if ($sparePart->status_spare == 1)
+                                                    <span class="badge bg-success">ปกติ</span>
+                                                    @elseif ($sparePart->status_spare == 2)
+                                                    <span class="badge bg-warning">แจ้งซ่อม</span>
+                                                    @elseif ($sparePart->status_spare == 3)
+                                                    <span class="badge bg-danger">ยกเลิก</span>
+                                                    @endif</td>
                                             </tr>
                                             <tr>
                                                 <td class="column1 h6">แผนการบำรุงรักษา</td>
-                                                <td>@if($sparePart->plan_spare)
-                                                    {{ \Carbon\Carbon::parse($sparePart->plan_spare)->translatedFormat('j F Y') }}
-                                                    @else
-                                                    ไม่ระบุวันที่
+                                                <td>: @if ($sparePart->plan_spare)
+                                                    @php
+                                                        $plan_spare = $sparePart->plan_spare;
+                                                        $plan_startDate = Carbon\Carbon::now();
+                                                        $plan_endDate = Carbon\Carbon::parse($plan_spare);
+                                                        $daysDifference = $plan_startDate->diffInDays($plan_endDate);
+
+                                                        if ($daysDifference < 1) {
+                                                            $status = 3;
+                                                        } elseif ($daysDifference < 7) {
+                                                            $status = 2;
+                                                        } else {
+                                                            $status = 1;
+                                                        }
+                                                    @endphp
+
+                                                    @if ($status == 1)
+                                                        <span class="badge bg-success">
+                                                            <i class="bi bi-check2-circle"></i>
+                                                            @if ($sparePart->plan_spare)
+                                                                {{ \Carbon\Carbon::parse($sparePart->plan_spare)->translatedFormat('j F Y') }}
+                                                            @else
+                                                                ไม่ระบุวันที่
+                                                            @endif
+                                                        </span>
+                                                    @elseif ($status == 2)
+                                                        <span class="badge bg-warning">
+                                                            <i class="bi bi-exclamation-circle"></i>
+                                                            @if ($sparePart->plan_spare)
+                                                                {{ \Carbon\Carbon::parse($sparePart->plan_spare)->translatedFormat('j F Y') }}
+                                                            @else
+                                                                ไม่ระบุวันที่
+                                                            @endif
+                                                        </span>
+                                                    @elseif ($status == 3)
+                                                        <span class="badge bg-danger">
+                                                            <i class="bi bi-x-circle"></i>
+                                                            @if ($sparePart->plan_spare)
+                                                                {{ \Carbon\Carbon::parse($sparePart->plan_spare)->translatedFormat('j F Y') }}
+                                                            @else
+                                                                ไม่ระบุวันที่
+                                                            @endif
+                                                        </span>
                                                     @endif
+                                                @else
+                                                    <p>ไม่มีข้อมูล</p>
+                                                @endif
                                                 </td>
                                             </tr>
                                             <tr>
