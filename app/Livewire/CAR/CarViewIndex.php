@@ -59,8 +59,10 @@ class CarViewIndex extends Component
     public function render()
     {
         Carbon::setLocale('th');
+        $carRepairs = CarRepair::where('car_id', $this->carReport->id)
+        ->orderBy('id', 'desc')
+        ->get();
         $carReports = CarReport::orderBy("id", 'ASC')->get();
-        $carRepairs = CarRepair::orderBy("id", 'ASC')->get();
         return view('livewire.CAR.car-view-index', [
             'carReport' => $this->carReport,
             'carReports' => $carReports,
