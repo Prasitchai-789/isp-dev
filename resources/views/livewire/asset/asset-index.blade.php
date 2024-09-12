@@ -257,7 +257,7 @@
                     </div>
                     <div class="modal-body">
                         <form novalidate class="form " wire:submit.prevent="{{ $edit ? 'updateAsset' : 'saveCategory' }}"
-                            id="">
+                            id="myForm">
                             <div class="container-fluid">
                                 <div class="row" id="error">
                                     <div class="col-md-12 mb-2">

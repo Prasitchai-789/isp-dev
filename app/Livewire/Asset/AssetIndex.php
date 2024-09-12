@@ -5,10 +5,14 @@ namespace App\Livewire\Asset;
 
 use Carbon\Carbon;
 use App\Models\Asset;
-use App\Models\CategoryAsset;
 use Livewire\Component;
 use Livewire\WithPagination;
+use App\Models\CategoryAsset;
 use Livewire\WithFileUploads;
+use App\Events\NotifyProcessed;
+use App\Events\TestNotification;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Storage;
 
 class AssetIndex extends Component
@@ -95,17 +99,17 @@ class AssetIndex extends Component
             );
 
             if ($this->photo_asset) {
-                $fileName = $this->photo_asset->getClientOriginalName(); // ดึงชื่อไฟล์เดิม
+                $fileName = $this->photo_asset->getClientOriginalName();
                 $filePath = 'Image_upload/' . $fileName;
 
-                // ตรวจสอบว่ามีไฟล์ชื่อเดียวกันอยู่ในโฟลเดอร์หรือไม่
+
                 if (Storage::disk('public')->exists($filePath)) {
-                    // เพิ่มเวลาปัจจุบันลงในชื่อไฟล์เพื่อให้ชื่อไฟล์ไม่ซ้ำกัน
+
                     $fileName = pathinfo($fileName, PATHINFO_FILENAME) . '_' . time() . '.' . $this->photo_asset->getClientOriginalExtension();
                 }
 
                 $filePath = $this->photo_asset->storeAs('Image_upload', $fileName, 'public');
-                $validateData['photo_asset'] = $filePath; // เก็บเส้นทางไฟล์ที่เก็บไว้
+                $validateData['photo_asset'] = $filePath;
             }
             Asset::create($validateData);
 
@@ -264,8 +268,16 @@ class AssetIndex extends Component
                     'name' => 'required|string|max:255',
                 ]
             );
-            CategoryAsset::create($validateData);
 
+            // event(new NotifyProcessed($validateData));
+            event(new TestNotification([
+                'author' => 12 ,
+                'title' => 34,
+            ]));
+
+            // CategoryAsset::create($validateData);
+
+            $this->dispatch('close-modal');
             $this->resetInputFields();
             $this->dispatch(
                 'alert',
@@ -275,7 +287,7 @@ class AssetIndex extends Component
                 showConfirmButton: false,
                 timer: 1500
             );
-            $this->dispatch('close-modal');
+
         } catch (\Throwable $th) {
             $this->dispatch(
                 'alert',

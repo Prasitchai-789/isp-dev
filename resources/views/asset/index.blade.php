@@ -16,9 +16,12 @@
 @endpush
 
 @section('script')
+
 <script>
     window.addEventListener('close-modal', event => {
             $('#assetModal').modal('hide'); // ให้ซ่อนโมดัล
+            console.log('close');
+
         });
 </script>
 

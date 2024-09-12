@@ -1,10 +1,12 @@
 <?php
 
 use App\Livewire\Counter;
+use App\Events\NotifyProcessed;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PDFController;
+use App\Http\Controllers\PostController;
 use App\Http\Controllers\SaleController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\AssetController;
@@ -39,9 +41,15 @@ Route::get('/', function () {
     return view('auth.login');
 });
 
-Route::get('/login16', function () {
-    return view('login16');
+Route::get('/welcome', function () {
+    return view('welcome');
 });
+
+Route::get('/post', function () {
+    return view('post');
+});
+Route::view('/pusher1','pusher1');
+Route::post('/posts', [PostController::class, 'store'])->name('posts.store');
 
 Auth::routes();
 

@@ -93,6 +93,7 @@ class CarViewIndex extends Component
         $this->car_requesterName = '';
     }
 
+    
     public function confirmEdit($id)
     {
         $this->edit = true;
