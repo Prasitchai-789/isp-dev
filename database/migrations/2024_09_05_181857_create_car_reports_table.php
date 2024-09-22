@@ -30,6 +30,7 @@ return new class extends Migration
             $table->dateTime('car_insurance')->nullable();
             $table->string('car_photo')->nullable();
             $table->string('car_status')->nullable();
+            $table->string('car_card')->nullable();
             $table->string('car_details')->nullable();
             $table->string('car_department')->nullable();
         });

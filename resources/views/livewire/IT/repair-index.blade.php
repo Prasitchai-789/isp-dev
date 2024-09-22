@@ -96,18 +96,19 @@
                                         {{ $workOrder->Telephone }}
                                     </td>
 
-                                    <td class="texe text-center align-middle">
-                                        <a href="#" wire:click='confirmEdit({{ $workOrder->id }})'
-                                            data-bs-toggle="modal" data-bs-target="#reportWorkModal"
-                                            class="avtar avtar-xs btn-link-secondary">
-                                            <i class="bi bi-eye text-primary" style="font-size: 18px;"></i>
-                                        </a>
+                                    <td class="texe text-end align-middle">
                                         @if($workOrder->TypeWork == 1)
                                         <a href="#" wire:click='generatePdf({{ $workOrder->id }})'
                                             class="avtar avtar-xs btn-link-secondary">
                                             <i class="bi bi-file-earmark-text" style="font-size: 18px;"></i>
                                         </a>
                                         @endif
+                                        <a href="#" wire:click='confirmEdit({{ $workOrder->id }})'
+                                            data-bs-toggle="modal" data-bs-target="#reportWorkModal"
+                                            class="avtar avtar-xs btn-link-secondary">
+                                            <i class="bi bi-eye text-primary" style="font-size: 18px;"></i>
+                                        </a>
+
                                         <a href="#" wire:click='confirmEdit({{ $workOrder->id }})'
                                             data-bs-toggle="modal" data-bs-target="#WorkOrderModal"
                                             class="avtar avtar-xs btn-link-secondary">

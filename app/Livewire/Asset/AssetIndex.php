@@ -270,12 +270,12 @@ class AssetIndex extends Component
             );
 
             // event(new NotifyProcessed($validateData));
-            event(new TestNotification([
-                'author' => 12 ,
-                'title' => 34,
-            ]));
+            // event(new TestNotification([
+            //     'author' => 12 ,
+            //     'title' => 34,
+            // ]));
 
-            // CategoryAsset::create($validateData);
+            CategoryAsset::create($validateData);
 
             $this->dispatch('close-modal');
             $this->resetInputFields();

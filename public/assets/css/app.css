@@ -438,3 +438,16 @@ html[data-bs-theme="light"] .theme-toggle .fa-sun {
     background-size: contain;
 }
 
+.blue-button {
+    background-color: rgb(43, 106, 242);
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+.blue-button:hover {
+    background-color: rgb(71, 105, 210);
+}

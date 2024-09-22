@@ -36,7 +36,7 @@
                             <thead>
                                 <tr>
                                     <th>ITEM</th>
-                                    <th>Photo</th>
+                                    {{-- <th>Photo</th> --}}
                                     <th>รหัสเครื่อง</th>
                                     <th>cpu</th>
                                     <th>ram</th>
@@ -52,8 +52,8 @@
                                 @foreach ($computers as $computer )
                             <tr>
                                 <td>{{$computer->code_com}}</td>
-                                <td><img src="{{ asset('storage/'.$computer->photo) }}" alt="user image" class="wid-60">
-                                </td>
+                                {{-- <td><img src="{{ asset('storage/'.$computer->photo) }}" alt="user image" class="wid-60">
+                                </td> --}}
                                 <td>{{$computer->code_com}}</td>
                                 <td>{{$computer->cpu}}</td>
                                 <td>{{$computer->ram}}</td>

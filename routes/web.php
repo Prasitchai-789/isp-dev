@@ -10,14 +10,17 @@ use App\Http\Controllers\PostController;
 use App\Http\Controllers\SaleController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\AssetController;
+use App\Http\Controllers\CAR\AddCardController;
 use App\Livewire\Pro\ReportMachineryIndex;
 use App\Http\Controllers\CAR\CarController;
+use App\Http\Controllers\CAR\CarUseController;
 use App\Http\Controllers\ComputerController;
 use App\Http\Controllers\IT\RepairController;
 use App\Http\Controllers\CAR\ReportCarController;
 use App\Http\Controllers\PRO\MachineryController;
 use App\Http\Controllers\RPO\DashboardPalmPurchase;
 use App\Http\Controllers\GM\DashboardPalmController;
+use App\Http\Controllers\HRE\CarRequestController;
 use App\Http\Controllers\Technician\MachineryReportController;
 
 Route::group(['middleware' => ['role:developer|admin']], function () {
@@ -116,6 +119,20 @@ Route::controller(CarController::class)->group(function () {
     Route::get('/car-view/{carReportId}', 'viewIndex')->name('car-view.index');
 });
 
+Route::controller(CarUseController::class)->group(function () {
+    Route::get('/car-use/', 'index')->name('car-use.index');
+
+});
+
+Route::controller(AddCardController::class)->group(function () {
+    Route::get('/add-card/', 'index')->name('add-card.index');
+
+});
+
+Route::controller(CarRequestController::class)->group(function () {
+    Route::get('/car-request/', 'index')->name('car-request.index');
+
+});
 
 Route::controller(MachineryReportController::class)->group(function () {
     Route::get('/machinery/', 'index')->name('machinery.index');

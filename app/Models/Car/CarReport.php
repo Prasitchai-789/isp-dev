@@ -11,7 +11,7 @@ class CarReport extends Model
 {
     use HasFactory;
     protected $table = 'car_reports';
-    protected $fillable =[
+    protected $fillable = [
         'car_number',
         'car_county',
         'car_type',
@@ -28,6 +28,7 @@ class CarReport extends Model
         'car_insurance',
         'car_photo',
         'car_status',
+        'car_card',
         'car_details',
         'car_department',
     ];
@@ -35,6 +36,7 @@ class CarReport extends Model
     {
         return $this->belongsTo(Province::class, 'car_county', 'ProvinceID');
     }
+   
 
     public function brand()
     {
@@ -52,6 +54,7 @@ class CarReport extends Model
     }
     public function department()
     {
-        return $this->belongsTo(Department::class, 'car_department','DeptID');
+        return $this->belongsTo(Department::class, 'car_department', 'DeptID');
     }
+
 }

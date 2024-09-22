@@ -45,6 +45,7 @@ class CarReportIndex extends Component
     public $car_type_list;
     public $car_brand_list;
     public $car_department;
+    public $car_card = 0 ;
 
     protected $rules = [
         'car_number' => 'required|string|max:255',
@@ -65,6 +66,7 @@ class CarReportIndex extends Component
         'car_status' => 'boolean',
         'car_details' => 'nullable|string',
         'car_department' => 'nullable|string',
+        'car_card' => 'nullable|string',
     ];
 
     public function mount(CarReport $carReport)
@@ -158,6 +160,7 @@ class CarReportIndex extends Component
 
             CarType::create($validatedData);
 
+            $this->dispatch('close-modal');
             $this->resetInputFields();
             $this->dispatch(
                 'alert',
@@ -167,7 +170,7 @@ class CarReportIndex extends Component
                 showConfirmButton: false,
                 timer: 1500
             );
-            $this->dispatch('close-modal');
+
         } catch (\Exception $e) {
             session()->flash('error', 'เกิดข้อผิดพลาด: ' . $e->getMessage());
             $this->dispatch(
@@ -190,6 +193,7 @@ class CarReportIndex extends Component
 
             CarBrand::create($validatedData);
 
+            $this->dispatch('close-modal');
             $this->resetInputFields();
             $this->dispatch(
                 'alert',
@@ -199,7 +203,7 @@ class CarReportIndex extends Component
                 showConfirmButton: false,
                 timer: 1500
             );
-            $this->dispatch('close-modal');
+
         } catch (\Exception $e) {
             session()->flash('error', 'เกิดข้อผิดพลาด: ' . $e->getMessage());
             $this->dispatch(
@@ -234,6 +238,7 @@ class CarReportIndex extends Component
                 // 'car_status' => 'boolean',
                 'car_details' => 'nullable|string',
                 'car_department' => 'nullable|string',
+                
             ]);
             if ($this->car_photo) {
 

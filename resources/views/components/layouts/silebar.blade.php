@@ -76,6 +76,41 @@
                             <a href="{{ route('car-report.index')}}" class="sidebar-link-li">รายการรถบริษัท ฯ</a>
                         </li>
                         <li class="sidebar-item">
+                            <a href="{{ route('car-use.index')}}" class="sidebar-link-li">บันทึกการใช้งานรถ</a>
+                        </li>
+
+                    </ul>
+                </li>
+                @endcan
+
+                <li class="sidebar-item font_anuphan">
+                    <a href="#" class="sidebar-link collapsed d-flex align-items-center" data-bs-target="#hre"
+                        data-bs-toggle="collapse" aria-expanded="false">
+                        <i class="ph ph-user-list me-2"></i>
+                        HRE
+                    </a>
+                    <ul id="hre" class="sidebar-dropdown list-unstyled collapse" data-bs-parent="#sidebar">
+                        <li class="sidebar-item">
+                            <a href="{{ route('car-request.index')}}" class="sidebar-link-li">การขอใช้รถ</a>
+                        </li>
+                        <li class="sidebar-item">
+                            <a href="{{ route('add-card.index')}}" class="sidebar-link-li">บันทึกบัตรรถ</a>
+                        </li>
+                    </ul>
+                </li>
+
+                @can('view IT')
+                <li class="sidebar-item font_anuphan">
+                    <a href="#" class="sidebar-link collapsed d-flex align-items-center" data-bs-target="#IT"
+                        data-bs-toggle="collapse" aria-expanded="false">
+                        <i class="ph ph-user-list me-2"></i>
+                        {{ __('เทคโนโลยีสานสนเทศ') }}
+                    </a>
+                    <ul id="IT" class="sidebar-dropdown list-unstyled collapse" data-bs-parent="#sidebar">
+                        <li class="sidebar-item">
+                            <a href="#" class="sidebar-link-li">Asset</a>
+                        </li>
+                        <li class="sidebar-item">
                             <a href="{{ route('computer.index')}}" class="sidebar-link-li">Computer</a>
                         </li>
                         <li class="sidebar-item">
@@ -85,30 +120,15 @@
                 </li>
                 @endcan
 
-                @can('view HRE')
-                <li class="sidebar-item font_anuphan">
-                    <a href="#" class="sidebar-link collapsed d-flex align-items-center" data-bs-target="#hre"
-                        data-bs-toggle="collapse" aria-expanded="false">
-                        <i class="ph ph-user-list me-2"></i>
-                        HRE
-                    </a>
-                    <ul id="hre" class="sidebar-dropdown list-unstyled collapse" data-bs-parent="#sidebar">
-                        <li class="sidebar-item">
-                            <a href="{{ route('user.index')}}" class="sidebar-link-li">User</a>
-                        </li>
-                    </ul>
-                </li>
-                @endcan
-
 
                 @can('view ALL')
                 <li class="sidebar-item font_anuphan">
-                    <a href="#" class="sidebar-link collapsed d-flex align-items-center" data-bs-target="#it"
+                    <a href="#" class="sidebar-link collapsed d-flex align-items-center" data-bs-target="#MT"
                         data-bs-toggle="collapse" aria-expanded="false">
                         <i class="ph ph-wrench me-2"></i>
                         {{ __('แจ้งซ่อม') }}
                     </a>
-                    <ul id="it" class="sidebar-dropdown list-unstyled collapse" data-bs-parent="#sidebar">
+                    <ul id="MT" class="sidebar-dropdown list-unstyled collapse" data-bs-parent="#sidebar">
                         <li class="sidebar-item">
                             <a href="{{ route('report-repair.index')}}" class="sidebar-link-li">รายงานการแจ้งซ่อม</a>
                         </li>

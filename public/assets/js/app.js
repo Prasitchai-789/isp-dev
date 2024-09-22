@@ -14,28 +14,25 @@ window.addEventListener("alert", (event) => {
 
 window.addEventListener("alertconfirmDelete", (event) => {
     let data = event.detail;
-
     const swalWithBootstrapButtons = Swal.mixin({
         customClass: {
-            confirmButton: "btn btn-success",
             cancelButton: "btn btn-danger me-2",
+            confirmButton: "btn btn-primary me-2",
         },
         buttonsStyling: false,
     });
 
     swalWithBootstrapButtons
         .fire({
-            title: "ต้องการลบ ใช่ไหม ?",
-            text: "เพราะจะไม่สามารถนำกลับมาได้ !",
+            title: "คุณต้องการลบใช่หรือไม่ ?",
+            text: "เพราะไม่สามารถกู้คืนได้ !",
             icon: "warning",
             showCancelButton: true,
             confirmButtonText: "Yes, ต้องการลบ !",
-            cancelButtonText: "No, ยกเลิก !",
-            reverseButtons: true,
+            // reverseButtons: true,
         })
         .then((result) => {
             if (result.isConfirmed) {
-                // เมื่อยืนยันการลบ ส่งอีเวนต์ไปยังคอมโพเนนต์ Livewire
                 Livewire.dispatch("deleteConfirmed");
             } else {
                 //
