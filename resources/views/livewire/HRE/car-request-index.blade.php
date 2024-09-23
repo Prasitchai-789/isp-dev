@@ -5,12 +5,12 @@
                 <div class="card-body">
                     <div class="row align-items-center">
                         <div class="col-md-12">
-                            <div class="page-header-title border-bottom pb-2 mb-2 font_Prompt">
-                                <h4 class="animate__animated animate__headShake">การขออนุญาตออกนอกบริษัท
+                            <div class="page-header-title border-bottom pb-2 mb-2 font_Prompt row">
+                                <h4 class="animate__animated animate__headShake col-md-12">ขออนุญาตออกนอกบริษัท
                                     <button type="button" class="btn btn-primary btn-sm col-lg-0 float-end"
                                         style="border-radius: 7px " data-bs-toggle="modal"
                                         data-bs-target="#carRequestModal" wire:click='addRequest'>
-                                        <span class="font_anuphan">ขออนุญาต</span>
+                                        <span class="font_anuphan col-md-12">ขออนุญาต</span>
                                     </button>
                                 </h4>
                             </div>
@@ -73,11 +73,14 @@
                                             @endif
                                         </td>
                                         <td class="text-center">
+                                            @if($carRequest->status_request != 1 && $carRequest->status_request != 2)
                                             @can('approver_car')
+
                                             <a href="#" wire:click.prevent="confirmApprove({{ $carRequest->id }})"
                                                 class="avtar avtar-xs btn-link-secondary">
                                                  <i class="ph ph-check-circle text-success text-middle" style="font-size: 22px;"></i>
                                             </a>
+
                                             @endcan
                                             <a href="#" wire:click='confirmEdit({{ $carRequest->id }})'
                                                 data-bs-toggle="modal" data-bs-target="#carRequestModal"
@@ -85,11 +88,15 @@
                                                 <i class="bi bi-pencil-square text-warning"
                                                 style="font-size: 18px; vertical-align: middle;"></i>
                                             </a>
+
+                                            @can('approver_car')
                                             <a href="#" wire:click='confirmDelete({{ $carRequest->id }})'
                                                 class="avtar avtar-xs btn-link-secondary" data-bs-toggle="modal"
                                                 data-bs-target="#">
                                                 <i class="bi bi-trash  text-danger" style="font-size: 18px; vertical-align: middle;"></i>
                                             </a>
+                                            @endcan
+                                            @endif
                                         </td>
                                     </tr>
                                     @endforeach

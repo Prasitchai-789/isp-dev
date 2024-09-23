@@ -195,7 +195,7 @@
                         <div class="container-fluid">
                             <div class="row" id="error">
 
-                                <div class="col-md-12 mb-2 font_anuphan">
+                                {{-- <div class="col-md-12 mb-2 font_anuphan">
                                     <label class="font_Prompt">ชื่อผู้ใช้งาน</label>
                                     <div class="input-group">
                                         <span class="input-group-text text-primary">
@@ -258,7 +258,7 @@
                                             @endforeach
                                         </select>
                                     </div>
-                                </div>
+                                </div> --}}
                                 {{-- @can(['approver_car'])
                                 <div class="col-md-12 mb-2 font_anuphan">
                                     <label class="font_Prompt">ผู้อนุญาต</label>
@@ -334,7 +334,4 @@
         </div>
     </div>
     {{-- END Modal --}}
-
-
-
 </div>
