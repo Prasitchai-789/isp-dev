@@ -171,6 +171,15 @@
                                                 placeholder="" required></textarea>
                                         </div>
                                     </div>
+                                    <div class="col-md-6 mb-2 mt-2">
+                                        <label class="font_Prompt">ขออนุญาตใช้รถ</label>
+                                        <div class="form-check form-switch mb-2 mt-2">
+                                            <input type="checkbox" class="form-check-input input-primary" id="use_check"
+                                                   wire:model.live="use_check">
+                                            <label class="form-check-label font_Prompt" for="use_check">ใช้</label>
+                                        </div>
+                                    </div>
+                                    @if($use_check == 1)
                                     <div class="col-md-12 mb-2 font_anuphan">
                                         <label class="font_Prompt">ขออนุญาตใช้รถ</label>
                                         <div class="input-group">
@@ -190,19 +199,8 @@
                                             </select>
                                         </div>
                                     </div>
-                                    {{-- @can(['approver_car'])
-                                    <div class="col-md-12 mb-2 font_anuphan">
-                                        <label class="font_Prompt">ผู้อนุญาต</label>
-                                        <div class="input-group">
-                                            <span class="input-group-text text-primary">
-                                                <i class="bi bi-person-workspace"></i>
-                                            </span>
-                                            <input type="text" class="form-control" id="approver_request"
-                                                name="approver_request" wire:model="approver_request" placeholder=""
-                                                required>
-                                        </div>
-                                    </div>
-                                    @endcan --}}
+                                    @endif
+
 
                                 </div>
                                 <div class="d-flex justify-content-end gap-2 font_Prompt mt-2">

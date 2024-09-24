@@ -35,6 +35,7 @@ class CarRequestIndex extends Component
     public $car_request;
     public $additionalNotes_request;
     public $carRequestId;
+    public $use_check = 0;
 
     protected $rules = [
         'user_request' => 'required|string|max:255',
@@ -49,6 +50,11 @@ class CarRequestIndex extends Component
     {
         $this->carRequest = $carRequest;
         $this->approver_request = Auth::user()->name;
+    }
+
+    public function updatedUseCheck($value)
+    {
+        $this->use_check = $value ? 1 : 0;
     }
 
     public bool $isLoading = false;
@@ -88,8 +94,13 @@ class CarRequestIndex extends Component
                 'car_request' => 'nullable|string|max:255',
                 'additionalNotes_request' => 'nullable|string|max:255',
             ]);
-
+            if($this->use_check == 0) {
+                $validatedData['car_request'] = 'รถส่วนตัว';
+            }else{
+                $validatedData['car_request'] = $this->car_request;
+            }
             CarRequest::create($validatedData);
+
             $empName = Emp::where('EmpID', '=', $validatedData['user_request'])->get();
             $carReports = CarReport::with(['province'])->where('id', '=', $validatedData['car_request'])->get();
 
