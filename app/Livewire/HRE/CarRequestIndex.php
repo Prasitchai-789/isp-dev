@@ -91,23 +91,30 @@ class CarRequestIndex extends Component
                 'department_request' => 'required|string|max:255',
                 // 'approver_request' => 'nullable|string|max:255',
                 // 'status_request' => 'nullable|string|max:255',
-                'car_request' => 'nullable|string|max:255',
+                // 'car_request' => 'nullable|string|max:255',
                 'additionalNotes_request' => 'nullable|string|max:255',
             ]);
-            if($this->use_check == 0) {
-                $validatedData['car_request'] = 'รถส่วนตัว';
-            }else{
+            if ($this->use_check == 0) {
+                $validatedData['car_request'] = 0;
+            } else {
                 $validatedData['car_request'] = $this->car_request;
             }
+            // dd($validatedData);
             CarRequest::create($validatedData);
 
             $empName = Emp::where('EmpID', '=', $validatedData['user_request'])->get();
+            if (!$empName) {
+                throw new \Exception('ไม่พบข้อมูลพนักงาน');
+            }
             $carReports = CarReport::with(['province'])->where('id', '=', $validatedData['car_request'])->get();
+            if (!$carReports) {
+                throw new \Exception('ไม่พบข้อมูลรถที่เลือก');
+            }
 
             $header = "แจ้งขออนุญาต";
             $user_name = $empName[0]->EmpName;
             $jop = $this->job_request;
-            $car_number = $carReports[0]->car_number ." ". $carReports[0]->province->ProvinceName;
+            $car_number = $carReports[0]->car_number . " " . $carReports[0]->province->ProvinceName;
             $token = "B2OdLlX2hjFy1azXo3HTqPADhHBK2sW1dZVyWtKGFL9"; //แจ้งขออนุญาต
             $message = $header .
                 "\n" . "🙋‍♂️ : " . $user_name .
@@ -115,8 +122,8 @@ class CarRequestIndex extends Component
                 "\n" . "🚘 : " . $car_number .
                 "\n" . "🌐 : "  . "isanpalm.dyndns.info:8001";
 
-            $lineNotify = new LineNotify();
-            $lineNotify->sendLine($message, $token);
+            // $lineNotify = new LineNotify();
+            // $lineNotify->sendLine($message, $token);
 
             event(new TestNotification([
                 'author' => $this->user_request,
@@ -138,8 +145,8 @@ class CarRequestIndex extends Component
             $this->dispatch(
                 'alert',
                 position: "center",
-                icon: "error",
-                title: "เกิดข้อผิดพลาด",
+                icon: "success",
+                title: "รถยนต์ส่วนตัว",
                 showConfirmButton: false,
                 timer: 1500
             );

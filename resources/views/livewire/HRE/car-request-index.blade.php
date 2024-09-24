@@ -60,8 +60,8 @@
                                         <td>{{ $carRequest->emp->EmpName }}</td>
                                         <td>{{ $carRequest->job_request }}</td>
                                         <td>{{ $carRequest->department->DeptName ?? 'N/A'}}</td>
-                                        <td>{{ $carRequest->car->car_number ?? 'N/A' }} {{
-                                            $carRequest->car->province->ProvinceName ?? 'N/A' }}</td>
+                                        <td>{{ $carRequest->car->car_number ?? 'รถยนต์' }} {{
+                                            $carRequest->car->province->ProvinceName ?? 'ส่วนตัว' }}</td>
                                         <td>{{ $carRequest->approver_request }}</td>
                                         <td class="text-center">
                                             @if ( $carRequest->status_request  == 1)
