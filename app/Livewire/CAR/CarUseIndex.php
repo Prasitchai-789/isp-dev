@@ -152,7 +152,7 @@ class CarUseIndex extends Component
         try {
             $carUse = CarUse::findOrFail($this->endId);
             $carReport = CarReport::findOrFail($this->carId);
-            $this->use_distance = ($this->use_end - $carUse->use_start);
+            $this->use_distance = (intval($this->use_end) - intval($carUse->use_start));
             $carUse->update([
                 'use_status' => 2,
                 'use_end' => $this->use_end,
