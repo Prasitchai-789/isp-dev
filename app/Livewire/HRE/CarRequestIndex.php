@@ -122,8 +122,8 @@ class CarRequestIndex extends Component
                 "\n" . "🚘 : " . $car_number .
                 "\n" . "🌐 : "  . "isanpalm.dyndns.info:8001";
 
-            // $lineNotify = new LineNotify();
-            // $lineNotify->sendLine($message, $token);
+            $lineNotify = new LineNotify();
+            $lineNotify->sendLine($message, $token);
 
             event(new TestNotification([
                 'author' => $this->user_request,
