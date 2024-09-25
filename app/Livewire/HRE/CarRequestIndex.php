@@ -95,7 +95,7 @@ class CarRequestIndex extends Component
                 'additionalNotes_request' => 'nullable|string|max:255',
             ]);
             if ($this->use_check == 0) {
-                $validatedData['car_request'] = 0;
+                $validatedData['car_request'] = '28';
             } else {
                 $validatedData['car_request'] = $this->car_request;
             }
@@ -116,6 +116,7 @@ class CarRequestIndex extends Component
             $jop = $this->job_request;
             $car_number = $carReports[0]->car_number . " " . $carReports[0]->province->ProvinceName;
             $token = "B2OdLlX2hjFy1azXo3HTqPADhHBK2sW1dZVyWtKGFL9"; //แจ้งขออนุญาต
+            // $token = "FDkGYUZXSB3YjuvLGF5MkOEU61TxkSNzupCfEZkVYSs"; //test
             $message = $header .
                 "\n" . "🙋‍♂️ : " . $user_name .
                 "\n" . "💼 : "  . $jop .

@@ -10,6 +10,7 @@ use Livewire\WithPagination;
 use App\Models\CAR\CarReport;
 use App\Models\HRE\CarRequest;
 use App\Models\HRE\Department;
+use App\Http\Notify\LineNotify;
 
 
 class CarUseIndex extends Component
@@ -105,10 +106,39 @@ class CarUseIndex extends Component
             $carUse->use_start = $this->use_start;
             $carUse->use_status = $this->use_status;
 
+            $carUse->save();
+
+            $empName = Emp::where('EmpID', '=', $carUse->user_request)->get();
+            if (!$empName) {
+                throw new \Exception('ไม่พบข้อมูลพนักงาน');
+            }
+            $carReports = CarReport::with(['province'])->where('id', '=', $this->car_id)->get();
+            if (!$carReports) {
+                throw new \Exception('ไม่พบข้อมูลรถที่เลือก');
+            }
+
+            $header = "🔴 ออกนอกบริษัท 🔴";
+            $user_name = $empName[0]->EmpName;
+            $jop = $carUse->use_job;
+            $car_number = $carReports[0]->car_number . " " . $carReports[0]->province->ProvinceName;
+            $use_start = $carUse->use_start;
+            $token = "W0WlfsmtkOhloU8JjdxUhQhpmYM9Je0FK1cu4b1Mtrq"; //แจ้งขอใช้รถ
+            // $token = "FDkGYUZXSB3YjuvLGF5MkOEU61TxkSNzupCfEZkVYSs"; //test
+            $message = $header .
+                "\n" . "🙋‍♂️ : " . $user_name .
+                "\n" . "💼 : "  . $jop .
+                "\n" . "🚘 : " . $car_number .
+                "\n" . "📟 : " . $use_start .
+                "\n" . "🌐 : "  . "isanpalm.dyndns.info:8001";
+
+            $lineNotify = new LineNotify();
+            $lineNotify->sendLine($message, $token);
+
             $carRequest->update([
                 'additionalNotes_request' => 1,
             ]);
-            $carUse->save();
+
+
             $this->dispatch('close-modal');
             $this->dispatch(
                 'alert',
@@ -161,6 +191,33 @@ class CarUseIndex extends Component
             $carReport->update([
                 'car_mileage' => $this->use_end,
             ]);
+            $empName = Emp::where('EmpID', '=', $this->user_request)->get();
+            if (!$empName) {
+                throw new \Exception('ไม่พบข้อมูลพนักงาน');
+            }
+            $carReports = CarReport::with(['province'])->where('id', '=', $this->carId)->get();
+            if (!$carReports) {
+                throw new \Exception('ไม่พบข้อมูลรถที่เลือก');
+            }
+
+            $header = "🟢 เสร็จภารกิจ 🟢";
+            $user_name = $empName[0]->EmpName;
+            $jop = $carUse->use_job;
+            $car_number = $carReports[0]->car_number . " " . $carReports[0]->province->ProvinceName;
+            $use_start = $carUse->use_start;
+            $use_end = $this->use_end;
+            $token = "W0WlfsmtkOhloU8JjdxUhQhpmYM9Je0FK1cu4b1Mtrq"; //แจ้งขอใช้รถ
+            // $token = "FDkGYUZXSB3YjuvLGF5MkOEU61TxkSNzupCfEZkVYSs"; //test
+            $message = $header .
+                "\n" . "🙋‍♂️ : " . $user_name .
+                "\n" . "💼 : "  . $jop .
+                "\n" . "🚘 : " . $car_number .
+                "\n" . "📟 : " . $use_start .
+                "\n" . "📟 : " . $use_end .
+                "\n" . "🌐 : "  . "isanpalm.dyndns.info:8001";
+
+            $lineNotify = new LineNotify();
+            $lineNotify->sendLine($message, $token);
             $this->dispatch('close-modal');
             $this->dispatch(
                 'alert',
