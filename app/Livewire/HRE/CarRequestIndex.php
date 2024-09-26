@@ -50,6 +50,9 @@ class CarRequestIndex extends Component
     {
         $this->carRequest = $carRequest;
         $this->approver_request = Auth::user()->name;
+        $this->user_request = Auth::user()->emp_id;
+        $dept = Emp::where('EmpID', Auth::user()->emp_id)->first();
+        $this->department_request = $dept->DeptID;
     }
 
     public function updatedUseCheck($value)

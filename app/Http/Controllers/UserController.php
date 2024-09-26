@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Hash;
 use App\Models\User;
+use App\Models\HRE\Emp;
 use Illuminate\Http\Request;
 use Spatie\Permission\Models\Role;
 
@@ -20,7 +21,8 @@ class UserController extends Controller
 
     public function index()
     {
-        $users = User::get();
+        // $users = User::get();
+        $users = User::with(['emp'])->orderBy('id', 'asc')->get();
         return view('role-permission.user.index', [
             'users' => $users,
         ]);
@@ -58,10 +60,13 @@ class UserController extends Controller
     {
         $roles = Role::pluck('name', 'name')->all();
         $userRoles = $user->roles->pluck('name', 'name')->all();
+        $emps = Emp::orderBy('EmpName', 'asc')->get();
+        // dd  ($emps);
         return view('role-permission.user.edit', [
             'user' => $user,
             'roles' => $roles,
             'userRoles' => $userRoles,
+            'emps' => $emps,
         ]);
     }
 
@@ -71,11 +76,13 @@ class UserController extends Controller
             'name' => 'required|string|max:255',
             'password' => 'nullable|string|min:8|max:20',
             'roles' => 'required',
+            'emp_id' => 'nullable|string|max:255',
         ]);
 
         $data = [
             'name' => $request->name,
             'email' => $request->email,
+            'emp_id' => $request->emp_id,
 
         ];
         if(!empty($request->password)){

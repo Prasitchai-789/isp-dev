@@ -11,7 +11,6 @@
                                 <h4> Edit User
                                     <a href="{{url('users')}}" class="btn btn-danger float-end p-1">Back</a>
                                 </h4>
-
                             </div>
                         </div>
                         <div class="col-md-12">
@@ -40,6 +39,20 @@
                         <div class="mb-3">
                             <label for="">Email</label>
                             <input type="text" name="email" value="{{ $user->email }}" class="form-control" readonly>
+                        </div>
+                        <div class="mb-3">
+                            <label for="">Employee Name</label>
+                            <div class="input-group">
+                                <select class="form-control my-auto" id="emp_id" name="emp_id"
+                                    wire:model="emp_id" required>
+                                    <option selected="" value="">
+                                        เลือกชื่อ...</option>
+                                    @foreach($emps as $emp)
+                                    <option value="{{ $emp->EmpID }}">{{
+                                        $emp->EmpName }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
                         </div>
                         <div class="mb-3">
                             <label for="">Password</label>

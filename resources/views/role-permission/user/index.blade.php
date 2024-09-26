@@ -35,6 +35,7 @@
                                         <th>Name</th>
                                         <th>Email</th>
                                         <th>Role</th>
+                                        <th>Epm_Name</th>
                                         <th>Action</th>
                                     </tr>
                                 </thead>
@@ -50,6 +51,7 @@
                                             @endforeach
                                             @endif
                                         </td>
+                                        <td>{{$user->emp->EmpName ?? 'N/A'}}</td>
                                         <td>
                                             <a href="{{ url('users/'.$user->id.'/edit')}}" class="avtar avtar-xs btn-link-secondary">
                                                 <i class="bi bi-pencil-square text-warning text-middle" style="font-size: 18px;"></i>
