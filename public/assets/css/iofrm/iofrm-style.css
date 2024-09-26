@@ -19,6 +19,28 @@
 /* -----------------------------------
     1 - General Styles
 ------------------------------------*/
+
+@import url("https://fonts.googleapis.com/css2?family=Prompt:wght@200;300;500;600&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Anuphan:wght@100..700&display=swap");
+@import url('https://fonts.cdnfonts.com/css/db-eurothai-x-bold');
+
+
+
+
+.font_Prompt {
+    font-family: "Prompt", sans-serif;
+    color: rgb(71, 75, 79);
+}
+.font_DB {
+    font-family: 'DB EuroThai X Bold', sans-serif;
+    font-size: 40px;
+    font-optical-sizing: auto;
+}
+.font_anuphan {
+    font-family: "Anuphan", sans-serif;
+    font-optical-sizing: auto;
+}
+
 *, body {
     font-family: "Lato", sans-serif;
     font-weight: 400;

@@ -99,6 +99,18 @@
                                     <strong>{{ $message }}</strong>
                                 </span>
                             @enderror
+
+                            <div class="row mb-3 p-0">
+                                <div class="py-0">
+                                    <div class="form-check p-0">
+                                        <input class="form-check-input" type="checkbox" name="remember" id="remember" {{ old('remember') ? 'checked' : '' }}>
+                                        <label class="form-check-label" for="remember">
+                                            {{ __('Remember Me') }}
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+
                             <div class="form-button my-4">
                                 <button id="submit" type="submit" class="ibtn">{{ __('Login') }}</button>
                                 @if (Route::has('password.request'))
