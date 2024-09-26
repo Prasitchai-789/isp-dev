@@ -122,7 +122,7 @@ class CarUseIndex extends Component
             $jop = $carUse->use_job;
             $car_number = $carReports[0]->car_number . " " . $carReports[0]->province->ProvinceName;
             $use_start = $carUse->use_start;
-            $token = "W0WlfsmtkOhloU8JjdxUhQhpmYM9Je0FK1cu4b1Mtrq"; //แจ้งขอใช้รถ
+            $token = "AjH3Cbadx1Albfg91wThcxzyZCArW0KqlyIUTYtIjIi"; //แจ้งขอใช้รถ
             // $token = "FDkGYUZXSB3YjuvLGF5MkOEU61TxkSNzupCfEZkVYSs"; //test
             $message = $header .
                 "\n" . "🙋‍♂️ : " . $user_name .
@@ -206,7 +206,7 @@ class CarUseIndex extends Component
             $car_number = $carReports[0]->car_number . " " . $carReports[0]->province->ProvinceName;
             $use_start = $carUse->use_start;
             $use_end = $this->use_end;
-            $token = "W0WlfsmtkOhloU8JjdxUhQhpmYM9Je0FK1cu4b1Mtrq"; //แจ้งขอใช้รถ
+            $token = "AjH3Cbadx1Albfg91wThcxzyZCArW0KqlyIUTYtIjIi"; //แจ้งขอใช้รถ
             // $token = "FDkGYUZXSB3YjuvLGF5MkOEU61TxkSNzupCfEZkVYSs"; //test
             $message = $header .
                 "\n" . "🙋‍♂️ : " . $user_name .
