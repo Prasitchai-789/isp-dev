@@ -379,7 +379,7 @@
                 </div>
             </div>
         </div>
-        <div class="col-lg-4 col-md-12">
+        {{-- <div class="col-lg-4 col-md-12">
             <div class="card">
                 <div class="card-header">
                     <h5>Popular</h5>
@@ -439,8 +439,8 @@
                             More</button></div>
                 </div>
             </div>
-        </div>
-        <div class="modal fade modal-lightbox post-modal-lightbox" id="lightboxModal" tabindex="-1" aria-hidden="true">
+        </div> --}}
+        {{-- <div class="modal fade modal-lightbox post-modal-lightbox" id="lightboxModal" tabindex="-1" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered">
                 <div class="modal-content"><button type="button" class="btn-close" data-bs-dismiss="modal"
                         aria-label="Close"></button>
@@ -448,7 +448,7 @@
                             class="modal-image w-100 img-fluid"></div>
                 </div>
             </div>
-        </div>
+        </div> --}}
         <div class="col-xl-4 col-md-6">
             <div class="card">
                 <div class="card-body">
