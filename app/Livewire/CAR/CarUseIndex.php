@@ -190,7 +190,8 @@ class CarUseIndex extends Component
                 throw new \Exception('ไม่พบข้อมูลรถที่เลือก');
             }
             $validatedData['use_start'] = $carReports[0]->car_mileage;
-            // CarUse::create($validatedData);
+            $validatedData['use_status'] = 1;
+            CarUse::create($validatedData);
 
             $empName = Emp::where('EmpID', '=', $validatedData['user_request'])->get();
             if (!$empName) {
