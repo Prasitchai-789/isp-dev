@@ -51,7 +51,7 @@
                                     <tr>
                                         <td>
                                             @if ($carRequest->created_at)
-                                            {{ \Carbon\Carbon::parse($carRequest->created_at)->translatedFormat('j F Y')
+                                            {{ \Carbon\Carbon::parse($carRequest->created_at)->translatedFormat('j/m/y')
                                             }}
                                             @else
                                             ไม่ระบุวันที่

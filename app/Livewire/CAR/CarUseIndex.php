@@ -164,7 +164,7 @@ class CarUseIndex extends Component
     public function end($id)
     {
         $this->endId = $id;
-        $carUse = CarUse::with(['emp','car'])->findOrFail($id);
+        $carUse = CarUse::with(['emp', 'car'])->findOrFail($id);
         $carReports = CarReport::with(['province'])->findOrFail($carUse->car->id);
 
         $carId = CarReport::findOrFail($carUse->car_id);
@@ -175,6 +175,70 @@ class CarUseIndex extends Component
         $this->car_province = $carReports->province->ProvinceName;
         $this->car_id = $carUse->car_request;
         $this->use_job = $carUse->job_request;
+    }
+
+    public function saveCarUse()
+    {
+        try {
+            $validatedData = $this->validate([
+                'car_id' => 'required|string|max:255',
+                'user_request' => 'required|string|max:255',
+                'use_job' => 'required|string|max:255',
+            ]);
+            $carReports = CarReport::with(['province'])->where('id', '=', $this->car_id)->get();
+            if (!$carReports) {
+                throw new \Exception('ไม่พบข้อมูลรถที่เลือก');
+            }
+            $validatedData['use_start'] = $carReports[0]->car_mileage;
+            // CarUse::create($validatedData);
+
+            $empName = Emp::where('EmpID', '=', $validatedData['user_request'])->get();
+            if (!$empName) {
+                throw new \Exception('ไม่พบข้อมูลพนักงาน');
+            }
+            $carReports = CarReport::with(['province'])->where('id', '=', $this->car_id)->get();
+            if (!$carReports) {
+                throw new \Exception('ไม่พบข้อมูลรถที่เลือก');
+            }
+
+            $header = "🔴 ออกนอกบริษัท 🔴";
+            $user_name = $empName[0]->EmpName;
+            $jop = $validatedData['use_job'];
+            $car_number = $carReports[0]->car_number . " " . $carReports[0]->province->ProvinceName;
+            $use_start = $validatedData['use_start'];
+            $token = "AjH3Cbadx1Albfg91wThcxzyZCArW0KqlyIUTYtIjIi"; //แจ้งขอใช้รถ
+            // $token = "FDkGYUZXSB3YjuvLGF5MkOEU61TxkSNzupCfEZkVYSs"; //test
+            $message = $header .
+                "\n" . "🙋‍♂️ : " . $user_name .
+                "\n" . "💼 : "  . $jop .
+                "\n" . "🚘 : " . $car_number .
+                "\n" . "📟 : " . $use_start .
+                "\n" . "🌐 : "  . "isanpalm.dyndns.info:8001";
+
+            $lineNotify = new LineNotify();
+            $lineNotify->sendLine($message, $token);
+
+            $this->dispatch('close-modal');
+            $this->dispatch(
+                'alert',
+                position: "center",
+                icon: "success",
+                title: "บันทึกข้อมูลสำเร็จ",
+                showConfirmButton: false,
+                timer: 1500
+            );
+        } catch (\Exception $e) {
+            session()->flash('error', 'เกิดข้อผิดพลาด: ' . $e->getMessage());
+            $this->dispatch(
+                'alert',
+                position: "center",
+                icon: "error",
+                title: "เกิดข้อผิดพลาด",
+                showConfirmButton: false,
+                timer: 1500
+            );
+            $this->dispatch('close-modal');
+        }
     }
 
     public function updateCarUseEnd()

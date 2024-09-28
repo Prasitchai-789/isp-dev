@@ -44,7 +44,7 @@
                                     <tr>
                                         <td>
                                             @if ($carRequest->created_at)
-                                            {{ \Carbon\Carbon::parse($carRequest->created_at)->translatedFormat('j F Y')
+                                            {{ \Carbon\Carbon::parse($carRequest->created_at)->translatedFormat('j/m/y')
                                             }}
                                             @else
                                             ไม่ระบุวันที่
@@ -94,11 +94,11 @@
                         <div class="col-md-12">
                             <div class="page-header-title border-bottom pb-2 mb-2 font_Prompt">
                                 <h4 class="animate__animated animate__headShake">บันทึกการเข้าออก
-                                    {{-- <button type="button" class="btn btn-primary btn-sm col-lg-0 float-end"
+                                    <button type="button" class="btn btn-primary btn-sm col-lg-0 float-end"
                                         style="border-radius: 7px " data-bs-toggle="modal"
                                         data-bs-target="#carUseModal">
                                         <span class="font_anuphan">การใช้งาน</span>
-                                    </button> --}}
+                                    </button>
                                 </h4>
 
                             </div>
@@ -127,7 +127,7 @@
                                     <tr>
                                         <td>
                                             @if ($carUse->created_at)
-                                            {{ \Carbon\Carbon::parse($carUse->created_at)->translatedFormat('j F Y')
+                                            {{ \Carbon\Carbon::parse($carUse->created_at)->translatedFormat('j/m/y')
                                             }}
                                             @else
                                             ไม่ระบุวันที่
@@ -195,7 +195,7 @@
                         <div class="container-fluid">
                             <div class="row" id="error">
 
-                                {{-- <div class="col-md-12 mb-2 font_anuphan">
+                                <div class="col-md-12 mb-2 font_anuphan">
                                     <label class="font_Prompt">ชื่อผู้ใช้งาน</label>
                                     <div class="input-group">
                                         <span class="input-group-text text-primary">
@@ -212,7 +212,7 @@
                                         </select>
                                     </div>
                                 </div>
-                                <div class="col-md-12 mb-2 font_anuphan">
+                                {{-- <div class="col-md-12 mb-2 font_anuphan">
                                     <label class="font_Prompt">ฝ่าย</label>
                                     <div class="input-group">
                                         <span class="input-group-text text-primary">
@@ -228,7 +228,7 @@
                                             @endforeach
                                         </select>
                                     </div>
-                                </div>
+                                </div> --}}
                                 <div class="col-md-12 mb-2 font_anuphan">
                                     <label class="font_Prompt">ภารกิจ</label>
                                     <div class="input-group">
@@ -236,7 +236,7 @@
                                             <i class="bi bi-ui-checks"></i>
                                         </span>
                                         <textarea type="text" class="form-control form-control-sm font_Prompt"
-                                            id="job_request" name="job_request" wire:model="job_request" placeholder=""
+                                            id="use_job" name="use_job" wire:model="use_job" placeholder=""
                                             required></textarea>
                                     </div>
                                 </div>
@@ -246,8 +246,8 @@
                                         <span class="input-group-text text-primary">
                                             <i class="bi bi-123"></i>
                                         </span>
-                                        <select class="form-control my-auto" id="car_request" name="car_request"
-                                            wire:model="car_request" required>
+                                        <select class="form-control my-auto" id="car_id" name="car_id"
+                                            wire:model="car_id" required>
                                             <option selected="" value="">
                                                 เลือกรถ...</option>
                                             @foreach($carReports as $carReport)
@@ -258,7 +258,7 @@
                                             @endforeach
                                         </select>
                                     </div>
-                                </div> --}}
+                                </div>
                                 {{-- @can(['approver_car'])
                                 <div class="col-md-12 mb-2 font_anuphan">
                                     <label class="font_Prompt">ผู้อนุญาต</label>
