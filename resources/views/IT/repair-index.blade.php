@@ -24,6 +24,7 @@
 
         window.addEventListener('modifyPdf', function(event) {
             modifyPdf(event);
+            console.log(event);
 
         });
 
@@ -136,6 +137,29 @@
             firstPage.drawText(event.detail.Detail, {
                 x: 145,
                 y: 644,
+                size: 14,
+                font: thaiFont,
+                color: rgb(0.1, 0.1, 0.95),
+            });
+
+            firstPage.drawText(event.detail.RepairReport, {
+                x: 125,
+                y: 423,
+                size: 14,
+                font: thaiFont,
+                color: rgb(0.1, 0.1, 0.95),
+            });
+
+            firstPage.drawText(event.detail.Technician, {
+                x: 305,
+                y: 132,
+                size: 14,
+                font: thaiFont,
+                color: rgb(0.1, 0.1, 0.95),
+            });
+            firstPage.drawText(event.detail.updateDate, {
+                x: 310,
+                y: 112,
                 size: 14,
                 font: thaiFont,
                 color: rgb(0.1, 0.1, 0.95),

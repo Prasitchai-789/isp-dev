@@ -400,7 +400,10 @@ class RepairIndex extends Component
                 MachineName: $workOrder->MachineName,
                 Detail: $workOrder->Detail,
                 Number: $workOrder->Number,
+                RepairReport: $workOrder->RepairReport,
+                Technician: $workOrder->Technician,
                 Date: Carbon::parse($workOrder->created_at)->locale('th')->translatedFormat('j F Y'),
+                updateDate: Carbon::parse($workOrder->updated_at)->locale('th')->translatedFormat('j F Y'),
             );
         } else {
             $this->dispatch(
@@ -410,6 +413,8 @@ class RepairIndex extends Component
                 MachineName: $workOrder->MachineName,
                 Detail: $workOrder->Detail,
                 Number: $workOrder->Number,
+                RepairReport: $workOrder->RepairReport,
+                Technician: $workOrder->Technician,
             );
         }
     }
