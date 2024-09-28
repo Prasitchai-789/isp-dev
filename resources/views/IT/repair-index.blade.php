@@ -155,13 +155,13 @@
                 font: thaiFont,
                 color: rgb(0.1, 0.1, 0.95),
             });
-            firstPage.drawText(event.detail.updateDate, {
-                x: 310,
-                y: 112,
-                size: 14,
-                font: thaiFont,
-                color: rgb(0.1, 0.1, 0.95),
-            });
+            // firstPage.drawText(event.detail.updateDate, {
+            //     x: 310,
+            //     y: 112,
+            //     size: 14,
+            //     font: thaiFont,
+            //     color: rgb(0.1, 0.1, 0.95),
+            // });
             // Serialize the PDFDocument to bytes (a Uint8Array)
             const pdfBytes = await pdfDoc.save()
 
