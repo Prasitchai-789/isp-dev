@@ -24,8 +24,6 @@
 
         window.addEventListener('modifyPdf', function(event) {
             modifyPdf(event);
-            console.log(event);
-
         });
 
         const {
