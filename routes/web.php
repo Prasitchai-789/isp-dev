@@ -23,7 +23,7 @@ use App\Http\Controllers\GM\DashboardPalmController;
 use App\Http\Controllers\HRE\CarRequestController;
 use App\Http\Controllers\Technician\MachineryReportController;
 
-Route::group(['middleware' => ['role:developer|admin']], function () {
+Route::group(['middleware' => ['auth','role:developer|admin']], function () {
     Route::resource('permissions', App\Http\Controllers\PermissionController::class);
     Route::get('permissions/{permissionId}/delete', [App\Http\Controllers\PermissionController::class, 'destrory']);
 
@@ -63,7 +63,7 @@ Route::get('/pdf', [PDFController::class, 'index'])->name('pdf.index');
 
 Route::get('/counter', Counter::class);
 
-Route::group(['middleware' => ['role:developer|admin']], function () {
+Route::group(['middleware' => ['auth','role:developer|admin']], function () {
     Route::controller(ComputerController::class)->group(function () {
         Route::get('/computer/', 'computerIndex')->name('computer.index');
         Route::get('/windows/', 'windowsIndex')->name('computer.windows.index');
@@ -78,7 +78,7 @@ Route::group(['middleware' => ['role:developer|admin']], function () {
 
 
 
-Route::group(['middleware' => ['role:developer|admin|admin-PRO']], function () {
+Route::group(['middleware' => ['auth','role:developer|admin|admin-PRO']], function () {
     Route::controller(SaleController::class)->group(function () {
         Route::get('/product/', 'productIndex')->name('product.index');
     });
@@ -90,13 +90,13 @@ Route::group(['middleware' => ['role:developer|admin|admin-PRO']], function () {
 
 });
 
-Route::group(['middleware' => ['role:developer|admin|GM|MD']], function () {
+Route::group(['middleware' => ['auth','role:developer|admin|GM|MD']], function () {
     Route::controller(DashboardPalmController::class)->group(function () {
         Route::get('/dashboard-palm/', 'index')->name('dashboard-palm.index');
     });
 });
 
-Route::group(['middleware' => ['role:developer|admin|admin-RPO|MD']], function () {
+Route::group(['middleware' => ['auth','role:developer|admin|admin-RPO|MD']], function () {
     Route::controller(DashboardPalmPurchase::class)->group(function () {
         Route::get('/dashboard-palm-purchase/', 'index')->name('dashboard-palm-purchase.index');
     });
