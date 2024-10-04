@@ -180,7 +180,7 @@
                                                 <i class="bi bi-calendar-event"></i>
                                             </span>
                                             <input type="text" class="form-control font_Prompt" id="birthday"
-                                                name="birthday" wire:model="birthday" placeholder="" required>
+                                                name="birthday" wire:model="birthday" placeholder="" >
                                         </div>
                                         @error('birthday')
                                         <span class="error">{{ $message }}</span>
@@ -193,7 +193,7 @@
                                                 <i class="bi bi-house"></i>
                                             </span>
                                             <input type="text" class="form-control font_Prompt" id="address"
-                                                name="address" wire:model="address" placeholder="" required="">
+                                                name="address" wire:model="address" placeholder="">
                                         </div>
                                         @error('address')
                                         <span class="error">{{ $message }}</span>
@@ -206,7 +206,7 @@
                                                 <i class="bi bi-house"></i>
                                             </span>
                                             <input type="text" class="form-control font_Prompt" id="address_moo"
-                                                name="address_moo" wire:model="address_moo" placeholder="" required="">
+                                                name="address_moo" wire:model="address_moo" placeholder="">
                                         </div>
                                         @error('address_moo')
                                         <span class="error">{{ $message }}</span>
@@ -271,7 +271,7 @@
                                                 <i class="bi bi-list-task"></i>
                                             </span>
                                             <select class="form-control text-primary font_Prompt" id="pass_dept"
-                                                name="pass_dept" wire:model="pass_dept" required>
+                                                name="pass_dept" wire:model="pass_dept">
                                                 <option selected value="">
                                                     เลือก...</option>
                                                 <option value="ลูกค้าขายปาล์ม">ลูกค้าขายปาล์ม</option>
@@ -293,7 +293,7 @@
                                                 <i class="bi bi-123"></i>
                                             </span>
                                             <select class="form-control my-auto font_Prompt text-primary" id="pass_contact" name="pass_contact"
-                                                wire:model="pass_contact" required>
+                                                wire:model="pass_contact">
                                                 <option selected="" value="">
                                                     เลือกผู้ติดต่อ...</option>
                                                 @foreach($emps as $emp)

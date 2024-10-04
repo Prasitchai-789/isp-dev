@@ -16,7 +16,7 @@ return new class extends Migration
             $table->string('prefix');
             $table->string('first_name');
             $table->string('last_name');
-            $table->string('id_card')->unique();
+            $table->string('id_card');
             $table->string('birthday')->nullable();
             $table->string('address')->nullable();
             $table->string('address_moo')->nullable();
