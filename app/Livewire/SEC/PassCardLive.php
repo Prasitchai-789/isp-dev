@@ -8,6 +8,7 @@ use App\Models\SEC\PassCard;
 use Livewire\WithPagination;
 use Livewire\WithFileUploads;
 use App\Events\TestNotification;
+use App\Models\HRE\Emp;
 
 class PassCardLive extends Component
 {
@@ -28,6 +29,7 @@ class PassCardLive extends Component
     public $id_card;
     public $birthday;
     public $address;
+    public $address_moo;
     public $district;
     public $county;
     public $province;
@@ -57,6 +59,7 @@ class PassCardLive extends Component
         'id_card' => 'required|string|max:255',
         'birthday' => 'nullable|string|max:255',
         'address' => 'nullable|string|max:255',
+        'address_moo' => 'nullable|string|max:255',
         'district' => 'nullable|string|max:255',
         'county' => 'nullable|string|max:255',
         'province' => 'nullable|string|max:255',
@@ -77,9 +80,11 @@ class PassCardLive extends Component
     public function render()
     {
         Carbon::setLocale('th');
+        $emps = Emp::orderBy('EmpName', 'asc')->get();
         $passCards = PassCard::orderBy('id', 'desc')->paginate(10);
         return view('livewire.SEC.pass-card-live', [
             'passCards' => $passCards,
+            'emps' => $emps,
         ]);
     }
     public function savePassCard()
@@ -93,6 +98,7 @@ class PassCardLive extends Component
                     'id_card' => 'required|string|max:255',
                     'birthday' => 'nullable|string|max:255',
                     'address' => 'nullable|string|max:255',
+                    'address_moo' => 'nullable|string|max:255',
                     'district' => 'nullable|string|max:255',
                     'county' => 'nullable|string|max:255',
                     'province' => 'nullable|string|max:255',
@@ -165,6 +171,7 @@ class PassCardLive extends Component
         $this->id_card = $passCard->id_card;
         $this->birthday = $passCard->birthday;
         $this->address = $passCard->address;
+        $this->address_moo = $passCard->address_moo;
         $this->district = $passCard->district;
         $this->county = $passCard->county;
         $this->province = $passCard->province;
@@ -185,6 +192,7 @@ class PassCardLive extends Component
                     'id_card' => 'required|string|max:255',
                     'birthday' => 'nullable|string|max:255',
                     'address' => 'nullable|string|max:255',
+                    'address_moo' => 'nullable|string|max:255',
                     'district' => 'nullable|string|max:255',
                     'county' => 'nullable|string|max:255',
                     'province' => 'nullable|string|max:255',
@@ -233,6 +241,7 @@ class PassCardLive extends Component
         $this->id_card = '';
         $this->birthday = '';
         $this->address = '';
+        $this->address_moo = '';
         $this->district = '';
         $this->county = '';
         $this->province = '';

@@ -52,18 +52,21 @@
                                         <td>
                                             @if ($passCard->created_at)
                                             {{
-                                            \Carbon\Carbon::parse($passCard->created_at)->translatedFormat('j/m/Y H:i') }}
+                                            \Carbon\Carbon::parse($passCard->created_at)->translatedFormat('j/m/Y H:i')
+                                            }}
                                             @else
                                             ไม่ระบุวันที่
                                             @endif
                                         </td>
-                                        <td>{{ $passCard->prefix }}{{ $passCard->first_name }} {{ $passCard->last_name }}</td>
+                                        <td>{{ $passCard->prefix }}{{ $passCard->first_name }} {{ $passCard->last_name
+                                            }}</td>
                                         <td>{{ $passCard->car_number }}</td>
                                         <td>{{ $passCard->pass_dept }}</td>
                                         <td>{{ $passCard->pass_contact }}</td>
                                         <td>
                                             @if ($passCard->pass_status == 1)
-                                            <span class="badge bg-danger btn" wire:click='passEnd({{ $passCard->id  }})'>ดำเนินการ</span>
+                                            <span class="badge bg-danger btn"
+                                                wire:click='passEnd({{ $passCard->id  }})'>ดำเนินการ</span>
                                             @else
                                             <span class="badge bg-success">ดำเนินการเรียบร้อย</span>
                                             @endif
@@ -80,8 +83,7 @@
                                             <a href="#" wire:click='confirmDelete({{ $passCard->id }})'
                                                 class="avtar avtar-xs btn-link-secondary" data-bs-toggle="modal"
                                                 data-bs-target="#">
-                                                <i class="bi bi-trash  text-danger"
-                                                    style="font-size: 18px;"></i>
+                                                <i class="bi bi-trash  text-danger" style="font-size: 18px;"></i>
                                             </a>
                                             @endcan
 
@@ -184,8 +186,8 @@
                                         <span class="error">{{ $message }}</span>
                                         @enderror
                                     </div>
-                                    <div class="col-md-6 mb-2">
-                                        <label class="font_Prompt">ที่อยู่</label>
+                                    <div class="col-md-3 mb-2">
+                                        <label class="font_Prompt">บ้านเลขที่</label>
                                         <div class="input-group">
                                             <span class="input-group-text text-primary">
                                                 <i class="bi bi-house"></i>
@@ -194,6 +196,19 @@
                                                 name="address" wire:model="address" placeholder="" required="">
                                         </div>
                                         @error('address')
+                                        <span class="error">{{ $message }}</span>
+                                        @enderror
+                                    </div>
+                                    <div class="col-md-3 mb-2">
+                                        <label class="font_Prompt">หมู่</label>
+                                        <div class="input-group">
+                                            <span class="input-group-text text-primary">
+                                                <i class="bi bi-house"></i>
+                                            </span>
+                                            <input type="text" class="form-control font_Prompt" id="address_moo"
+                                                name="address_moo" wire:model="address_moo" placeholder="" required="">
+                                        </div>
+                                        @error('address_moo')
                                         <span class="error">{{ $message }}</span>
                                         @enderror
                                     </div>
@@ -255,8 +270,17 @@
                                             <span class="input-group-text text-primary">
                                                 <i class="bi bi-list-task"></i>
                                             </span>
-                                            <input type="text" class="form-control font_Prompt" id="pass_dept"
-                                                name="pass_dept" wire:model="pass_dept" placeholder="">
+                                            <select class="form-control text-primary font_Prompt" id="pass_dept"
+                                                name="pass_dept" wire:model="pass_dept" required>
+                                                <option selected value="">
+                                                    เลือก...</option>
+                                                <option value="ลูกค้าขายปาล์ม">ลูกค้าขายปาล์ม</option>
+                                                <option value="ลูกค้าซื้อสินค้า">ลูกค้าซื้อสินค้า</option>
+                                                <option value="หน่วยงานราชการ">หน่วยงานราชการ</option>
+                                                <option value="เจ้าหน้าที่ธนาคาร">เจ้าหน้าที่ธนาคาร</option>
+                                                <option value="แขกผู้บริหาร">แขกผู้บริหาร</option>
+                                                <option value="บุคคลทั่วไป">บุคคลทั่วไป</option>
+                                            </select>
                                         </div>
                                         @error('pass_dept')
                                         <span class="error">{{ $message }}</span>
@@ -268,8 +292,15 @@
                                             <span class="input-group-text text-primary">
                                                 <i class="bi bi-123"></i>
                                             </span>
-                                            <input type="text" class="form-control font_Prompt" id="pass_contact"
-                                                name="pass_contact" wire:model="pass_contact" placeholder="">
+                                            <select class="form-control my-auto font_Prompt text-primary" id="pass_contact" name="pass_contact"
+                                                wire:model="pass_contact" required>
+                                                <option selected="" value="">
+                                                    เลือกผู้ติดต่อ...</option>
+                                                @foreach($emps as $emp)
+                                                <option value="{{ $emp->EmpName }}">{{
+                                                    $emp->EmpName }}</option>
+                                                @endforeach
+                                            </select>
                                         </div>
                                         @error('pass_contact')
                                         <span class="error">{{ $message }}</span>

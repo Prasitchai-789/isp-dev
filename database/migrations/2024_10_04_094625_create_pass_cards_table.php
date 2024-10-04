@@ -19,6 +19,7 @@ return new class extends Migration
             $table->string('id_card')->unique();
             $table->string('birthday')->nullable();
             $table->string('address')->nullable();
+            $table->string('address_moo')->nullable();
             $table->string('district')->nullable();
             $table->string('county')->nullable();
             $table->string('province')->nullable();

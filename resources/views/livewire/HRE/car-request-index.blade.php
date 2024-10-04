@@ -97,6 +97,13 @@
                                             </a>
                                             @endcan
                                             @endif
+                                            @can('delete IT')
+                                            <a href="#" wire:click='confirmDelete({{ $carRequest->id }})'
+                                                class="avtar avtar-xs btn-link-secondary" data-bs-toggle="modal"
+                                                data-bs-target="#">
+                                                <i class="bi bi-trash  text-danger" style="font-size: 18px; vertical-align: middle;"></i>
+                                            </a>
+                                            @endcan
                                         </td>
                                     </tr>
                                     @endforeach

@@ -15,6 +15,7 @@ class PassCard extends Model
         'id_card',
         'birthday',
         'address',
+        'address_moo',
         'district',
         'county',
         'province',

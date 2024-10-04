@@ -142,7 +142,7 @@ Route::controller(MachineryReportController::class)->group(function () {
 });
 
 
-Route::group(['middleware' => ['auth','role:developer|admin']], function () {
+Route::group(['middleware' => ['auth','role:developer|admin|staff']], function () {
     Route::controller(PassCardController::class)->group(function () {
         Route::get('/pass-card/', 'index')->name('pass-card');
     });
