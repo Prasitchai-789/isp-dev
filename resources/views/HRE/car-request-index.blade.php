@@ -67,7 +67,6 @@
             }
         });
 });
-
 </script>
 <script>
     Pusher.logToConsole = true;

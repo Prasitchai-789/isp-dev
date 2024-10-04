@@ -9,6 +9,7 @@ use App\Http\Notify\LineNotify;
 use App\Models\Technical\TypeWork;
 use Illuminate\Support\Facades\DB;
 use App\Models\Technical\WorkOrder;
+use Illuminate\Support\Facades\Auth;
 
 class RepairIndex extends Component
 {
@@ -68,6 +69,10 @@ class RepairIndex extends Component
         ];
     }
 
+    // public function mount(WorkOrder $workOrder)
+    // {
+    //     $this->user_request = Auth::user()->emp_id;
+    // }
 
     public function generateReferenceNumber()
     {

@@ -73,11 +73,15 @@
                     </a>
                     <ul id="SEC" class="sidebar-dropdown list-unstyled collapse" data-bs-parent="#sidebar">
                         <li class="sidebar-item">
-                            <a href="{{ route('car-report.index')}}" class="sidebar-link-li">รายการรถบริษัท ฯ</a>
+                            <a href="{{ route('pass-card')}}" class="sidebar-link-li">บันทึกเข้า - ออก</a>
                         </li>
                         <li class="sidebar-item">
                             <a href="{{ route('car-use.index')}}" class="sidebar-link-li">บันทึกการใช้งานรถ</a>
                         </li>
+                        <li class="sidebar-item">
+                            <a href="{{ route('car-report.index')}}" class="sidebar-link-li">รายการรถบริษัท ฯ</a>
+                        </li>
+
 
                     </ul>
                 </li>

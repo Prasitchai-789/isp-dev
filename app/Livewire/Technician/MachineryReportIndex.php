@@ -105,7 +105,7 @@ class MachineryReportIndex extends Component
         Carbon::setLocale('th');
         $spareParts = SparePart::where('id_machinery', $this->machinery->id)
             ->orderBy('id', 'desc')
-            ->get();
+            ->paginate(10);
 
         return view('livewire.technician.machinery-report-index', [
             'spareParts' => $spareParts,

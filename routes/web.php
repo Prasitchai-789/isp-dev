@@ -21,6 +21,7 @@ use App\Http\Controllers\PRO\MachineryController;
 use App\Http\Controllers\RPO\DashboardPalmPurchase;
 use App\Http\Controllers\GM\DashboardPalmController;
 use App\Http\Controllers\HRE\CarRequestController;
+use App\Http\Controllers\SEC\PassCardController;
 use App\Http\Controllers\Technician\MachineryReportController;
 
 Route::group(['middleware' => ['auth','role:developer|admin']], function () {
@@ -140,3 +141,9 @@ Route::controller(MachineryReportController::class)->group(function () {
     Route::get('/machinery/spare-part/{sparePartId}', 'sparePartIndex')->name('spare-part.index');
 });
 
+
+Route::group(['middleware' => ['auth','role:developer|admin']], function () {
+    Route::controller(PassCardController::class)->group(function () {
+        Route::get('/pass-card/', 'index')->name('pass-card');
+    });
+});

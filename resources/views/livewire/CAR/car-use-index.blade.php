@@ -127,7 +127,7 @@
                                     <tr>
                                         <td>
                                             @if ($carUse->created_at)
-                                            {{ \Carbon\Carbon::parse($carUse->created_at)->translatedFormat('j/m/y')
+                                            {{ \Carbon\Carbon::parse($carUse->created_at)->translatedFormat('j/m/y H:i')
                                             }}
                                             @else
                                             ไม่ระบุวันที่
@@ -170,6 +170,7 @@
                                 </tbody>
                             </table>
                             <div class="d-flex justify-content mx-4">
+                                {{ $carUses->links() ?? '' }}
                             </div>
                         </div>
                     </div>

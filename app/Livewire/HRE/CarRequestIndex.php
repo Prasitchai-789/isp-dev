@@ -70,7 +70,7 @@ class CarRequestIndex extends Component
     {
         Carbon::setLocale('th');
         $carReports = CarReport::with(['province', 'brand'])->orderBy('id', 'desc')->get();
-        $carRequests = CarRequest::with(['emp', 'department', 'car'])->orderBy('id', 'desc')->get();
+        $carRequests = CarRequest::with(['emp', 'department', 'car'])->orderBy('id', 'desc')->paginate(10);
         $users = Emp::orderBy('EmpName', 'ASC')->get();
         $departments = Department::orderBy('DeptID', 'ASC')->get();
         return view('livewire.HRE.car-request-index', [

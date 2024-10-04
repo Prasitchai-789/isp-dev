@@ -65,7 +65,7 @@ class MachineryIndex extends Component
     public function render()
     {
         Carbon::setLocale('th');
-        $machineries = Machinery::orderBy('id', 'desc')->get();
+        $machineries = Machinery::orderBy('id', 'desc')->paginate(10);
         if ($machineries->isEmpty()) {
             return view('livewire.Technician.machinery-index', ['machineries' => []]);
         } else {

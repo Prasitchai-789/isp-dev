@@ -70,7 +70,7 @@ class CarUseIndex extends Component
             })
             ->orderBy('id', 'desc')
             ->get();
-        $carUses = CarUse::with(['emp', 'department', 'car'])->orderBy('id', 'desc')->get();
+        $carUses = CarUse::with(['emp', 'department', 'car'])->orderBy('id', 'desc')->paginate(10);
         $users = Emp::orderBy('EmpName', 'ASC')->get();
         $departments = Department::orderBy('DeptID', 'ASC')->get();
         return view('livewire.CAR.car-use-index', [

@@ -121,8 +121,8 @@
 
                                         </tbody>
                                     </table>
-                                    <div>
-
+                                    <div class="d-flex justify-content mx-4">
+                                        {{ $machineries->links() ?? '' }}
                                     </div>
                                 </div>
                             </div>

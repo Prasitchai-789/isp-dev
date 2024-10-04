@@ -103,6 +103,7 @@
                                 </tbody>
                             </table>
                             <div class="d-flex justify-content mx-4">
+                                {{ $carRequests->links() ?? '' }}
                             </div>
                         </div>
                     </div>

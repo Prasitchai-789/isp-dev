@@ -29,10 +29,35 @@
 
     // Bind to the event
     channel.bind('test.notification', function(data) {
-        console.log('Received data:', data); // Debugging line
-        window.location.reload(); 
+        // console.log('Received data:', data); // Debugging line
+        let timerInterval;
+        Swal.fire({
+            title: "แจ้งเตือนการขออนุญาต!",
+            html: "I will close in <b></b> milliseconds.",
+            timer: 2000,
+            timerProgressBar: true,
+            customClass: {
+                title: 'custom-title',
+                htmlContainer: 'custom-html'
+                },
+            didOpen: () => {
+                Swal.showLoading();
+                const timer = Swal.getPopup().querySelector("b");
+                timerInterval = setInterval(() => {
+                    timer.textContent = `${Swal.getTimerLeft()}`;
+                }, 100);
+            },
+            willClose: () => {
+                clearInterval(timerInterval);
+            }
+        }).then((result) => {
+            if (result.dismiss === Swal.DismissReason.timer) {
+                console.log("I was closed by the timer");
+                // Reload the page after Swal closes
+                window.location.reload(); // รีโหลดหน้าหลังจากที่ Swal ปิด
 
-    });
+            }
+});
     // Debugging line
     pusher.connection.bind('connected', function() {
         console.log('Pusher connected');
