@@ -69,6 +69,10 @@ class CarReportIndex extends Component
         'car_card' => 'nullable|string',
     ];
 
+    public function pusher()
+    {
+
+    }
     public function mount(CarReport $carReport)
     {
         $this->carReport = $carReport;
@@ -240,7 +244,6 @@ class CarReportIndex extends Component
                 'car_department' => 'nullable|string',
 
             ]);
-            dd($validatedData);
             if ($this->car_photo) {
 
                 if ($this->car_photo instanceof \Illuminate\Http\UploadedFile) {
@@ -262,8 +265,7 @@ class CarReportIndex extends Component
             }
 
             $validatedData['car_status'] = $this->car_status ? 1 : 0;
-dd(1);
-            // CarReport::create($validatedData);
+            CarReport::create($validatedData);
 
             $this->dispatch('close-modal');
             $this->resetInputFields();
