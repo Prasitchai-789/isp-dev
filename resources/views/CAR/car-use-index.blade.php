@@ -57,7 +57,7 @@
                 window.location.reload(); // รีโหลดหน้าหลังจากที่ Swal ปิด
 
             }
-});
+})});
     // Debugging line
     pusher.connection.bind('connected', function() {
         console.log('Pusher connected');

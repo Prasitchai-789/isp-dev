@@ -84,6 +84,13 @@ class CarRequestIndex extends Component
     {
         $this->edit = false;
     }
+    public function pusher()
+    {
+        event(new TestNotification([
+            'author' => $this->user_request,
+            'title' => $this->car_request,
+        ]));
+    }
 
     public function saveCarRequest()
     {
