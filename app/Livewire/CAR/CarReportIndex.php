@@ -54,10 +54,10 @@ class CarReportIndex extends Component
         'car_character' => 'nullable|string|max:255',
         'car_brand' => 'nullable|string|max:255',
         'car_model' => 'nullable|string|max:255',
-        'car_year' => 'nullable|integer',
+        'car_year' => 'nullable|string',
         'car_color' => 'nullable|string|max:100',
         'car_fuel' => 'nullable|string|max:100',
-        'car_mileage' => 'nullable|integer',
+        'car_mileage' => 'nullable|string',
         'car_date' => 'nullable|date',
         'car_buy' => 'nullable|date',
         'car_tax' => 'nullable|date',
@@ -226,10 +226,10 @@ class CarReportIndex extends Component
                 'car_character' => 'nullable|string|max:255',
                 'car_brand' => 'nullable|string|max:255',
                 'car_model' => 'nullable|string|max:255',
-                'car_year' => 'nullable|integer',
+                'car_year' => 'nullable|string',
                 'car_color' => 'nullable|string|max:100',
                 'car_fuel' => 'nullable|string|max:100',
-                'car_mileage' => 'nullable|integer',
+                'car_mileage' => 'nullable|string',
                 'car_date' => 'nullable|date',
                 'car_buy' => 'nullable|date',
                 'car_tax' => 'nullable|date',
@@ -238,8 +238,9 @@ class CarReportIndex extends Component
                 // 'car_status' => 'boolean',
                 'car_details' => 'nullable|string',
                 'car_department' => 'nullable|string',
-                
+
             ]);
+            dd($validatedData);
             if ($this->car_photo) {
 
                 if ($this->car_photo instanceof \Illuminate\Http\UploadedFile) {
@@ -261,8 +262,8 @@ class CarReportIndex extends Component
             }
 
             $validatedData['car_status'] = $this->car_status ? 1 : 0;
-
-            CarReport::create($validatedData);
+dd(1);
+            // CarReport::create($validatedData);
 
             $this->dispatch('close-modal');
             $this->resetInputFields();
@@ -347,10 +348,10 @@ class CarReportIndex extends Component
                 'car_character' => 'nullable|string|max:255',
                 'car_brand' => 'nullable|string|max:255',
                 'car_model' => 'nullable|string|max:255',
-                'car_year' => 'nullable|integer',
+                'car_year' => 'nullable|string',
                 'car_color' => 'nullable|string|max:100',
                 'car_fuel' => 'nullable|string|max:100',
-                'car_mileage' => 'nullable|integer',
+                'car_mileage' => 'nullable|string',
                 'car_date' => 'nullable|date',
                 'car_buy' => 'nullable|date',
                 'car_tax' => 'nullable|date',
