@@ -11,6 +11,7 @@ use App\Models\CAR\CarReport;
 use App\Models\HRE\CarRequest;
 use App\Models\HRE\Department;
 use App\Http\Notify\LineNotify;
+use App\Events\TestNotification;
 
 
 class CarUseIndex extends Component
@@ -141,6 +142,10 @@ class CarUseIndex extends Component
                 'additionalNotes_request' => 1,
             ]);
 
+            event(new TestNotification([
+                'author' => $this->user_request,
+                'title' => $this->car_request,
+            ]));
 
             $this->dispatch('close-modal');
             $this->dispatch(
@@ -221,6 +226,10 @@ class CarUseIndex extends Component
 
             $lineNotify = new LineNotify();
             $lineNotify->sendLine($message, $token);
+            event(new TestNotification([
+                'author' => $this->user_request,
+                'title' => $this->car_request,
+            ]));
 
             $this->dispatch('close-modal');
             $this->dispatch(
@@ -286,6 +295,10 @@ class CarUseIndex extends Component
 
             $lineNotify = new LineNotify();
             $lineNotify->sendLine($message, $token);
+            event(new TestNotification([
+                'author' => $this->user_request,
+                'title' => $this->car_request,
+            ]));
             $this->dispatch('close-modal');
             $this->dispatch(
                 'alert',
