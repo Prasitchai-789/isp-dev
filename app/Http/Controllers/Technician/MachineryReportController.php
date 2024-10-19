@@ -32,4 +32,10 @@ class MachineryReportController extends Controller
             'sparePart' => $sparePartId,
         ]);
     }
+
+    public function listSparePartIndex()
+    {
+        return view('technician.list-spare-part-index',[
+        ]);
+    }
 }

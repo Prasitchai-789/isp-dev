@@ -152,6 +152,11 @@
                             <a href="{{ route('machinery.index')}}" class="sidebar-link-li">รายการเครื่องจักร</a>
                         </li>
                     </ul>
+                    <ul id="pro" class="sidebar-dropdown list-unstyled collapse" data-bs-parent="#sidebar">
+                        <li class="sidebar-item">
+                            <a href="{{ route('list-spare-part.index')}}" class="sidebar-link-li">แผนการบำรุงรักษา</a>
+                        </li>
+                    </ul>
                 </li>
                 @endcan
 

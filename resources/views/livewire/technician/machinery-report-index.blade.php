@@ -328,6 +328,7 @@
                                         <input type="text" class="form-control form-control-sm font_Prompt text-primary"
                                             id="lubricant" name="lubricant" wire:model="lubricant" placeholder="">
                                     </div>
+                                </div>
                                 <div class="col-md-6 mb-2">
                                     <label style="font-family: 'Prompt', sans-serif;">KW</label>
                                     <div class="input-group">

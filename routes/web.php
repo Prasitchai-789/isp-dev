@@ -139,6 +139,7 @@ Route::controller(MachineryReportController::class)->group(function () {
     Route::get('/machinery/', 'index')->name('machinery.index');
     Route::get('/machinery/report/{machineryId}', 'reportIndex')->name('machinery-report.index');
     Route::get('/machinery/spare-part/{sparePartId}', 'sparePartIndex')->name('spare-part.index');
+    Route::get('/machinery/list-spare-part/', 'listSparePartIndex')->name('list-spare-part.index');
 });
 
 
