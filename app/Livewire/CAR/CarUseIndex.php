@@ -143,8 +143,7 @@ class CarUseIndex extends Component
             ]);
 
             event(new TestNotification([
-                'author' => $this->user_request,
-                'title' => $this->car_request,
+
             ]));
 
             $this->dispatch('close-modal');
@@ -227,8 +226,7 @@ class CarUseIndex extends Component
             $lineNotify = new LineNotify();
             $lineNotify->sendLine($message, $token);
             event(new TestNotification([
-                'author' => $this->user_request,
-                'title' => $this->car_request,
+
             ]));
 
             $this->dispatch('close-modal');
@@ -296,8 +294,7 @@ class CarUseIndex extends Component
             $lineNotify = new LineNotify();
             $lineNotify->sendLine($message, $token);
             event(new TestNotification([
-                'author' => $this->user_request,
-                'title' => $this->car_request,
+                
             ]));
             $this->dispatch('close-modal');
             $this->dispatch(

@@ -84,13 +84,13 @@ class CarRequestIndex extends Component
     {
         $this->edit = false;
     }
-    public function pusher()
-    {
-        event(new TestNotification([
-            'author' => $this->user_request,
-            'title' => $this->car_request,
-        ]));
-    }
+    // public function pusher()
+    // {
+    //     event(new TestNotification([
+    //         'author' => $this->user_request,
+    //         'title' => $this->car_request,
+    //     ]));
+    // }
 
     public function saveCarRequest()
     {
@@ -98,7 +98,7 @@ class CarRequestIndex extends Component
             $validatedData = $this->validate([
                 'user_request' => 'required|string|max:255',
                 'job_request' => 'nullable|string|max:255',
-                'department_request' => 'required|string|max:255',
+                'department_request' => 'nullable',
                 // 'approver_request' => 'nullable|string|max:255',
                 // 'status_request' => 'nullable|string|max:255',
                 // 'car_request' => 'nullable|string|max:255',
@@ -137,8 +137,7 @@ class CarRequestIndex extends Component
             $lineNotify->sendLine($message, $token);
 
             event(new TestNotification([
-                'author' => $this->user_request,
-                'title' => $this->car_request,
+
             ]));
 
             $this->dispatch('close-modal');
@@ -206,8 +205,7 @@ class CarRequestIndex extends Component
         if ($carRequest) {
             $carRequest->delete();
             event(new TestNotification([
-                'author' => $this->user_request,
-                'title' => $this->car_request,
+
             ]));
             $this->dispatch(
                 'alert',
@@ -257,8 +255,7 @@ class CarRequestIndex extends Component
                 'approver_request' => Auth::user()->name,
             ]);
             event(new TestNotification([
-                'author' => $this->user_request,
-                'title' => $this->car_request,
+
             ]));
             session()->flash('message', 'Car Request Approved Successfully.');
         } else {
@@ -275,8 +272,7 @@ class CarRequestIndex extends Component
                 'approver_request' => Auth::user()->name,
             ]);
             event(new TestNotification([
-                'author' => $this->user_request,
-                'title' => $this->car_request,
+
             ]));
             session()->flash('message', 'Car Request Rejected Successfully.');
         } else {
